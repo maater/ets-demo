@@ -48,6 +48,13 @@ export function render(container) {
             </div>
           </div>
         `).join('')}
+
+        <!-- CTA Card -->
+        <div class="card text-center" style="margin-top: var(--space-8); padding: var(--space-10); background: linear-gradient(135deg, var(--primary)08, var(--accent)08);">
+          <h3 class="mb-3">Your story could be next.</h3>
+          <p class="text-secondary mb-6" style="max-width: 480px; margin: 0 auto; line-height: 1.6;">Start with a free AI-guided assessment to see what's possible.</p>
+          <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Assessment →</a>
+        </div>
       </div>
     </div>
   `;

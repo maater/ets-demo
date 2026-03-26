@@ -56,6 +56,14 @@ export function render(container) {
         </div>
       </section>
 
+      <!-- Mid-page CTA Banner -->
+      <section style="background: linear-gradient(135deg, var(--primary)08, var(--accent)08); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div style="max-width: var(--content-max-width); margin: 0 auto; padding: var(--space-10) var(--space-6); text-align: center;">
+          <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4);">Not sure where to start? Our AI-guided assessment takes 5 minutes.</p>
+          <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Free Assessment →</a>
+        </div>
+      </section>
+
       <!-- Case Studies Preview -->
       <section style="background: var(--bg-secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
         <div style="max-width: var(--content-max-width); margin: 0 auto; padding: var(--space-16) var(--space-6);">
@@ -78,6 +86,12 @@ export function render(container) {
               </a>
             `).join('')}
           </div>
+
+          <!-- CTA after case studies -->
+          <div class="text-center" style="margin-top: var(--space-8);">
+            <p class="text-secondary mb-4" style="font-size: var(--text-base);">Want results like these? Start with a free assessment.</p>
+            <a href="#/public/self-assessment" class="btn btn-primary">Start Free Assessment →</a>
+          </div>
         </div>
       </section>
 
@@ -87,7 +101,24 @@ export function render(container) {
         <p class="text-secondary mb-6" style="max-width: 480px; margin-left: auto; margin-right: auto;">
           Our AI-guided self-assessment takes 5 minutes and gives you a preview of what we'd build — before talking to anyone.
         </p>
-        <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Your Free Assessment →</a>
+        <div class="flex items-center justify-center gap-4">
+          <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Your Free Assessment →</a>
+          <button class="btn btn-lg" onclick="document.getElementById('not-implemented-modal').style.display='flex'">Join Our Community →</button>
+        </div>
+      </section>
+
+      <!-- Community / Newsletter -->
+      <section style="background: var(--bg-secondary); border-top: 1px solid var(--border);">
+        <div style="max-width: var(--content-max-width); margin: 0 auto; padding: var(--space-12) var(--space-6); text-align: center;">
+          <h3 class="mb-3">Stay in the Loop</h3>
+          <p class="text-secondary mb-6" style="max-width: 560px; margin: 0 auto; line-height: 1.6;">
+            Get insights on SAP intelligence, AI-native operations, and procurement strategy. Join 2,400+ operations leaders.
+          </p>
+          <div class="flex items-center justify-center gap-4">
+            <button class="btn" onclick="document.getElementById('not-implemented-modal').style.display='flex'">📧 Subscribe to Newsletter</button>
+            <button class="btn" onclick="document.getElementById('not-implemented-modal').style.display='flex'">💬 Join Slack Community</button>
+          </div>
+        </div>
       </section>
     </div>
   `;

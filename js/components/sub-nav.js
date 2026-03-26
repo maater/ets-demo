@@ -43,6 +43,10 @@ const SUB_NAV_LINKS = {
   ]
 };
 
+export function getSubNavLinks(role) {
+  return SUB_NAV_LINKS[role] || [];
+}
+
 export function renderSubNav(container) {
   const state = getState();
   const role = state.currentRole;

@@ -20,9 +20,22 @@ export function render(container) {
         ).join('')}
       </div>
 
+      <!-- Top CTA Banner -->
+      <div class="card mb-6" style="background: linear-gradient(135deg, var(--primary)08, var(--accent)08); text-align: center; padding: var(--space-6);">
+        <p class="text-secondary mb-3" style="font-size: var(--text-base);">Got an SAP challenge? Our self-assessment matches your situation to proven solutions.</p>
+        <a href="#/public/self-assessment" class="btn btn-primary">Take the Assessment →</a>
+      </div>
+
       <!-- Articles grid -->
       <div class="grid grid-2 gap-6" id="articles-grid">
         ${articles.map(article => renderArticleCard(article)).join('')}
+      </div>
+
+      <!-- Bottom CTA Banner -->
+      <div class="card mt-8" style="background: linear-gradient(135deg, var(--primary)08, var(--accent)08); text-align: center; padding: var(--space-8);">
+        <h3 class="mb-2">Ready to move from reading to doing?</h3>
+        <p class="text-secondary mb-4">Our AI-guided self-assessment takes 5 minutes and shows you what's possible.</p>
+        <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Your Free Assessment →</a>
       </div>
 
       <!-- Article detail modal -->

@@ -115,6 +115,13 @@ export function render(container) {
         </div>
       </section>
 
+      <!-- Post-Pricing CTA -->
+      <section style="max-width: var(--content-max-width); margin: 0 auto; padding: var(--space-12) var(--space-6); text-align: center;">
+        <h3 class="mb-3">Step 1 is free.</h3>
+        <p class="text-secondary mb-6" style="max-width: 500px; margin: 0 auto; line-height: 1.6;">Take our AI-guided self-assessment and get instant feasibility feedback.</p>
+        <a href="#/public/self-assessment" class="btn btn-primary btn-lg">Start Your Free Assessment →</a>
+      </section>
+
       <!-- About Axon -->
       <section style="max-width: var(--content-max-width); margin: 0 auto; padding: var(--space-16) var(--space-6);">
         <div class="grid grid-2 gap-8 items-center">
@@ -152,6 +159,9 @@ export function render(container) {
             <p class="text-sm text-secondary" style="line-height: 1.6;">
               Vixul teaches the transformation framework. Axon Labs lives it. Every engagement we run makes the system smarter — and that intelligence flows back to the entire portfolio.
             </p>
+            <div style="margin-top: var(--space-6);">
+              <button class="btn" onclick="document.getElementById('not-implemented-modal').style.display='flex'">Join Our Community →</button>
+            </div>
           </div>
         </div>
       </section>
