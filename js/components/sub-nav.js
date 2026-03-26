@@ -14,11 +14,11 @@ const SUB_NAV_LINKS = {
   ],
   customer: [
     { page: 'dashboard', label: 'Dashboard' },
-    { page: 'backlog', label: 'Backlog' },
-    { page: 'sprint', label: 'Sprint' },
+    { page: 'sprint-plan', label: 'Sprint Plan' },
+    { page: 'sprint', label: 'Sprint Progress' },
     { page: 'approvals', label: 'Approvals' },
     { page: 'proposal-viewer', label: 'Proposal' },
-    { page: 'invoicing', label: 'Invoicing' }
+    { page: 'invoicing', label: 'Subscription' }
   ],
   sales: [
     { page: 'intake-pipeline', label: 'Pipeline' },
@@ -33,7 +33,7 @@ const SUB_NAV_LINKS = {
     { page: 'story-detail', label: 'Story Detail' },
     { page: 'pr-review', label: 'PR Review' },
     { page: 'standup', label: 'Standup' },
-    { page: 'sme-portal', label: 'SME Portal' }
+    { page: 'approve-delivery', label: 'Approve Delivery' }
   ],
   admin: [
     { page: 'agent-monitoring', label: 'Agents' },

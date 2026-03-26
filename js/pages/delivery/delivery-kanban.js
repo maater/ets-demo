@@ -34,7 +34,7 @@ export function render(container) {
         </div>
         <div class="flex gap-2">
           <button class="btn btn-sm" data-nav="standup">📋 Standup View</button>
-          <button class="btn btn-sm" data-nav="sme-portal">👤 SME Portal</button>
+          <button class="btn btn-sm" data-nav="approve-delivery">✓ Approve Delivery</button>
           <button class="btn btn-sm" data-nav="pr-review">📝 PR Queue</button>
         </div>
       </div>
