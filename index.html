@@ -255,6 +255,31 @@
     background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;
   }
 
+  /* ── Knowledge-loop bookend badges ── */
+  .kb-bookend {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 3px 10px; border-radius: 20px;
+    cursor: pointer; transition: all 150ms ease; margin-top: 6px;
+    text-decoration: none;
+  }
+  .kb-bookend-out {
+    background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE;
+  }
+  .kb-bookend-out:hover { background: #EDE9FE; border-color: #C4B5FD; box-shadow: 0 2px 8px rgba(124,58,237,0.15); }
+  .kb-bookend-in {
+    background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE;
+  }
+  .kb-bookend-in:hover { background: #DBEAFE; border-color: #93C5FD; box-shadow: 0 2px 8px rgba(37,99,235,0.15); }
+  .kb-inline {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 8px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 1px 6px; border-radius: 12px;
+    background: #F5F3FF; color: #7C3AED; border: 1px solid #EDE9FE;
+    cursor: pointer; transition: all 150ms ease; vertical-align: middle;
+  }
+  .kb-inline:hover { background: #EDE9FE; border-color: #C4B5FD; }
+
   /* ── Knowledge base callout ── */
   .loop-callout {
     display: flex; align-items: flex-start; gap: 12px;
@@ -438,7 +463,7 @@
           <span class="channel-icon">🔍</span>
           <div>
             <div class="channel-label">Search &amp; SEO</div>
-            <div class="channel-sub">Googles "SAP procurement analytics" — Axon's education hub ranks on the first page</div>
+            <div class="channel-sub">Googles "SAP procurement analytics" — Axon's <span class="kb-inline" onclick="event.stopPropagation(); togglePhase('learn');">🧠 KB</span>-powered education hub ranks on the first page</div>
           </div>
         </div>
         <div class="channel-card">
@@ -511,6 +536,7 @@
             <div class="step-title">Reads Education Hub</div>
             <div class="step-desc">Articles on SAP data strategy, procurement optimization, AI-native operations. Genuine expertise.</div>
             <span class="step-tag tag-human">Self-serve</span>
+            <span class="kb-bookend kb-bookend-out" onclick="event.stopPropagation(); togglePhase('learn');">🧠 Sourced from ⑥ Knowledge Base</span>
             <div class="step-route">public / blog</div>
           </div>
           <div class="arrow">→</div>
@@ -574,7 +600,7 @@
           <div class="step" data-href="app.html#/sales/submission-detail">
             <div class="step-icon">🤖</div>
             <div class="step-title">AI Pre-Qualification</div>
-            <div class="step-desc">Fit score, complexity, timeline — from knowledge base patterns. Before any human sees it.</div>
+            <div class="step-desc">Fit score, complexity, timeline — from <span class="kb-inline" onclick="event.stopPropagation(); togglePhase('learn');">🧠 KB</span> patterns. Before any human sees it.</div>
             <span class="step-tag tag-ai">AI-generated</span>
             <div class="step-route">sales / submission-detail</div>
           </div>
@@ -655,7 +681,7 @@
           <div class="step" data-href="app.html#/sales/proposal-creator">
             <div class="step-icon">✍️</div>
             <div class="step-title">AI Drafts Proposal</div>
-            <div class="step-desc">Epics, stories, timeline, pricing from discovery context + knowledge base. Human refines.</div>
+            <div class="step-desc">Epics, stories, timeline, pricing from discovery context + <span class="kb-inline" onclick="event.stopPropagation(); togglePhase('learn');">🧠 KB</span>. Human refines.</div>
             <span class="step-tag tag-both">Human + AI</span>
             <div class="step-route">sales / proposal-creator</div>
           </div>
@@ -786,6 +812,7 @@
             Usage signals → <span class="lc-pill lc-pill-amber">Improvement suggestions</span>
             Best practices → <span class="lc-pill lc-pill-amber">Next proposal</span>.
             Every client makes every other client's delivery smarter.
+            <br><span class="kb-bookend kb-bookend-in" onclick="event.stopPropagation(); togglePhase('discover');" style="margin-top:8px;">📚 Powers ② Education Hub</span>
           </div>
         </div>
       </div>
