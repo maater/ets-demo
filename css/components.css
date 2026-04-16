@@ -407,6 +407,72 @@ tr:hover td {
   border: 1px solid var(--border);
 }
 
+/* Selectable chip — used in multi-select grids (e.g., self-assessment) */
+.chip-choice {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  font-family: inherit;
+}
+.chip-choice:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text-muted);
+}
+.chip-choice .chip-choice-sub {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.chip-choice.selected {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.chip-choice.selected .chip-choice-sub {
+  color: var(--primary);
+  opacity: 0.85;
+}
+
+/* Radio pills — single-select horizontal group */
+.pill-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.pill {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: 9999px;
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+.pill:hover {
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+.pill.selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
 /* Score indicator */
 .score {
   display: inline-flex;

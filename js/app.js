@@ -5,7 +5,7 @@
 
 import { subscribe, getState, ROLES } from './store.js';
 import { initRouter, handleRoute } from './router.js';
-import { renderNav } from './components/nav.js';
+import { renderNav } from './components/nav.js?v=2';
 
 function init() {
   // Render persistent UI
