@@ -9,9 +9,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-    background: #F3F4F6;
-    color: #1F2937;
-    min-height: 100vh;
+    background: #F3F4F6; color: #1F2937; min-height: 100vh;
   }
 
   /* ── Nav ── */
@@ -23,12 +21,10 @@
   }
   .nav-logo {
     display: flex; align-items: center; gap: 8px;
-    font-size: 15px; font-weight: 700; color: #111827;
-    text-decoration: none;
+    font-size: 15px; font-weight: 700; color: #111827; text-decoration: none;
   }
   .nav-logo-dot {
-    width: 22px; height: 22px; border-radius: 6px;
-    background: #2563EB;
+    width: 22px; height: 22px; border-radius: 6px; background: #2563EB;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; color: #fff; font-weight: 800;
   }
@@ -50,106 +46,85 @@
   .btn-launch:hover { background: #1d4ed8; }
 
   /* ── Content ── */
-  .content { padding: 28px 32px 60px; max-width: 1200px; margin: 0 auto; }
-
-  .hero { text-align: center; margin-bottom: 32px; }
+  .content { padding: 28px 32px 60px; max-width: 1260px; margin: 0 auto; }
+  .hero { text-align: center; margin-bottom: 28px; }
   .hero h1 { font-size: 22px; font-weight: 700; color: #111827; margin-bottom: 6px; }
-  .hero p { font-size: 13px; color: #6B7280; max-width: 540px; margin: 0 auto; line-height: 1.6; }
+  .hero p { font-size: 13px; color: #6B7280; max-width: 560px; margin: 0 auto; line-height: 1.6; }
 
-  /* ═══════════ PIPELINE — top-level phase cards ═══════════ */
+  /* ═══════════ PIPELINE ═══════════ */
   .pipeline {
-    display: flex; align-items: stretch; gap: 0;
-    margin-bottom: 0;
+    display: flex; align-items: stretch; gap: 0; margin-bottom: 0;
   }
   .pipeline-arrow {
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px; color: #D1D5DB; flex: 0 0 28px;
-    user-select: none;
+    font-size: 18px; color: #D1D5DB; flex: 0 0 20px; user-select: none;
   }
-
   .phase-card {
     flex: 1; display: flex; flex-direction: column;
     background: #fff; border: 2px solid #E5E7EB; border-radius: 12px;
-    padding: 20px 18px 16px; cursor: pointer;
+    padding: 16px 14px 14px; cursor: pointer;
     transition: all 200ms ease; position: relative; overflow: hidden;
+    min-width: 0;
   }
   .phase-card:hover { border-color: #93C5FD; box-shadow: 0 4px 12px rgba(37,99,235,0.1); }
-  .phase-card.active { border-color: var(--phase-color, #2563EB); box-shadow: 0 4px 16px color-mix(in srgb, var(--phase-color, #2563EB) 20%, transparent); }
+  .phase-card.active {
+    border-color: var(--phase-color, #2563EB);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--phase-color, #2563EB) 20%, transparent);
+  }
   .phase-card.active::after {
     content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
     width: 40px; height: 4px; background: var(--phase-color, #2563EB); border-radius: 2px 2px 0 0;
   }
-
   .phase-card .phase-num {
-    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--phase-color, #2563EB);
-    margin-bottom: 8px;
+    font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 6px;
   }
-  .phase-card .phase-title {
-    font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 4px;
-    line-height: 1.3;
-  }
-  .phase-card .phase-sub {
-    font-size: 11px; color: #9CA3AF; line-height: 1.5; flex: 1;
-  }
-  .phase-card .phase-actors {
-    display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
-  }
+  .phase-card .phase-title { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 4px; line-height: 1.3; }
+  .phase-card .phase-sub { font-size: 10.5px; color: #9CA3AF; line-height: 1.5; flex: 1; }
+  .phase-card .phase-actors { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
   .actor-pill {
-    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
-    padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 2px 7px; border-radius: 20px; text-transform: uppercase;
   }
   .actor-customer { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
   .actor-sales    { background: #F0FDF4; color: #059669; border: 1px solid #BBF7D0; }
   .actor-delivery { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
   .actor-admin    { background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE; }
-
+  .actor-marketing { background: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; }
   .phase-card .phase-expand-hint {
-    font-size: 10px; color: #D1D5DB; margin-top: 8px;
-    transition: color 150ms ease;
+    font-size: 9px; color: #D1D5DB; margin-top: 6px; transition: color 150ms ease;
   }
   .phase-card:hover .phase-expand-hint { color: #6B7280; }
   .phase-card.active .phase-expand-hint { color: var(--phase-color, #2563EB); }
 
-  /* ═══════════ EXPANDED DETAIL ═══════════ */
+  /* ═══════════ PHASE DETAIL ═══════════ */
   .phase-detail {
     overflow: hidden; max-height: 0;
     transition: max-height 400ms ease, opacity 300ms ease, margin 300ms ease;
     opacity: 0; margin-top: 0;
   }
-  .phase-detail.open {
-    max-height: 1200px; opacity: 1; margin-top: 20px;
-  }
+  .phase-detail.open { max-height: 1400px; opacity: 1; margin-top: 20px; }
   .phase-detail-inner {
     background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
-    padding: 24px 24px 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    position: relative;
+    padding: 24px 24px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;
   }
   .phase-detail-header {
     display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px; padding-bottom: 12px;
-    border-bottom: 1px solid #F3F4F6;
+    margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #F3F4F6;
   }
   .phase-detail-header .pd-num {
-    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
   }
-  .phase-detail-header .pd-title {
-    font-size: 16px; font-weight: 700; color: #111827;
-  }
+  .phase-detail-header .pd-title { font-size: 16px; font-weight: 700; color: #111827; }
   .phase-detail-close {
     margin-left: auto; background: none; border: 1px solid #E5E7EB;
     border-radius: 8px; padding: 4px 10px; font-size: 11px;
-    color: #6B7280; cursor: pointer; font-family: inherit;
-    transition: all 150ms ease;
+    color: #6B7280; cursor: pointer; font-family: inherit; transition: all 150ms ease;
   }
   .phase-detail-close:hover { background: #F3F4F6; color: #111827; }
 
-  /* ── Swimlanes inside detail ── */
-  .swimlanes {
-    display: grid; grid-template-columns: 80px 1fr;
-  }
+  /* ── Swimlanes ── */
+  .swimlanes { display: grid; grid-template-columns: 80px 1fr; }
   .role-cell {
     display: flex; align-items: center; justify-content: flex-end;
     padding-right: 12px; border-right: 2px solid #E5E7EB;
@@ -159,10 +134,7 @@
     text-transform: uppercase; writing-mode: vertical-rl;
     transform: rotate(180deg); text-align: center;
   }
-  .lane {
-    padding: 12px 0 12px 18px;
-    border-bottom: 1px solid #F3F4F6;
-  }
+  .lane { padding: 12px 0 12px 18px; border-bottom: 1px solid #F3F4F6; }
   .lane:last-child { border-bottom: none; }
   .steps-row { display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; }
 
@@ -176,7 +148,6 @@
     transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
   }
   .step.ghost { opacity: 0.12; pointer-events: none; }
-
   .step[data-href] { cursor: pointer; }
   .step[data-href]:hover {
     box-shadow: 0 4px 12px rgba(37,99,235,0.15), 0 2px 4px rgba(0,0,0,0.08);
@@ -188,7 +159,6 @@
     font-size: 10px; color: #D1D5DB; transition: color 150ms ease;
   }
   .step[data-href]:hover::after { color: #2563EB; }
-
   .step-route {
     display: none; font-size: 8.5px; color: #9CA3AF; margin-top: 4px;
     font-family: 'SF Mono', SFMono-Regular, Consolas, monospace;
@@ -216,14 +186,74 @@
   .loop-badge {
     position: absolute; top: -10px; right: 8px;
     font-size: 8px; font-weight: 800; letter-spacing: 0.05em;
-    padding: 2px 7px; border-radius: 20px; text-transform: uppercase;
-    white-space: nowrap;
+    padding: 2px 7px; border-radius: 20px; text-transform: uppercase; white-space: nowrap;
   }
   .badge-amber { background: #F59E0B; color: #fff; }
   .badge-green { background: #10B981; color: #fff; }
-
   .arrow { font-size: 16px; color: #2563EB; flex: 0 0 auto; align-self: center; }
   .arrow-dim { color: #D1D5DB; }
+
+  /* ── Reach phase: convergence layout ── */
+  .reach-layout { display: flex; gap: 24px; align-items: stretch; }
+  .reach-channels {
+    flex: 1; display: flex; flex-direction: column; gap: 8px;
+  }
+  .reach-channels-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #E11D48; margin-bottom: 4px;
+  }
+  .channel-card {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid #E5E7EB; border-radius: 8px;
+    padding: 8px 12px; font-size: 11px; color: #374151;
+    transition: all 150ms ease;
+  }
+  .channel-card:hover { border-color: #FDA4AF; box-shadow: 0 2px 8px rgba(225,29,72,0.08); }
+  .channel-icon { font-size: 16px; flex: 0 0 auto; }
+  .channel-label { font-weight: 600; line-height: 1.3; }
+  .channel-sub { font-size: 9.5px; color: #9CA3AF; }
+
+  .reach-converge {
+    flex: 0 0 40px; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; position: relative;
+  }
+  .converge-arrow { color: #E11D48; font-size: 20px; }
+
+  .reach-destination {
+    flex: 0 0 200px; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    gap: 8px;
+  }
+  .reach-dest-card {
+    background: linear-gradient(135deg, #FFF1F2, #FFF); border: 2px solid #FECDD3;
+    border-radius: 12px; padding: 20px 16px; text-align: center;
+    cursor: pointer; transition: all 150ms ease; width: 100%;
+  }
+  .reach-dest-card:hover { border-color: #E11D48; box-shadow: 0 4px 12px rgba(225,29,72,0.12); }
+  .reach-dest-icon { font-size: 28px; margin-bottom: 6px; }
+  .reach-dest-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+  .reach-dest-sub { font-size: 10px; color: #9CA3AF; }
+
+  .reach-axon-lane {
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid #F3F4F6;
+  }
+  .reach-axon-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #059669; margin-bottom: 8px;
+  }
+  .signal-engine {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #F0FDF4; border: 1px dashed #BBF7D0; border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .signal-engine-icon { font-size: 22px; flex: 0 0 auto; }
+  .signal-engine-text { font-size: 11px; color: #6B7280; line-height: 1.7; }
+  .signal-engine-text strong { color: #059669; font-weight: 700; }
+  .signal-pill {
+    display: inline-block; font-size: 8.5px; font-weight: 700;
+    padding: 1px 7px; border-radius: 20px; letter-spacing: 0.05em; margin: 0 1px;
+    background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;
+  }
 
   /* ── Knowledge base callout ── */
   .loop-callout {
@@ -243,7 +273,7 @@
   .lc-pill-amber { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
   .lc-pill-green { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
 
-  /* ── Loop return banner ── */
+  /* ── Loop return banners ── */
   .loop-return {
     display: flex; align-items: center; gap: 8px;
     padding: 8px 14px; border-radius: 8px;
@@ -263,7 +293,6 @@
   .loop-legend { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
   .loop-legend-item { display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: #6B7280; }
   .loop-line-dashed { width: 28px; height: 0; border-top: 2px dashed; border-radius: 1px; }
-
   .footer-note { text-align: center; font-size: 10px; color: #9CA3AF; margin-top: 28px; }
 </style>
 </head>
@@ -272,8 +301,7 @@
 <!-- ═══════════ NAV ═══════════ -->
 <div class="nav-bar">
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-dot">A</div>
-    Axon Labs
+    <div class="nav-logo-dot">A</div> Axon Labs
   </a>
   <div class="nav-divider"></div>
   <div class="nav-title">Customer Value Stream</div>
@@ -285,73 +313,182 @@
 
 <div class="content">
 
-<!-- ═══════════ HERO ═══════════ -->
 <div class="hero">
   <h1>AI-First Service Delivery</h1>
-  <p>Follow one customer — Meridian Partners — from first visit through delivery and continuous innovation. Click a phase to expand, then click any step to see the live interface.</p>
+  <p>Follow one customer — Meridian Partners — from first signal through delivery and continuous innovation. Click a phase to expand, then click any step to see the live interface.</p>
 </div>
 
-<!-- ═══════════ PIPELINE — 4 phase cards ═══════════ -->
+<!-- ═══════════ PIPELINE — 6 phases ═══════════ -->
 <div class="pipeline">
-  <div class="phase-card" data-phase="discover" style="--phase-color: #2563EB;" onclick="togglePhase('discover')">
-    <div class="phase-num" style="color: #2563EB;">① Phase 1</div>
-    <div class="phase-title">Discover &amp; Qualify</div>
-    <div class="phase-sub">Customer finds Axon, completes AI self-assessment. Sales gets AI pre-qualification before any human sees it.</div>
+  <div class="phase-card" data-phase="reach" style="--phase-color:#E11D48" onclick="togglePhase('reach')">
+    <div class="phase-num" style="color:#E11D48">① REACH</div>
+    <div class="phase-title">Reach</div>
+    <div class="phase-sub">Signal-based outbound, content, community, conferences. Multiple touchpoints build familiarity.</div>
+    <div class="phase-actors">
+      <span class="actor-pill actor-marketing">Marketing</span>
+      <span class="actor-pill actor-customer">Customer</span>
+    </div>
+    <div class="phase-expand-hint">▼ Expand</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+
+  <div class="phase-card" data-phase="discover" style="--phase-color:#2563EB" onclick="togglePhase('discover')">
+    <div class="phase-num" style="color:#2563EB">② DISCOVER</div>
+    <div class="phase-title">Discover</div>
+    <div class="phase-sub">Customer explores the site — reads blog, reviews case studies, understands the approach.</div>
+    <div class="phase-actors">
+      <span class="actor-pill actor-customer">Customer</span>
+    </div>
+    <div class="phase-expand-hint">▼ Expand</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+
+  <div class="phase-card" data-phase="qualify" style="--phase-color:#7C3AED" onclick="togglePhase('qualify')">
+    <div class="phase-num" style="color:#7C3AED">③ QUALIFY</div>
+    <div class="phase-title">Qualify</div>
+    <div class="phase-sub">Self-assessment, AI pre-qualification, human review. From interest to qualified lead.</div>
     <div class="phase-actors">
       <span class="actor-pill actor-customer">Customer</span>
       <span class="actor-pill actor-sales">Sales</span>
     </div>
-    <div class="phase-expand-hint">▼ Click to expand</div>
+    <div class="phase-expand-hint">▼ Expand</div>
   </div>
-
   <div class="pipeline-arrow">→</div>
 
-  <div class="phase-card" data-phase="propose" style="--phase-color: #059669;" onclick="togglePhase('propose')">
-    <div class="phase-num" style="color: #059669;">② Phase 2</div>
+  <div class="phase-card" data-phase="propose" style="--phase-color:#059669" onclick="togglePhase('propose')">
+    <div class="phase-num" style="color:#059669">④ PROPOSE</div>
     <div class="phase-title">Propose &amp; Agree</div>
-    <div class="phase-sub">Discovery call, AI-drafted proposal, interactive review. Both innovation loops feed new items back here.</div>
+    <div class="phase-sub">Discovery call, AI-drafted proposal, interactive review. Both loops feed back here.</div>
     <div class="phase-actors">
       <span class="actor-pill actor-customer">Customer</span>
       <span class="actor-pill actor-sales">Sales</span>
     </div>
-    <div class="phase-expand-hint">▼ Click to expand</div>
+    <div class="phase-expand-hint">▼ Expand</div>
   </div>
-
   <div class="pipeline-arrow">→</div>
 
-  <div class="phase-card" data-phase="deliver" style="--phase-color: #D97706;" onclick="togglePhase('deliver')">
-    <div class="phase-num" style="color: #D97706;">③ Phase 3</div>
+  <div class="phase-card" data-phase="deliver" style="--phase-color:#D97706" onclick="togglePhase('deliver')">
+    <div class="phase-num" style="color:#D97706">⑤ DELIVER</div>
     <div class="phase-title">Deliver &amp; Approve</div>
-    <div class="phase-sub">Agents build 24/7, engineers review, customer approves. Mid-sprint ideas flow back to backlog (Loop A).</div>
+    <div class="phase-sub">Agents build 24/7, engineers review, customer approves. Loop A feeds back to backlog.</div>
     <div class="phase-actors">
       <span class="actor-pill actor-customer">Customer</span>
       <span class="actor-pill actor-delivery">Delivery</span>
     </div>
-    <div class="phase-expand-hint">▼ Click to expand</div>
+    <div class="phase-expand-hint">▼ Expand</div>
   </div>
-
   <div class="pipeline-arrow">→</div>
 
-  <div class="phase-card" data-phase="learn" style="--phase-color: #7C3AED;" onclick="togglePhase('learn')">
-    <div class="phase-num" style="color: #7C3AED;">④ Phase 4</div>
+  <div class="phase-card" data-phase="learn" style="--phase-color:#7C3AED" onclick="togglePhase('learn')">
+    <div class="phase-num" style="color:#7C3AED">⑥ LEARN</div>
     <div class="phase-title">Learn &amp; Innovate</div>
-    <div class="phase-sub">Product in use. Usage insights generate AI improvement proposals that feed back to proposal (Loop B).</div>
+    <div class="phase-sub">Usage insights generate AI improvement proposals. Loop B feeds back to proposal.</div>
     <div class="phase-actors">
       <span class="actor-pill actor-customer">Customer</span>
       <span class="actor-pill actor-admin">Admin</span>
     </div>
-    <div class="phase-expand-hint">▼ Click to expand</div>
+    <div class="phase-expand-hint">▼ Expand</div>
   </div>
 </div>
 
-<!-- ═══════════ PHASE DETAILS (hidden by default) ═══════════ -->
+<!-- ═══════════ DETAIL PANELS ═══════════ -->
 
-<!-- Phase 1: Discover & Qualify -->
+<!-- ① REACH -->
+<div class="phase-detail" id="detail-reach">
+  <div class="phase-detail-inner">
+    <div class="phase-detail-header">
+      <span class="pd-num" style="color:#E11D48">① REACH</span>
+      <span class="pd-title">Multiple touchpoints build familiarity before the first click</span>
+      <button class="phase-detail-close" onclick="togglePhase('reach')">Collapse ✕</button>
+    </div>
+
+    <div class="reach-layout">
+      <!-- Channel cards -->
+      <div class="reach-channels">
+        <div class="reach-channels-label">How Sarah encounters Axon</div>
+        <div class="channel-card">
+          <span class="channel-icon">🎯</span>
+          <div>
+            <div class="channel-label">Targeted Outbound</div>
+            <div class="channel-sub">Signal engine detects SAP pain → personalized email lands in Sarah's inbox</div>
+          </div>
+        </div>
+        <div class="channel-card">
+          <span class="channel-icon">💼</span>
+          <div>
+            <div class="channel-label">LinkedIn Content</div>
+            <div class="channel-sub">Posts about SAP spend analysis appear in Sarah's feed — practical, not salesy</div>
+          </div>
+        </div>
+        <div class="channel-card">
+          <span class="channel-icon">💬</span>
+          <div>
+            <div class="channel-label">Community &amp; Forums</div>
+            <div class="channel-sub">Axon team answers SAP questions in forums Sarah reads — builds credibility before contact</div>
+          </div>
+        </div>
+        <div class="channel-card">
+          <span class="channel-icon">🎤</span>
+          <div>
+            <div class="channel-label">Conferences &amp; Events</div>
+            <div class="channel-sub">Sarah meets Axon people at a manufacturing conference — they know her domain cold</div>
+          </div>
+        </div>
+        <div class="channel-card">
+          <span class="channel-icon">🔍</span>
+          <div>
+            <div class="channel-label">Search &amp; SEO</div>
+            <div class="channel-sub">Googles "SAP procurement analytics" — Axon's education hub ranks on the first page</div>
+          </div>
+        </div>
+        <div class="channel-card">
+          <span class="channel-icon">🗣️</span>
+          <div>
+            <div class="channel-label">Referrals</div>
+            <div class="channel-sub">A peer at another manufacturer recommends Axon — "they built exactly what you need"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Converge arrow -->
+      <div class="reach-converge">
+        <div class="converge-arrow">→</div>
+      </div>
+
+      <!-- Destination -->
+      <div class="reach-destination">
+        <div class="reach-dest-card" onclick="event.stopPropagation(); window.location.href='app.html#/public/home'">
+          <div class="reach-dest-icon">🌐</div>
+          <div class="reach-dest-title">Visits axonlabs.ai</div>
+          <div class="reach-dest-sub">All channels converge here — the first real visit</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axon side: Signal Engine -->
+    <div class="reach-axon-lane">
+      <div class="reach-axon-label">Axon side — what powers this</div>
+      <div class="signal-engine">
+        <div class="signal-engine-icon">🤖</div>
+        <div class="signal-engine-text">
+          <strong>Signal Intelligence Engine</strong> monitors buying signals —
+          <span class="signal-pill">Job posts</span>
+          <span class="signal-pill">LinkedIn activity</span>
+          <span class="signal-pill">RFP postings</span>
+          <span class="signal-pill">Conference registrations</span>
+          — and triggers outreach through the right channel at the right moment. Not spray-and-pray; surgical.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ② DISCOVER -->
 <div class="phase-detail" id="detail-discover">
   <div class="phase-detail-inner">
     <div class="phase-detail-header">
-      <span class="pd-num" style="color:#2563EB;">① DISCOVER &amp; QUALIFY</span>
-      <span class="pd-title">From problem to qualified lead</span>
+      <span class="pd-num" style="color:#2563EB">② DISCOVER</span>
+      <span class="pd-title">Customer explores, reads, and builds conviction</span>
       <button class="phase-detail-close" onclick="togglePhase('discover')">Collapse ✕</button>
     </div>
 
@@ -362,17 +499,61 @@
       <div class="lane">
         <div class="steps-row">
           <div class="step" data-href="app.html#/public/home">
-            <div class="step-icon">🔍</div>
-            <div class="step-title">Arrives with a Problem</div>
-            <div class="step-desc">Finds Axon via search or referral. Has a SAP data challenge they can't solve internally.</div>
+            <div class="step-icon">🏠</div>
+            <div class="step-title">Lands on Homepage</div>
+            <div class="step-desc">"SAP Intelligence That Tells You What To Do" — value prop clicks, social proof, clear CTA.</div>
             <span class="step-tag tag-human">Human</span>
             <div class="step-route">public / home</div>
           </div>
           <div class="arrow">→</div>
+          <div class="step" data-href="app.html#/public/blog">
+            <div class="step-icon">📚</div>
+            <div class="step-title">Reads Education Hub</div>
+            <div class="step-desc">Articles on SAP data strategy, procurement optimization, AI-native operations. Genuine expertise.</div>
+            <span class="step-tag tag-human">Self-serve</span>
+            <div class="step-route">public / blog</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="step" data-href="app.html#/public/case-studies">
+            <div class="step-icon">📊</div>
+            <div class="step-title">Reviews Case Studies</div>
+            <div class="step-desc">Real-feeling metrics: timelines, outcomes, subscription tiers. "Someone like me did this."</div>
+            <span class="step-tag tag-human">Self-serve</span>
+            <div class="step-route">public / case-studies</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="step" data-href="app.html#/public/how-we-work">
+            <div class="step-icon">⚙️</div>
+            <div class="step-title">How We Work</div>
+            <div class="step-desc">Transparent engagement model, pricing, sprint-based delivery loop. No surprises.</div>
+            <span class="step-tag tag-human">Self-serve</span>
+            <div class="step-route">public / how-we-work</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ QUALIFY -->
+<div class="phase-detail" id="detail-qualify">
+  <div class="phase-detail-inner">
+    <div class="phase-detail-header">
+      <span class="pd-num" style="color:#7C3AED">③ QUALIFY</span>
+      <span class="pd-title">From interest to qualified lead</span>
+      <button class="phase-detail-close" onclick="togglePhase('qualify')">Collapse ✕</button>
+    </div>
+
+    <div class="swimlanes">
+      <div class="role-cell" style="height:148px;">
+        <span class="role-label" style="color:#2563EB;">Customer</span>
+      </div>
+      <div class="lane">
+        <div class="steps-row">
           <div class="step" data-href="app.html#/public/self-assessment">
             <div class="step-icon">💬</div>
             <div class="step-title">Self-Assessment</div>
-            <div class="step-desc">AI-guided conversation. Describes problem, answers SAP-specific questions, gets a live preview.</div>
+            <div class="step-desc">SAP-specific structured intake: modules, pain points, reporting stack, team. Gets a live preview.</div>
             <span class="step-tag tag-ai">AI-led</span>
             <div class="step-route">public / self-assessment</div>
           </div>
@@ -388,8 +569,6 @@
       </div>
       <div class="lane">
         <div class="steps-row">
-          <div class="step ghost"></div>
-          <div class="arrow arrow-dim">→</div>
           <div class="step ghost"></div>
           <div class="arrow">→</div>
           <div class="step" data-href="app.html#/sales/submission-detail">
@@ -413,22 +592,20 @@
   </div>
 </div>
 
-<!-- Phase 2: Propose & Agree -->
+<!-- ④ PROPOSE & AGREE -->
 <div class="phase-detail" id="detail-propose">
   <div class="phase-detail-inner">
     <div class="phase-detail-header">
-      <span class="pd-num" style="color:#059669;">② PROPOSE &amp; AGREE</span>
+      <span class="pd-num" style="color:#059669">④ PROPOSE &amp; AGREE</span>
       <span class="pd-title">From discovery to signed scope</span>
       <button class="phase-detail-close" onclick="togglePhase('propose')">Collapse ✕</button>
     </div>
-
     <div class="loop-return lr-green">
       <span>↩</span> <strong>Loop A</strong> lands here — mid-delivery engineer insights &amp; demo feedback add items to the backlog
     </div>
     <div class="loop-return lr-amber">
       <span>↩</span> <strong>Loop B</strong> lands here — post-usage AI suggestions create new proposals for customer review
     </div>
-
     <div class="swimlanes">
       <div class="role-cell" style="height:148px;">
         <span class="role-label" style="color:#2563EB;">Customer</span>
@@ -448,7 +625,7 @@
             <div class="loop-badge badge-green" style="top:-22px; right:8px; left:auto;">↩ Loop B</div>
             <div class="step-icon">📄</div>
             <div class="step-title">Reviews &amp; Prioritizes</div>
-            <div class="step-desc">Interactive proposal. New items added here from both loops. Customer sets priorities.</div>
+            <div class="step-desc">Interactive proposal. New items from both loops. Customer sets priorities.</div>
             <span class="step-tag tag-amber">Both loops</span>
             <div class="step-route">customer / proposal-viewer</div>
           </div>
@@ -462,7 +639,6 @@
           </div>
         </div>
       </div>
-
       <div class="role-cell" style="height:148px;">
         <span class="role-label" style="color:#059669;">Axon Sales</span>
       </div>
@@ -491,15 +667,14 @@
   </div>
 </div>
 
-<!-- Phase 3: Deliver & Approve -->
+<!-- ⑤ DELIVER & APPROVE -->
 <div class="phase-detail" id="detail-deliver">
   <div class="phase-detail-inner">
     <div class="phase-detail-header">
-      <span class="pd-num" style="color:#D97706;">③ DELIVER &amp; APPROVE</span>
+      <span class="pd-num" style="color:#D97706">⑤ DELIVER &amp; APPROVE</span>
       <span class="pd-title">Agents build, humans approve, customers watch</span>
       <button class="phase-detail-close" onclick="togglePhase('deliver')">Collapse ✕</button>
     </div>
-
     <div class="swimlanes">
       <div class="role-cell" style="height:160px;">
         <span class="role-label" style="color:#2563EB;">Customer</span>
@@ -531,7 +706,6 @@
           </div>
         </div>
       </div>
-
       <div class="role-cell" style="height:160px;">
         <span class="role-label" style="color:#D97706;">Axon Delivery</span>
       </div>
@@ -546,11 +720,11 @@
           </div>
           <div class="arrow">→</div>
           <div class="step loop-source-green" data-href="app.html#/delivery/delivery-kanban">
-            <div class="loop-badge badge-green">Loop A → back to ②</div>
+            <div class="loop-badge badge-green">Loop A → back to ④</div>
             <div class="step-icon">💡</div>
             <div class="step-title">Engineers Surface Ideas</div>
             <div class="step-desc">As engineers implement, they spot improvements. Customer sees demo — new requests emerge.</div>
-            <span class="step-tag tag-green">→ back to ②</span>
+            <span class="step-tag tag-green">→ back to ④</span>
             <div class="step-route">delivery / delivery-kanban</div>
           </div>
           <div class="arrow">→</div>
@@ -567,15 +741,14 @@
   </div>
 </div>
 
-<!-- Phase 4: Learn & Innovate -->
+<!-- ⑥ LEARN & INNOVATE -->
 <div class="phase-detail" id="detail-learn">
   <div class="phase-detail-inner">
     <div class="phase-detail-header">
-      <span class="pd-num" style="color:#7C3AED;">④ LEARN &amp; INNOVATE</span>
+      <span class="pd-num" style="color:#7C3AED">⑥ LEARN &amp; INNOVATE</span>
       <span class="pd-title">Usage intelligence drives the next cycle</span>
       <button class="phase-detail-close" onclick="togglePhase('learn')">Collapse ✕</button>
     </div>
-
     <div class="swimlanes">
       <div class="role-cell" style="height:148px;">
         <span class="role-label" style="color:#2563EB;">Customer</span>
@@ -591,21 +764,20 @@
           </div>
           <div class="arrow">→</div>
           <div class="step loop-source-amber" data-href="app.html#/customer/dashboard">
-            <div class="loop-badge badge-amber">Loop B → back to ②</div>
+            <div class="loop-badge badge-amber">Loop B → back to ④</div>
             <div class="step-icon">💡</div>
             <div class="step-title">Reviews AI Suggestions</div>
             <div class="step-desc">Usage data + knowledge base best practices → AI generates improvement proposals.</div>
-            <span class="step-tag tag-amber">→ back to ②</span>
+            <span class="step-tag tag-amber">→ back to ④</span>
             <div class="step-route">customer / dashboard</div>
           </div>
         </div>
       </div>
-
       <div class="role-cell" style="height:148px;">
         <span class="role-label" style="color:#7C3AED;">Axon Admin</span>
       </div>
       <div class="lane">
-        <div class="loop-callout" style="border: 1px dashed #DDD6FE;" onclick="event.stopPropagation(); window.location.href='app.html#/admin/knowledge-base'">
+        <div class="loop-callout" style="border:1px dashed #DDD6FE;" onclick="event.stopPropagation(); window.location.href='app.html#/admin/knowledge-base'">
           <div class="lc-icon">🧠</div>
           <div class="lc-text">
             <strong style="color:#7C3AED;">Knowledge Base compounds every engagement.</strong>
@@ -626,27 +798,26 @@
   <div class="loop-legend">
     <div class="loop-legend-item">
       <div class="loop-line-dashed" style="border-color:#10B981; width:32px;"></div>
-      <span><strong style="color:#059669;">Loop A</strong> — Mid-delivery feedback → back to ② backlog</span>
+      <span><strong style="color:#059669;">Loop A</strong> — Mid-delivery feedback → back to ④ backlog</span>
     </div>
     <div class="loop-legend-item">
       <div class="loop-line-dashed" style="border-color:#F59E0B; width:32px;"></div>
-      <span><strong style="color:#B45309;">Loop B</strong> — Post-usage intelligence → back to ② proposal</span>
+      <span><strong style="color:#B45309;">Loop B</strong> — Post-usage intelligence → back to ④ proposal</span>
     </div>
   </div>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#2563EB;"></div> AI-led</div>
     <div class="legend-item"><div class="legend-dot" style="background:#059669;"></div> Human-led</div>
     <div class="legend-item"><div class="legend-dot" style="background:#D97706;"></div> Human + AI</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#7C3AED;"></div> Automated</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E11D48;"></div> Signal / Marketing</div>
   </div>
 </div>
 
 <p class="footer-note">Axon Labs · A Vixul Portfolio Company · VixulCon 2026</p>
 
-</div><!-- end content -->
+</div>
 
 <script>
-// ── Phase toggle ──
 let activePhase = null;
 
 function togglePhase(phase) {
@@ -654,7 +825,6 @@ function togglePhase(phase) {
   const allDetails = document.querySelectorAll('.phase-detail');
 
   if (activePhase === phase) {
-    // Collapse
     allCards.forEach(c => c.classList.remove('active'));
     allDetails.forEach(d => d.classList.remove('open'));
     activePhase = null;
@@ -662,7 +832,6 @@ function togglePhase(phase) {
     return;
   }
 
-  // Close any open, then open the new one
   allCards.forEach(c => c.classList.remove('active'));
   allDetails.forEach(d => d.classList.remove('open'));
 
@@ -671,10 +840,8 @@ function togglePhase(phase) {
   if (card) card.classList.add('active');
   if (detail) {
     detail.classList.add('open');
-    // Scroll detail into view after animation starts
     setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
   }
-
   activePhase = phase;
   updateHints();
 }
@@ -683,11 +850,10 @@ function updateHints() {
   document.querySelectorAll('.phase-card').forEach(card => {
     const hint = card.querySelector('.phase-expand-hint');
     if (!hint) return;
-    hint.textContent = card.classList.contains('active') ? '▲ Click to collapse' : '▼ Click to expand';
+    hint.textContent = card.classList.contains('active') ? '▲ Collapse' : '▼ Expand';
   });
 }
 
-// ── Step card deep-links ──
 document.querySelectorAll('.step[data-href]').forEach(el => {
   el.addEventListener('click', (e) => {
     e.stopPropagation();
