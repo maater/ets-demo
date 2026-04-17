@@ -136,12 +136,9 @@ export const SoundLayer: React.FC = () => {
         <Audio src={sfx.pad} volume={0.12} showInTimeline={false} />
       </Sequence>
 
-      {/* ═══════ Background music — loops to cover full duration ═══════ */}
-      <Sequence from={0} durationInFrames={2100} showInTimeline={false}>
-        <Audio src={sfx.music} volume={0.18} showInTimeline={false} />
-      </Sequence>
-      <Sequence from={2100} durationInFrames={240} showInTimeline={false}>
-        <Audio src={sfx.music} volume={0.14} showInTimeline={false} />
+      {/* ═══════ Background music — 80s, 138 BPM driving track ═══════ */}
+      <Sequence from={0} durationInFrames={2400} showInTimeline={false}>
+        <Audio src={sfx.music} volume={0.2} showInTimeline={false} />
       </Sequence>
     </>
   );
