@@ -1,39 +1,35 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+import { TypingText } from '../components/TypingText';
 import { colors, fonts } from '../styles/tokens';
 
 /*
-  Scene 1 — Meridian Partners narrative (270 frames / 9s)
+  Scene 1 — Meridian Partners narrative (420 frames / 14s)
 
-  Panel 1 (0-80f):   Company intro — who they are
-  Panel 2 (80-160f):  The pain — what they're struggling with
-  Panel 3 (160-240f): The trigger — how they found Axon
-  Fade out (240-270f)
+  5 panels, each with generous reading time.
+  Key lines use typing animation; supporting text fades in after.
+
+  Panel 1 (0-95f):     "Meet the customer" → type "Meridian Partners"
+  Panel 2 (95-185f):   Company details fade in line-by-line
+  Panel 3 (185-290f):  "The problem" → type the quote slowly
+  Panel 4 (290-370f):  Supporting pain details fade in
+  Panel 5 (370-420f):  "Then they find Axon" → email line types
 */
 
-const Panel: React.FC<{
+const FadeLine: React.FC<{
   children: React.ReactNode;
   frame: number;
   enterFrame: number;
-  exitFrame: number;
-}> = ({ children, frame, enterFrame, exitFrame }) => {
-  const fadeIn = interpolate(frame, [enterFrame, enterFrame + 12], [0, 1], {
+  style?: React.CSSProperties;
+}> = ({ children, frame, enterFrame, style }) => {
+  const opacity = interpolate(frame, [enterFrame, enterFrame + 15], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const fadeOut = interpolate(frame, [exitFrame - 10, exitFrame], [1, 0], {
+  const slideY = interpolate(frame, [enterFrame, enterFrame + 18], [16, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const slideY = interpolate(frame, [enterFrame, enterFrame + 15], [30, 0], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-
   return (
-    <div style={{
-      opacity: fadeIn * fadeOut,
-      transform: `translateY(${slideY}px)`,
-      display: 'flex', flexDirection: 'column', alignItems: 'center',
-      gap: 20, maxWidth: 1100, textAlign: 'center',
-    }}>
+    <div style={{ opacity, transform: `translateY(${slideY}px)`, ...style }}>
       {children}
     </div>
   );
@@ -42,7 +38,25 @@ const Panel: React.FC<{
 export const Scene1Pain: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const globalFade = interpolate(frame, [250, 270], [1, 0], {
+  // Panel visibility
+  const p1 = frame >= 0 && frame < 95;
+  const p2 = frame >= 95 && frame < 185;
+  const p3 = frame >= 185 && frame < 290;
+  const p4 = frame >= 290 && frame < 370;
+  const p5 = frame >= 370;
+
+  // Panel fade helpers
+  const panelOpacity = (enter: number, exit: number) => {
+    const fadeIn = interpolate(frame, [enter, enter + 12], [0, 1], {
+      extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+    });
+    const fadeOut = interpolate(frame, [exit - 12, exit], [1, 0], {
+      extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+    });
+    return fadeIn * fadeOut;
+  };
+
+  const globalFade = interpolate(frame, [408, 420], [1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
@@ -51,85 +65,148 @@ export const Scene1Pain: React.FC = () => {
       backgroundColor: '#0B1120', display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center', opacity: globalFade,
     }}>
-      {/* Panel 1: Company intro */}
-      <Panel frame={frame} enterFrame={0} exitFrame={80}>
-        <div style={{
-          fontSize: 20, fontWeight: 600, color: colors.primary,
-          letterSpacing: '0.15em', textTransform: 'uppercase' as const,
-          fontFamily: fonts.sans,
-        }}>
-          Meet the customer
-        </div>
-        <div style={{
-          fontSize: 56, fontWeight: 800, color: '#F9FAFB',
-          fontFamily: fonts.sans, lineHeight: 1.2,
-        }}>
-          Meridian Partners
-        </div>
-        <div style={{
-          fontSize: 26, color: '#9CA3AF', fontFamily: fonts.sans, lineHeight: 1.7,
-        }}>
-          Mid-market manufacturer &middot; $120M revenue &middot; 850 employees
-          <br />
-          Running SAP ECC 6.0 &mdash; MM, PP, FI, SD
-        </div>
-      </Panel>
 
-      {/* Panel 2: The pain */}
-      <Panel frame={frame} enterFrame={80} exitFrame={160}>
+      {/* Panel 1: Name reveal */}
+      {p1 && (
         <div style={{
-          fontSize: 20, fontWeight: 600, color: '#F87171',
-          letterSpacing: '0.12em', textTransform: 'uppercase' as const,
-          fontFamily: fonts.sans,
+          opacity: panelOpacity(0, 95),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
-          The problem
+          <FadeLine frame={frame} enterFrame={0} style={{
+            fontSize: 18, fontWeight: 600, color: colors.primary,
+            letterSpacing: '0.18em', textTransform: 'uppercase' as const,
+            fontFamily: fonts.sans,
+          }}>
+            Meet the customer
+          </FadeLine>
+          <TypingText
+            text="Meridian Partners"
+            speed={18}
+            fontSize={64}
+            color="#F9FAFB"
+            fontFamily={fonts.sans}
+            startFrame={10}
+            showCursor={false}
+          />
         </div>
-        <div style={{
-          fontSize: 44, fontWeight: 700, color: '#F9FAFB',
-          fontFamily: fonts.sans, lineHeight: 1.35,
-        }}>
-          "Our SAP system has 10 years of procurement data.
-          <br />
-          Nobody knows what to do with it."
-        </div>
-        <div style={{
-          fontSize: 24, color: '#9CA3AF', fontFamily: fonts.sans, lineHeight: 1.7,
-        }}>
-          Weekly manual Excel exports. Crystal Reports nobody trusts.
-          <br />
-          No visibility into supplier risk, spend patterns, or reorder timing.
-        </div>
-      </Panel>
+      )}
 
-      {/* Panel 3: The trigger */}
-      <Panel frame={frame} enterFrame={160} exitFrame={250}>
+      {/* Panel 2: Company details — line by line */}
+      {p2 && (
         <div style={{
-          fontSize: 20, fontWeight: 600, color: '#34D399',
-          letterSpacing: '0.12em', textTransform: 'uppercase' as const,
-          fontFamily: fonts.sans,
+          opacity: panelOpacity(95, 185),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+          textAlign: 'center',
         }}>
-          Then they find Axon Labs
+          <FadeLine frame={frame} enterFrame={95} style={{
+            fontSize: 32, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+          }}>
+            Mid-market manufacturer
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={110} style={{
+            fontSize: 24, color: '#9CA3AF', fontFamily: fonts.sans,
+          }}>
+            $120M revenue &middot; 850 employees &middot; Chicago, IL
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={125} style={{
+            fontSize: 22, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
+          }}>
+            Running SAP ECC 6.0
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={138} style={{
+            display: 'flex', gap: 12, marginTop: 4,
+          }}>
+            {['MM', 'PP', 'FI', 'SD'].map((mod) => (
+              <span key={mod} style={{
+                padding: '5px 16px', borderRadius: 20,
+                backgroundColor: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)',
+                fontSize: 18, fontWeight: 700, color: colors.primary,
+                fontFamily: fonts.mono, letterSpacing: '0.05em',
+              }}>{mod}</span>
+            ))}
+          </FadeLine>
         </div>
+      )}
+
+      {/* Panel 3: The quote — typed slowly */}
+      {p3 && (
         <div style={{
-          fontSize: 40, fontWeight: 700, color: '#F9FAFB',
-          fontFamily: fonts.sans, lineHeight: 1.4,
+          opacity: panelOpacity(185, 290),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
-          LinkedIn posts. SAP partner directories.
-          <br />
-          Manufacturing conferences. Peer referrals.
+          <FadeLine frame={frame} enterFrame={185} style={{
+            fontSize: 18, fontWeight: 600, color: '#F87171',
+            letterSpacing: '0.14em', textTransform: 'uppercase' as const,
+            fontFamily: fonts.sans,
+          }}>
+            The problem
+          </FadeLine>
+          <TypingText
+            text={`"Our SAP system has 10 years of\nprocurement data. Nobody knows\nwhat to do with it."`}
+            speed={28}
+            fontSize={44}
+            color="#E5E7EB"
+            fontFamily={fonts.sans}
+            startFrame={10}
+            showCursor={true}
+            cursorColor="#F87171"
+          />
         </div>
+      )}
+
+      {/* Panel 4: Supporting pain — fades in */}
+      {p4 && (
         <div style={{
-          fontSize: 26, color: '#9CA3AF', fontFamily: fonts.sans, lineHeight: 1.7,
+          opacity: panelOpacity(290, 370),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
+          textAlign: 'center', maxWidth: 900,
         }}>
-          Then an email arrives from Axon:
+          <FadeLine frame={frame} enterFrame={290} style={{
+            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+          }}>
+            Weekly manual Excel exports from SAP.
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={305} style={{
+            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+          }}>
+            Crystal Reports nobody trusts.
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={320} style={{
+            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+          }}>
+            No visibility into supplier risk or spend patterns.
+          </FadeLine>
         </div>
+      )}
+
+      {/* Panel 5: The trigger */}
+      {p5 && (
         <div style={{
-          fontSize: 30, fontWeight: 700, color: colors.primary,
-          fontFamily: fonts.sans, marginTop: 4,
+          opacity: panelOpacity(370, 420),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+          textAlign: 'center',
         }}>
-          "See what we'd build for you &mdash; in 5 minutes."
+          <FadeLine frame={frame} enterFrame={370} style={{
+            fontSize: 18, fontWeight: 600, color: '#34D399',
+            letterSpacing: '0.14em', textTransform: 'uppercase' as const,
+            fontFamily: fonts.sans,
+          }}>
+            Then they find Axon Labs
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={378} style={{
+            fontSize: 28, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
+            lineHeight: 1.6,
+          }}>
+            LinkedIn &middot; SAP partner directories &middot; Manufacturing conferences
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={392} style={{
+            fontSize: 28, fontWeight: 700, color: colors.primary,
+            fontFamily: fonts.sans, marginTop: 4,
+          }}>
+            "See what we'd build for you — in 5 minutes."
+          </FadeLine>
         </div>
-      </Panel>
+      )}
     </AbsoluteFill>
   );
 };

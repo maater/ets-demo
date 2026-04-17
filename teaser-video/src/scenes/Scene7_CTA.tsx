@@ -13,14 +13,18 @@ export const Scene7CTA: React.FC = () => {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const ctaOpacity = interpolate(frame, [45, 58], [0, 1], {
+  const ctaOpacity = interpolate(frame, [42, 55], [0, 1], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+
+  const vixulOpacity = interpolate(frame, [55, 68], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
   return (
     <AbsoluteFill style={{
       backgroundColor: colors.bg, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: 28,
+      alignItems: 'center', justifyContent: 'center', gap: 24,
     }}>
       {/* Logo */}
       <div style={{
@@ -39,11 +43,13 @@ export const Scene7CTA: React.FC = () => {
 
       {/* Tagline */}
       <div style={{
-        fontSize: 32, fontWeight: 500, color: colors.textMuted,
+        fontSize: 26, fontWeight: 500, color: colors.textMuted,
         fontFamily: fonts.sans, opacity: taglineOpacity,
-        textAlign: 'center', lineHeight: 1.5,
+        textAlign: 'center', lineHeight: 1.6, maxWidth: 800,
       }}>
-        Curious to see the rest?
+        Axon Labs is a hypothetical company — but these are exactly
+        <br />
+        the kind of companies we're building at <strong style={{ color: colors.text, fontWeight: 700 }}>Vixul</strong>.
       </div>
 
       {/* CTA */}
@@ -51,10 +57,19 @@ export const Scene7CTA: React.FC = () => {
         opacity: ctaOpacity,
         padding: '16px 40px', borderRadius: 14,
         backgroundColor: colors.primary, color: '#fff',
-        fontSize: 26, fontWeight: 700, fontFamily: fonts.sans,
+        fontSize: 24, fontWeight: 700, fontFamily: fonts.sans,
         boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
       }}>
-        See us in the Demo Area &rarr;
+        Learn more about this vision &rarr;
+      </div>
+
+      {/* Vixul note */}
+      <div style={{
+        opacity: vixulOpacity,
+        fontSize: 18, color: colors.textLight, fontFamily: fonts.sans,
+        textAlign: 'center',
+      }}>
+        See what our companies are building at vixul.com
       </div>
     </AbsoluteFill>
   );
