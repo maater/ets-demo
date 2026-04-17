@@ -17,9 +17,6 @@ export const Scene7CTA: React.FC = () => {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const vixulOpacity = interpolate(frame, [110, 130], [0, 1], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
 
   return (
     <AbsoluteFill style={{
@@ -47,7 +44,7 @@ export const Scene7CTA: React.FC = () => {
         fontFamily: fonts.sans, opacity: taglineOpacity,
         textAlign: 'center', lineHeight: 1.6, maxWidth: 1100,
       }}>
-        Axon Labs is a hypothetical company — but these are exactly
+        Axon Labs is a hypothetical company, but these are exactly
         <br />
         the kind of companies we're building at <strong style={{ color: colors.text, fontWeight: 700 }}>Vixul</strong>.
       </div>
@@ -63,14 +60,7 @@ export const Scene7CTA: React.FC = () => {
         Learn more about this vision &rarr;
       </div>
 
-      {/* Vixul note */}
-      <div style={{
-        opacity: vixulOpacity,
-        fontSize: 28, color: colors.textLight, fontFamily: fonts.sans,
-        textAlign: 'center',
-      }}>
-        See what our companies are building at vixul.com
-      </div>
+      {/* (removed vixul.com line per user request) */}
     </AbsoluteFill>
   );
 };

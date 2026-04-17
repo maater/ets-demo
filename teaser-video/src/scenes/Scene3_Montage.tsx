@@ -8,10 +8,11 @@ import {
 import { ChipGrid } from '../components/ChipGrid';
 import { colors, fonts } from '../styles/tokens';
 
-const BEAT_A = 75;
-const BEAT_B = 75;
-const BEAT_C = 60;
-const BEAT_D = 60;
+const BEAT_A = 55;
+const BEAT_B = 55;
+const BEAT_C = 40;
+const BEAT_D = 40;
+const BEAT_CHAT = 140;
 
 const SAP_MODULES = [
   { label: 'MM', sub: 'Materials Mgmt' },
@@ -95,16 +96,16 @@ export const Scene3Montage: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
       {/* Narrative overlay — large, centered, stays visible over the assessment */}
-      {frame < 110 && (
+      {frame < 120 && (
         <AbsoluteFill style={{
-          backgroundColor: interpolate(frame, [0, 5, 80, 110], [0.92, 0.92, 0.92, 0], {
+          backgroundColor: interpolate(frame, [0, 5, 90, 120], [0.92, 0.92, 0.92, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 80, 110], [0.92, 0.92, 0.92, 0], {
+          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 90, 120], [0.92, 0.92, 0.92, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           })})` : 'transparent',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           justifyContent: 'center', gap: 20, zIndex: 20,
-          opacity: interpolate(frame, [0, 8, 85, 110], [0, 1, 1, 0], {
+          opacity: interpolate(frame, [0, 8, 95, 120], [0, 1, 1, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           }),
         }}>
@@ -120,7 +121,7 @@ export const Scene3Montage: React.FC = () => {
             </span>
           </div>
           <div style={{
-            fontSize: 32, color: '#9CA3AF', fontFamily: fonts.sans,
+            fontSize: 36, color: '#9CA3AF', fontFamily: fonts.sans,
             textAlign: 'center', lineHeight: 1.6,
           }}>
             These questions come from deep SAP domain expertise
@@ -230,14 +231,14 @@ export const Scene3Montage: React.FC = () => {
             {(() => {
               const localF = frame - BEAT_A - BEAT_B - BEAT_C;
               const fadeIn = interpolate(localF, [0, 8], [0, 1], { extrapolateRight: 'clamp' });
-              const compressScale = interpolate(localF, [35, 60], [1, 0.3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-              const compressFade = interpolate(localF, [45, 60], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+              const compressScale = interpolate(localF, [25, 40], [1, 0.3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+              const compressFade = interpolate(localF, [30, 40], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
               return (
                 <div style={{
                   opacity: fadeIn * compressFade, transform: `scale(${compressScale})`,
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
                 }}>
-                  <AiBubble text="Almost done — what's your current reporting stack?" frame={localF} />
+                  <AiBubble text="Almost done. What's your current reporting stack?" frame={localF} />
                   <StepHeader step="4" title="Reporting Stack" />
                   <ChipGrid
                     chips={[
@@ -245,9 +246,73 @@ export const Scene3Montage: React.FC = () => {
                       { label: 'SAP BW' }, { label: 'Power BI' },
                       { label: 'Tableau' }, { label: 'SAP Analytics Cloud' },
                     ]}
-                    selectedIndices={[0, 1]} frame={localF} selectionFrames={[12, 22]}
+                    selectedIndices={[0, 1]} frame={localF} selectionFrames={[10, 18]}
                     chipWidth={195}
                   />
+                </div>
+              );
+            })()}
+          </AbsoluteFill>
+        </Sequence>
+
+        {/* Beat E: Chat with designer — shows it's not just a form */}
+        <Sequence from={BEAT_A + BEAT_B + BEAT_C + BEAT_D} durationInFrames={BEAT_CHAT}>
+          <AbsoluteFill style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', padding: '0 80px',
+          }}>
+            {(() => {
+              const localF = frame - BEAT_A - BEAT_B - BEAT_C - BEAT_D;
+              const fadeIn = interpolate(localF, [0, 10], [0, 1], { extrapolateRight: 'clamp' });
+              const fadeOut = interpolate(localF, [BEAT_CHAT - 10, BEAT_CHAT], [1, 0], { extrapolateRight: 'clamp' });
+
+              const CHAT_MESSAGES: { from: 'user' | 'ai'; text: string; enterFrame: number }[] = [
+                { from: 'ai', text: "Great, I have enough to start building your preview. Before I do, anything else you'd like to flag?", enterFrame: 5 },
+                { from: 'user', text: "We also have a big S/4HANA migration planned for next year. Would that affect the approach?", enterFrame: 35 },
+                { from: 'ai', text: "Good to know. I'll factor that into the phasing so everything we build now carries forward cleanly to S/4.", enterFrame: 65 },
+                { from: 'user', text: "Perfect. Let's see what you come up with.", enterFrame: 95 },
+              ];
+
+              return (
+                <div style={{
+                  opacity: fadeIn * fadeOut,
+                  display: 'flex', flexDirection: 'column', gap: 14,
+                  maxWidth: 800, width: '100%',
+                }}>
+                  <div style={{
+                    fontSize: 14, fontWeight: 700, color: colors.textMuted, fontFamily: fonts.sans,
+                    letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 8,
+                    textAlign: 'center',
+                  }}>
+                    Live Chat
+                  </div>
+                  {CHAT_MESSAGES.map((msg, i) => {
+                    const msgOpacity = interpolate(localF, [msg.enterFrame, msg.enterFrame + 8], [0, 1], {
+                      extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+                    });
+                    const slideY = interpolate(localF, [msg.enterFrame, msg.enterFrame + 10], [12, 0], {
+                      extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+                    });
+                    const isUser = msg.from === 'user';
+                    return (
+                      <div key={i} style={{
+                        opacity: msgOpacity, transform: `translateY(${slideY}px)`,
+                        display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start',
+                      }}>
+                        <div style={{
+                          backgroundColor: isUser ? colors.primary : '#F0F9FF',
+                          color: isUser ? '#fff' : colors.text,
+                          border: isUser ? 'none' : `1px solid ${colors.primaryBorder}`,
+                          borderRadius: 14, padding: '14px 20px',
+                          maxWidth: 580, fontSize: 20, fontFamily: fonts.sans,
+                          lineHeight: 1.5,
+                        }}>
+                          {!isUser && <span style={{ fontSize: 18, marginRight: 8 }}>🤖</span>}
+                          {msg.text}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })()}

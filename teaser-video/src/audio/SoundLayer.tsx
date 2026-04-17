@@ -53,63 +53,69 @@ export const SoundLayer: React.FC = () => {
       {/* Panel 5 (the trigger) */}
       <SFX src={sfx.chime} frame={s.pain.start + 570} volume={0.08} />
 
-      {/* ═══════ Scene 2: Website + Click (90f) ═══════ */}
-      <SFX src={sfx.click} frame={s.click.start + 42} volume={0.05} />
-      <SFX src={sfx.pop} frame={s.click.start + 50} volume={0.08} />
-      <SFX src={sfx.whoosh} frame={s.click.start + 60} volume={0.07} />
+      {/* ═══════ Scene 2: Website + Click (150f) ═══════ */}
+      <SFX src={sfx.click} frame={s.click.start + 115} volume={0.03} />
+      <SFX src={sfx.pop} frame={s.click.start + 120} volume={0.05} />
+      <SFX src={sfx.whoosh} frame={s.click.start + 130} volume={0.04} />
 
-      {/* ═══════ Scene 3: Self-Assessment (270f) — chip selections ═══════ */}
-      {/* Beat A: Module selections at frames 20, 40, 55 */}
-      <SFX src={sfx.pop} frame={s.conversation.start + 20} volume={0.06} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 40} volume={0.06} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 55} volume={0.06} />
+      {/* ═══════ Scene 3: Self-Assessment (330f) — chip selections ═══════ */}
+      {/* Beat A: Module selections (sped up) */}
+      <SFX src={sfx.pop} frame={s.conversation.start + 15} volume={0.03} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 30} volume={0.03} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 42} volume={0.03} />
 
-      {/* Beat B: Pain point selections at 75+15, 75+35, 75+50 */}
-      <SFX src={sfx.pop} frame={s.conversation.start + 90} volume={0.05} playbackRate={0.9} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 110} volume={0.05} playbackRate={0.9} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 125} volume={0.05} playbackRate={0.9} />
+      {/* Beat B: Pain point selections */}
+      <SFX src={sfx.pop} frame={s.conversation.start + 70} volume={0.03} playbackRate={0.9} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 85} volume={0.03} playbackRate={0.9} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 98} volume={0.03} playbackRate={0.9} />
 
       {/* Beat C: Report + data access selections */}
-      <SFX src={sfx.pop} frame={s.conversation.start + 168} volume={0.05} playbackRate={1.1} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 180} volume={0.05} playbackRate={1.1} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 190} volume={0.05} playbackRate={1.1} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 125} volume={0.02} playbackRate={1.1} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 135} volume={0.02} playbackRate={1.1} />
 
-      {/* Beat D: Final selections + compress */}
-      <SFX src={sfx.pop} frame={s.conversation.start + 222} volume={0.05} />
-      <SFX src={sfx.pop} frame={s.conversation.start + 232} volume={0.05} />
-      <SFX src={sfx.whoosh} frame={s.conversation.start + 250} volume={0.08} />
+      {/* Beat D: Final selections */}
+      <SFX src={sfx.pop} frame={s.conversation.start + 162} volume={0.02} />
+      <SFX src={sfx.pop} frame={s.conversation.start + 170} volume={0.02} />
 
-      {/* ═══════ Scene 4: Spec + Wedge (270f) ═══════ */}
-      <SFX src={sfx.click} frame={s.wow.start + 5} volume={0.05} />
+      {/* Chat messages appear */}
+      <SFX src={sfx.tap} frame={s.conversation.start + 195} volume={0.03} />
+      <SFX src={sfx.tap} frame={s.conversation.start + 225} volume={0.03} />
+      <SFX src={sfx.tap} frame={s.conversation.start + 255} volume={0.03} />
+      <SFX src={sfx.tap} frame={s.conversation.start + 285} volume={0.03} />
+
+      {/* ═══════ Scene 4: Spec + Wedge (300f) ═══════ */}
+      <SFX src={sfx.click} frame={s.wow.start + 5} volume={0.03} />
       {/* Spec sections appear */}
       {[10, 25, 40, 55, 70].map((f) => (
-        <SFX key={`spec-${f}`} src={sfx.click} frame={s.wow.start + f} volume={0.04} playbackRate={1.2} />
+        <SFX key={`spec-${f}`} src={sfx.click} frame={s.wow.start + f} volume={0.02} playbackRate={1.2} />
       ))}
       {/* Wedge recommendation slides in */}
-      <SFX src={sfx.chime} frame={s.wow.start + 85} volume={0.08} />
+      <SFX src={sfx.chime} frame={s.wow.start + 85} volume={0.05} />
       {/* SAP table pills pop in */}
       {[105, 110, 115, 120, 125].map((f) => (
-        <SFX key={`pill-${f}`} src={sfx.pop} frame={s.wow.start + f} volume={0.04} playbackRate={1.3} />
+        <SFX key={`pill-${f}`} src={sfx.pop} frame={s.wow.start + f} volume={0.02} playbackRate={1.3} />
       ))}
       {/* Timeline appears */}
-      <SFX src={sfx.ping} frame={s.wow.start + 130} volume={0.05} />
+      <SFX src={sfx.ping} frame={s.wow.start + 130} volume={0.03} />
       {/* Expert Review button */}
-      <SFX src={sfx.ping} frame={s.wow.start + 165} volume={0.06} />
+      <SFX src={sfx.ping} frame={s.wow.start + 165} volume={0.04} />
       {/* "Before any sales call" overlay */}
-      <SFX src={sfx.success} frame={s.wow.start + 235} volume={0.1} />
+      <SFX src={sfx.success} frame={s.wow.start + 235} volume={0.06} />
 
-      {/* ═══════ Scene 5: Pipeline Zoom Out (390f) ═══════ */}
-      {/* Overlay text appears */}
-      <SFX src={sfx.whoosh} frame={s.zoomOut.start + 5} volume={0.07} />
+      {/* ═══════ Scene 5: Pipeline Zoom Out (420f) ═══════ */}
+      {/* Overlay beat 1 */}
+      <SFX src={sfx.whoosh} frame={s.zoomOut.start + 5} volume={0.05} />
+      {/* Overlay beat 2 */}
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 80} volume={0.05} />
       {/* Pipeline fades in */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 105} volume={0.06} />
-      {/* Staggered card entrances (at 120 + i*8) */}
-      {[120, 128, 136, 144, 152, 160].map((f, i) => (
-        <SFX key={`card-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.04} playbackRate={0.8 + i * 0.05} />
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 140} volume={0.04} />
+      {/* Staggered card entrances (at 155 + i*8) */}
+      {[155, 163, 171, 179, 187, 195].map((f, i) => (
+        <SFX key={`card-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.02} playbackRate={0.8 + i * 0.05} />
       ))}
-      {/* Flash-expand clicks (at 180 + i*30) */}
-      {[180, 210, 240, 270, 300, 330].map((f) => (
-        <SFX key={`flash-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.03} playbackRate={1.4} />
+      {/* Flash-expand clicks (at 210 + i*30) */}
+      {[210, 240, 270, 300, 330, 360].map((f) => (
+        <SFX key={`flash-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.02} playbackRate={1.4} />
       ))}
 
       {/* ═══════ Scene 6: Knowledge Loop (180f) ═══════ */}
@@ -131,7 +137,7 @@ export const SoundLayer: React.FC = () => {
       </Sequence>
 
       {/* ═══════ Background music — full duration ═══════ */}
-      <Sequence from={0} durationInFrames={2100} showInTimeline={false}>
+      <Sequence from={0} durationInFrames={2190} showInTimeline={false}>
         <Audio src={sfx.music} volume={0.18} showInTimeline={false} />
       </Sequence>
     </>

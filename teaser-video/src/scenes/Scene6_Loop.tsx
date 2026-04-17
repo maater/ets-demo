@@ -183,7 +183,7 @@ export const Scene6Loop: React.FC = () => {
           fontSize: 44, fontWeight: 800, color: '#111827', fontFamily: fonts.sans,
           lineHeight: 1.4,
         }}>
-          Every engagement makes the next one smarter.
+          And it keeps getting smarter.
         </div>
       </div>
     </AbsoluteFill>

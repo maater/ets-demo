@@ -37,10 +37,10 @@ export const Scene4Wow: React.FC = () => {
   const cardOpacity = interpolate(frame, [0, 12], [0, 1], { extrapolateRight: 'clamp' });
 
   const specSections = [
-    { title: 'Executive Summary', body: 'Custom SAP Intelligence Platform — transforming raw data into actionable procurement insights and supplier risk intelligence.', delay: 10 },
+    { title: 'Executive Summary', body: 'Custom SAP Intelligence Platform, transforming raw data into actionable procurement insights and supplier risk intelligence.', delay: 10 },
     { title: 'SAP Modules in Scope', body: 'MM (Materials Management), FI (Financial Accounting), SD (Sales & Distribution), PP (Production Planning)', delay: 25 },
     { title: 'Primary Pain Points', body: 'Manual Excel exports weekly · Crystal Reports nobody trusts · No spend visibility across purchasing orgs · No predictive capability for reorder timing', delay: 40 },
-    { title: 'Fit Score: 87 · Complexity: Medium', body: 'Strong fit — classic procurement intelligence engagement with well-defined data sources and 12+ identified users across procurement, ops, and finance.', delay: 55 },
+    { title: 'Fit Score: 87 · Complexity: Medium', body: 'Strong fit. Classic procurement intelligence engagement with well-defined data sources and 12+ identified users across procurement, ops, and finance.', delay: 55 },
     { title: 'Estimated Timeline: 12 weeks', body: 'Phased delivery starting with procurement analytics, then supplier risk and inventory optimization. Pricing: Professional tier.', delay: 70 },
   ];
 
@@ -54,17 +54,17 @@ export const Scene4Wow: React.FC = () => {
   const finalFade = interpolate(frame, [282, 300], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   // Opening overlay: "And Sarah gets a project preview"
-  const introOverlayBgOpacity = interpolate(frame, [0, 5, 70, 100], [0.92, 0.92, 0.92, 0], {
+  const introOverlayBgOpacity = interpolate(frame, [0, 5, 85, 115], [0.92, 0.92, 0.92, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const introOverlayOpacity = interpolate(frame, [0, 8, 75, 100], [0, 1, 1, 0], {
+  const introOverlayOpacity = interpolate(frame, [0, 8, 90, 115], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg, opacity: finalFade }}>
       {/* Opening narrative overlay */}
-      {frame < 100 && (
+      {frame < 115 && (
         <AbsoluteFill style={{
           backgroundColor: `rgba(11,17,32,${introOverlayBgOpacity})`,
           display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -86,7 +86,7 @@ export const Scene4Wow: React.FC = () => {
             fontSize: 32, color: '#9CA3AF', fontFamily: fonts.sans,
             textAlign: 'center', lineHeight: 1.6,
           }}>
-            AI-generated — tailored to her exact SAP environment.
+            AI-generated. Tailored to her exact SAP environment.
           </div>
         </AbsoluteFill>
       )}
@@ -200,7 +200,7 @@ export const Scene4Wow: React.FC = () => {
               backgroundColor: colors.deliverLight, border: `1px solid ${colors.deliverBorder}`,
               fontSize: 14, fontWeight: 700, color: colors.deliver, fontFamily: fonts.sans,
             }}>
-              Quick win &mdash; 4 week delivery
+              Quick win · 4 week delivery
             </div>
           </div>
 

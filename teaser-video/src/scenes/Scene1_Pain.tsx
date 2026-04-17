@@ -200,7 +200,7 @@ export const Scene1Pain: React.FC = () => {
             fontSize: 44, fontWeight: 700, color: colors.primary,
             fontFamily: fonts.sans, marginTop: 4,
           }}>
-            "See what we'd build for you — in 5 minutes."
+            "See what we'd build for you. In 5 minutes."
           </FadeLine>
         </div>
       )}
