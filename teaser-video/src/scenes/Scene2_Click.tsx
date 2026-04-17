@@ -10,47 +10,47 @@ import { colors, fonts } from '../styles/tokens';
 /*
   Scene 2 — Website landing + CTA click (120 frames / 4s)
 
-  0-40f:   Dark overlay with narrative text (large, readable)
-  35-55f:  Overlay fades out, website fades in
-  55-80f:  Cursor moves toward CTA
-  80-90f:  Click ripple
-  90-120f: Zoom into button + fade out
+  0-65f:   Dark overlay with narrative text — generous dwell
+  55-75f:  Overlay fades out, website fades in
+  75-98f:  Cursor moves toward CTA
+  98-105f: Click ripple
+  105-120f: Zoom into button + fade out
 */
 
 export const Scene2Click: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Narrative overlay — shown first, before the website
-  const narrativeOpacity = interpolate(frame, [0, 8, 30, 45], [0, 1, 1, 0], {
+  // Narrative overlay — long dwell before website
+  const narrativeOpacity = interpolate(frame, [0, 10, 50, 68], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
   // Website fades in after narrative
-  const pageOpacity = interpolate(frame, [35, 50], [0, 1], {
+  const pageOpacity = interpolate(frame, [58, 75], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const cursorX = interpolate(frame, [50, 78], [1400, 960], { extrapolateRight: 'clamp' });
-  const cursorY = interpolate(frame, [50, 78], [800, 590], { extrapolateRight: 'clamp' });
+  const cursorX = interpolate(frame, [75, 96], [1400, 960], { extrapolateRight: 'clamp' });
+  const cursorY = interpolate(frame, [75, 96], [800, 590], { extrapolateRight: 'clamp' });
 
-  const btnShadow = frame >= 75
+  const btnShadow = frame >= 93
     ? '0 8px 24px rgba(37,99,235,0.25), 0 2px 8px rgba(0,0,0,0.1)'
     : '0 2px 8px rgba(0,0,0,0.08)';
-  const btnY = frame >= 75 ? -3 : 0;
+  const btnY = frame >= 93 ? -3 : 0;
 
-  const rippleProgress = frame >= 82 ? (frame - 82) / 10 : 0;
+  const rippleProgress = frame >= 98 ? (frame - 98) / 10 : 0;
   const rippleOpacity = interpolate(rippleProgress, [0, 1], [0.5, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const rippleScale = interpolate(rippleProgress, [0, 1], [0.01, 2.5], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const zoom = interpolate(frame, [92, 112], [1, 3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const fadeOut = interpolate(frame, [100, 115], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const zoom = interpolate(frame, [105, 118], [1, 3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const fadeOut = interpolate(frame, [110, 120], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#0B1120' }}>
 
       {/* Narrative overlay — shown FIRST on dark bg */}
-      {frame < 50 && (
+      {frame < 70 && (
         <AbsoluteFill style={{
           backgroundColor: '#0B1120',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -134,7 +134,7 @@ export const Scene2Click: React.FC = () => {
         </div>
 
         {/* Cursor — only visible after website shows */}
-        {frame >= 50 && (
+        {frame >= 75 && (
           <div style={{
             position: 'absolute', left: cursorX, top: cursorY,
             width: 0, height: 0, pointerEvents: 'none', zIndex: 100,

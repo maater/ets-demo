@@ -53,8 +53,44 @@ export const Scene4Wow: React.FC = () => {
   const overlayTextOpacity = interpolate(frame, [230, 248], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const finalFade = interpolate(frame, [282, 300], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
+  // Opening overlay: "And Sarah gets a project preview"
+  const introOverlayBgOpacity = interpolate(frame, [0, 5, 70, 100], [0.92, 0.92, 0.92, 0], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+  const introOverlayOpacity = interpolate(frame, [0, 8, 75, 100], [0, 1, 1, 0], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg, opacity: finalFade }}>
+      {/* Opening narrative overlay */}
+      {frame < 100 && (
+        <AbsoluteFill style={{
+          backgroundColor: `rgba(11,17,32,${introOverlayBgOpacity})`,
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', gap: 20, zIndex: 20,
+          opacity: introOverlayOpacity,
+        }}>
+          <div style={{
+            fontSize: 46, fontWeight: 600, color: '#E5E7EB',
+            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.5,
+            maxWidth: 1100,
+          }}>
+            And Sarah gets a
+            <br />
+            <span style={{ color: colors.primary, fontWeight: 700 }}>
+              project preview.
+            </span>
+          </div>
+          <div style={{
+            fontSize: 32, color: '#9CA3AF', fontFamily: fonts.sans,
+            textAlign: 'center', lineHeight: 1.6,
+          }}>
+            AI-generated — tailored to her exact SAP environment.
+          </div>
+        </AbsoluteFill>
+      )}
+
       <div style={{ display: 'flex', gap: 32, padding: '72px 60px 60px', height: '100%' }}>
         {/* Left: Spec document — richer content */}
         <div style={{

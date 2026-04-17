@@ -94,26 +94,40 @@ export const Scene3Montage: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
-      {/* Narrative overlay — appears at top for first 2 seconds */}
-      {frame < 70 && (
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, zIndex: 20,
-          display: 'flex', justifyContent: 'center', paddingTop: 8,
-          opacity: interpolate(frame, [0, 8, 55, 70], [0, 1, 1, 0], {
+      {/* Narrative overlay — large, centered, stays visible over the assessment */}
+      {frame < 110 && (
+        <AbsoluteFill style={{
+          backgroundColor: interpolate(frame, [0, 5, 80, 110], [0.92, 0.92, 0.92, 0], {
+            extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 80, 110], [0.92, 0.92, 0.92, 0], {
+            extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+          })})` : 'transparent',
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', gap: 20, zIndex: 20,
+          opacity: interpolate(frame, [0, 8, 85, 110], [0, 1, 1, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           }),
         }}>
           <div style={{
-            backgroundColor: 'rgba(11,17,32,0.88)', borderRadius: 12,
-            padding: '12px 32px',
+            fontSize: 46, fontWeight: 600, color: '#E5E7EB',
+            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.5,
+            maxWidth: 1100,
           }}>
-            <span style={{
-              fontSize: 20, color: '#E5E7EB', fontFamily: fonts.sans, fontWeight: 500,
-            }}>
-              This isn't ChatGPT. These questions come from deep SAP domain expertise.
+            Sarah shares details about her SAP environment.
+            <br />
+            <span style={{ color: colors.primary, fontWeight: 700 }}>
+              But this isn't ChatGPT.
             </span>
           </div>
-        </div>
+          <div style={{
+            fontSize: 32, color: '#9CA3AF', fontFamily: fonts.sans,
+            textAlign: 'center', lineHeight: 1.6,
+          }}>
+            These questions come from deep SAP domain expertise
+            <br />
+            and real engagement patterns.
+          </div>
+        </AbsoluteFill>
       )}
 
       {/* App chrome */}
