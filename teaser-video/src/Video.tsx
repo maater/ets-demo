@@ -13,7 +13,7 @@ import { SoundLayer } from './audio/SoundLayer';
 export const Video: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: '#000' }}>
-      {/* Audio runs across the full timeline, independent of visual scenes */}
+      {/* Audio layer — SFX placed at precise frame offsets */}
       <SoundLayer />
       <Series>
         <Series.Sequence durationInFrames={scenes.pain.duration}>

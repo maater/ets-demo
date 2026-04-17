@@ -21,15 +21,17 @@ const sfx = {
   pad:     staticFile('sfx/pad.wav'),
 };
 
-/** Helper: place an audio clip at a specific absolute frame */
+/** Helper: place an audio clip at a specific absolute frame.
+ *  showInTimeline=false avoids the Studio waveform visualizer which
+ *  can throw IndexSizeError on very short audio files. */
 const SFX: React.FC<{
   src: string;
   frame: number;
   volume?: number;
   playbackRate?: number;
 }> = ({ src, frame, volume = 1, playbackRate = 1 }) => (
-  <Sequence from={frame} durationInFrames={60}>
-    <Audio src={src} volume={volume} playbackRate={playbackRate} />
+  <Sequence from={frame} durationInFrames={60} showInTimeline={false}>
+    <Audio src={src} volume={volume} playbackRate={playbackRate} showInTimeline={false} />
   </Sequence>
 );
 
@@ -133,12 +135,12 @@ export const SoundLayer: React.FC = () => {
 
       {/* ═══════ Ambient pad — loops across dark scenes ═══════ */}
       {/* Scene 1 (black bg) */}
-      <Sequence from={s.pain.start} durationInFrames={s.pain.duration}>
-        <Audio src={sfx.pad} volume={0.15} />
+      <Sequence from={s.pain.start} durationInFrames={s.pain.duration} showInTimeline={false}>
+        <Audio src={sfx.pad} volume={0.15} showInTimeline={false} />
       </Sequence>
       {/* Scene 5+6 (dark bg) */}
-      <Sequence from={s.zoomOut.start} durationInFrames={s.zoomOut.duration + s.loop.duration}>
-        <Audio src={sfx.pad} volume={0.12} />
+      <Sequence from={s.zoomOut.start} durationInFrames={s.zoomOut.duration + s.loop.duration} showInTimeline={false}>
+        <Audio src={sfx.pad} volume={0.12} showInTimeline={false} />
       </Sequence>
     </>
   );

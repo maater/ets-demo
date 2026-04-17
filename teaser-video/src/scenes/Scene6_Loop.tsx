@@ -72,23 +72,23 @@ export const Scene6Loop: React.FC = () => {
               {i === 1 && (
                 <div style={{
                   marginTop: 10, opacity: badgeOpacity,
-                  padding: '4px 12px', borderRadius: 20,
+                  padding: '6px 16px', borderRadius: 22,
                   backgroundColor: colors.qualifyLight,
                   border: `1px solid ${colors.qualifyBorder}`,
-                  fontSize: 10, fontWeight: 700, color: colors.qualify,
+                  fontSize: 14, fontWeight: 700, color: colors.qualify,
                   fontFamily: fonts.sans, whiteSpace: 'nowrap',
                 }}>
-                  🧠 Sourced from ⑥ KB
+                  🧠 Sourced from ⑥ Knowledge Base
                 </div>
               )}
               {/* Bookend badge on Learn */}
               {i === 5 && (
                 <div style={{
                   marginTop: 10, opacity: badgeOpacity,
-                  padding: '4px 12px', borderRadius: 20,
+                  padding: '6px 16px', borderRadius: 22,
                   backgroundColor: colors.discoverLight,
                   border: `1px solid ${colors.discoverBorder}`,
-                  fontSize: 10, fontWeight: 700, color: colors.discover,
+                  fontSize: 14, fontWeight: 700, color: colors.discover,
                   fontFamily: fonts.sans, whiteSpace: 'nowrap',
                 }}>
                   📚 Powers ② Education Hub
@@ -128,22 +128,17 @@ export const Scene6Loop: React.FC = () => {
           strokeDashoffset={1200 * (1 - arcProgress)}
           opacity={0.8}
         />
-        {/* Leading dot */}
-        {arcProgress > 0 && arcProgress < 1 && (
-          <circle
-            r="6"
-            fill={colors.primary}
-            opacity={0.9}
-          >
-            <animateMotion
-              dur="1s"
-              repeatCount="1"
-              keyPoints={`${arcProgress};${arcProgress}`}
-              keyTimes="0;1"
-              path="M 1520 200 C 1520 60, 400 60, 400 200"
-            />
-          </circle>
-        )}
+        {/* Leading dot — manually positioned along the cubic bezier */}
+        {arcProgress > 0 && arcProgress < 1 && (() => {
+          // Cubic bezier: P0(1520,200) C1(1520,60) C2(400,60) P3(400,200)
+          const t = arcProgress;
+          const mt = 1 - t;
+          const cx = mt*mt*mt*1520 + 3*mt*mt*t*1520 + 3*mt*t*t*400 + t*t*t*400;
+          const cy = mt*mt*mt*200 + 3*mt*mt*t*60 + 3*mt*t*t*60 + t*t*t*200;
+          return (
+            <circle cx={cx} cy={cy} r="6" fill={colors.primary} opacity={0.9} />
+          );
+        })()}
       </svg>
 
       {/* Text overlay */}
@@ -152,7 +147,7 @@ export const Scene6Loop: React.FC = () => {
         opacity: textOpacity,
       }}>
         <div style={{
-          fontSize: 40, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
+          fontSize: 48, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
           lineHeight: 1.4,
         }}>
           Every engagement makes the next one smarter.

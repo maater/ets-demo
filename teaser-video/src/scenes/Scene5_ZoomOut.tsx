@@ -2,9 +2,7 @@ import React from 'react';
 import {
   AbsoluteFill,
   useCurrentFrame,
-  useVideoConfig,
   interpolate,
-  spring,
 } from 'remotion';
 import { PipelineCard } from '../components/PipelineCard';
 import { colors, fonts } from '../styles/tokens';
@@ -18,47 +16,66 @@ const PHASES = [
   { num: '⑥ LEARN', title: 'Learn & Innovate', color: colors.learn },
 ];
 
-/** Simplified phase detail snippets for the flash-expand */
-const PHASE_SNIPPETS = [
-  // Reach: channel icons
-  ['🎯', '💼', '💬', '🎤', '🔍', '🗣️'],
-  // Discover: step icons
-  ['🏠', '📚', '📊', '⚙️'],
+/** Expanded detail text for each phase — readable labels, not just icons */
+const PHASE_DETAILS: { icon: string; label: string }[][] = [
+  // Reach
+  [
+    { icon: '🎯', label: 'Outbound' },
+    { icon: '💼', label: 'LinkedIn' },
+    { icon: '💬', label: 'Community' },
+    { icon: '🎤', label: 'Events' },
+    { icon: '🔍', label: 'SEO' },
+    { icon: '🗣️', label: 'Referrals' },
+  ],
+  // Discover
+  [
+    { icon: '🏠', label: 'Homepage' },
+    { icon: '📚', label: 'Education Hub' },
+    { icon: '📊', label: 'Case Studies' },
+    { icon: '⚙️', label: 'How We Work' },
+  ],
   // Qualify
-  ['💬', '🤖', '👤'],
+  [
+    { icon: '💬', label: 'Self-Assessment' },
+    { icon: '🤖', label: 'AI Pre-Qual' },
+    { icon: '👤', label: 'Human Review' },
+  ],
   // Propose
-  ['📞', '📄', '✅'],
+  [
+    { icon: '📞', label: 'Discovery Call' },
+    { icon: '📄', label: 'AI Proposal' },
+    { icon: '✅', label: 'Customer Approves' },
+  ],
   // Deliver
-  ['🤖', '💡', '👤'],
+  [
+    { icon: '🤖', label: 'Agents Build' },
+    { icon: '💡', label: 'Engineers Review' },
+    { icon: '👤', label: 'Human PR Gate' },
+  ],
   // Learn
-  ['📊', '💡', '🧠'],
+  [
+    { icon: '📊', label: 'Usage Insights' },
+    { icon: '💡', label: 'AI Suggestions' },
+    { icon: '🧠', label: 'Knowledge Base' },
+  ],
 ];
 
 export const Scene5ZoomOut: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  // Phase A: Cards enter (0-90f / 3s)
-  // Phase B: Flash-expand each (90-240f / 5s) — ~25f per phase
-  // Phase C: All settled (240-270f / 1s)
-
-  // Arrow opacity
   const arrowOpacity = interpolate(frame, [60, 80], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  // Flash expand for each phase
   const FLASH_START = 90;
   const FLASH_PER = 25;
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#111827' }}>
       {/* Title */}
-      <div style={{
-        position: 'absolute', top: 50, left: 0, right: 0, textAlign: 'center',
-      }}>
+      <div style={{ position: 'absolute', top: 40, left: 0, right: 0, textAlign: 'center' }}>
         <div style={{
-          fontSize: 14, fontWeight: 700, color: colors.textLight, fontFamily: fonts.sans,
+          fontSize: 18, fontWeight: 700, color: colors.textLight, fontFamily: fonts.sans,
           letterSpacing: '0.15em', textTransform: 'uppercase' as const,
           opacity: interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' }),
         }}>
@@ -68,14 +85,12 @@ export const Scene5ZoomOut: React.FC = () => {
 
       {/* Pipeline row */}
       <div style={{
-        position: 'absolute',
-        top: 140,
-        left: 0, right: 0,
+        position: 'absolute', top: 100, left: 0, right: 0,
         display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: 0,
+        padding: '0 40px',
       }}>
         {PHASES.map((phase, i) => {
           const enterFrame = 10 + i * 12;
-          // Determine if this phase is currently "flashing"
           const flashFrame = frame - FLASH_START - i * FLASH_PER;
           const isFlashing = flashFrame >= 0 && flashFrame < FLASH_PER;
 
@@ -92,28 +107,26 @@ export const Scene5ZoomOut: React.FC = () => {
                   glowColor={phase.color}
                 />
 
-                {/* Flash detail snippet */}
+                {/* Expanded detail — actual text labels, not just icons */}
                 {isFlashing && (
                   <div style={{
-                    marginTop: 12,
-                    backgroundColor: 'rgba(255,255,255,0.08)',
-                    borderRadius: 10,
-                    padding: '12px 14px',
-                    display: 'flex', gap: 8, flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    opacity: interpolate(flashFrame, [0, 5, FLASH_PER - 5, FLASH_PER], [0, 1, 1, 0], {
+                    marginTop: 14, backgroundColor: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: 12, padding: '14px 16px',
+                    display: 'flex', flexDirection: 'column', gap: 8,
+                    opacity: interpolate(flashFrame, [0, 4, FLASH_PER - 4, FLASH_PER], [0, 1, 1, 0], {
                       extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
                     }),
-                    width: 170,
+                    width: 220,
                   }}>
-                    {PHASE_SNIPPETS[i].map((icon, j) => (
+                    {PHASE_DETAILS[i].map((item, j) => (
                       <div key={j} style={{
-                        width: 32, height: 32, borderRadius: 8,
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 16,
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        fontSize: 14, color: 'rgba(255,255,255,0.85)',
+                        fontFamily: fonts.sans, fontWeight: 500,
                       }}>
-                        {icon}
+                        <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
+                        <span>{item.label}</span>
                       </div>
                     ))}
                   </div>
@@ -121,10 +134,9 @@ export const Scene5ZoomOut: React.FC = () => {
               </div>
               {i < PHASES.length - 1 && (
                 <div style={{
-                  fontSize: 22, color: 'rgba(255,255,255,0.3)',
+                  fontSize: 24, color: 'rgba(255,255,255,0.3)',
                   alignSelf: 'center', padding: '0 8px',
-                  opacity: arrowOpacity,
-                  marginTop: 16,
+                  opacity: arrowOpacity, marginTop: 16,
                 }}>
                   →
                 </div>
@@ -134,16 +146,14 @@ export const Scene5ZoomOut: React.FC = () => {
         })}
       </div>
 
-      {/* Subtitle: "what you just saw is step 3 of 6" */}
+      {/* Subtitle */}
       <div style={{
         position: 'absolute', bottom: 80, left: 0, right: 0, textAlign: 'center',
         opacity: interpolate(frame, [60, 80], [0, 1], {
           extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
         }),
       }}>
-        <span style={{
-          fontSize: 18, color: 'rgba(255,255,255,0.6)', fontFamily: fonts.sans,
-        }}>
+        <span style={{ fontSize: 24, color: 'rgba(255,255,255,0.6)', fontFamily: fonts.sans }}>
           What you just saw is{' '}
           <strong style={{ color: colors.qualify }}>step 3 of 6</strong>
           . There's a whole machine behind it.
