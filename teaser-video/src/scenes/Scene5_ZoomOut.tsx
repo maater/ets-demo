@@ -9,14 +9,14 @@ import {
 import { colors, fonts } from '../styles/tokens';
 
 /*
-  Scene 5 — Pipeline Zoom Out (360 frames / 12s)
+  Scene 5 — Pipeline Zoom Out (390 frames / 13s)
 
-  0-75f:    Large overlay: "What you just experienced was one step. There are five more."
-  75-105f:  Overlay fades, pipeline view fades in
-  105-120f: Phase cards enter with spring animation
-  120-150f: Arrows appear
-  150-330f: Sequential phase expansion (6 phases × 30f each)
-  330-360f: Settle + subtitle
+  0-110f:    Large overlay with dwell: "What you just experienced was one step."
+  100-135f:  Overlay fades, pipeline view fades in
+  135-155f:  Phase cards enter with spring animation
+  155-180f:  Arrows appear
+  180-360f:  Sequential phase expansion (6 phases × 30f each)
+  360-390f:  Settle + subtitle
 */
 
 /* ── Data matching the actual demo ────────────────────── */
@@ -219,27 +219,27 @@ export const Scene5ZoomOut: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Overlay phase (0-105f)
-  const overlayOpacity = interpolate(frame, [0, 10, 65, 85], [0, 1, 1, 0], {
+  // Overlay phase (0-120f) — generous dwell
+  const overlayOpacity = interpolate(frame, [0, 12, 90, 115], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const pipelineOpacity = interpolate(frame, [75, 100], [0, 1], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-
-  const arrowOpacity = interpolate(frame, [130, 150], [0, 1], {
+  const pipelineOpacity = interpolate(frame, [100, 130], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  // Phase expansion starts at frame 150
-  const FLASH_START = 150;
+  const arrowOpacity = interpolate(frame, [160, 180], [0, 1], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+
+  // Phase expansion starts at frame 180
+  const FLASH_START = 180;
   const FLASH_PER = 30;
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
 
       {/* ── Large overlay: "This was just one step" ── */}
-      {frame < 95 && (
+      {frame < 120 && (
         <AbsoluteFill style={{
           backgroundColor: 'rgba(11,17,32,0.92)',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -306,7 +306,7 @@ export const Scene5ZoomOut: React.FC = () => {
           padding: '0 32px', maxWidth: 1260, margin: '0 auto',
         }}>
           {PHASES.map((phase, i) => {
-            const enterFrame = 90 + i * 8;
+            const enterFrame = 120 + i * 8;
             const entered = frame >= enterFrame;
             const slideY = entered
               ? spring({ frame: frame - enterFrame, fps, config: { damping: 14, stiffness: 80 }, from: 80, to: 0 })
@@ -455,7 +455,7 @@ export const Scene5ZoomOut: React.FC = () => {
         {/* Subtitle */}
         <div style={{
           position: 'absolute', bottom: 40, left: 0, right: 0, textAlign: 'center',
-          opacity: interpolate(frame, [130, 150], [0, 1], {
+          opacity: interpolate(frame, [165, 185], [0, 1], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           }),
         }}>
@@ -468,7 +468,7 @@ export const Scene5ZoomOut: React.FC = () => {
         <div style={{
           position: 'absolute', bottom: 12, left: 0, right: 0,
           display: 'flex', justifyContent: 'center', gap: 20,
-          opacity: interpolate(frame, [140, 155], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+          opacity: interpolate(frame, [170, 190], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
         }}>
           {[
             { label: 'AI-led', color: '#2563EB' },

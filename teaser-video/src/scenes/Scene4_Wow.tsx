@@ -47,11 +47,11 @@ export const Scene4Wow: React.FC = () => {
   const wedgeX = interpolate(frame, [80, 105], [600, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const wedgeOpacity = interpolate(frame, [80, 95], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const expertBtnOpacity = interpolate(frame, [155, 168], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const expertBtnOpacity = interpolate(frame, [160, 175], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const overlayBg = interpolate(frame, [210, 225], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const overlayTextOpacity = interpolate(frame, [218, 232], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const finalFade = interpolate(frame, [255, 270], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const overlayBg = interpolate(frame, [220, 240], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const overlayTextOpacity = interpolate(frame, [230, 248], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const finalFade = interpolate(frame, [282, 300], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg, opacity: finalFade }}>

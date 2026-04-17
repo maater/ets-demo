@@ -40,13 +40,17 @@ export const SoundLayer: React.FC = () => {
 
   return (
     <>
-      {/* ═══════ Scene 1: Narrative (270f) — panel transitions ═══════ */}
+      {/* ═══════ Scene 1: Narrative (660f) — panel transitions ═══════ */}
       {/* Panel 1 fade in */}
       <SFX src={sfx.whoosh} frame={s.pain.start + 5} volume={0.2} playbackRate={0.8} />
-      {/* Panel 2 (the pain) */}
-      <SFX src={sfx.whoosh} frame={s.pain.start + 80} volume={0.25} playbackRate={0.9} />
-      {/* Panel 3 (the trigger) */}
-      <SFX src={sfx.chime} frame={s.pain.start + 160} volume={0.25} />
+      {/* Panel 2 (details) */}
+      <SFX src={sfx.whoosh} frame={s.pain.start + 140} volume={0.2} playbackRate={0.9} />
+      {/* Panel 3 (the quote) */}
+      <SFX src={sfx.whoosh} frame={s.pain.start + 280} volume={0.25} playbackRate={0.9} />
+      {/* Panel 4 (supporting pain) */}
+      <SFX src={sfx.ping} frame={s.pain.start + 440} volume={0.2} />
+      {/* Panel 5 (the trigger) */}
+      <SFX src={sfx.chime} frame={s.pain.start + 570} volume={0.25} />
 
       {/* ═══════ Scene 2: Website + Click (90f) ═══════ */}
       <SFX src={sfx.click} frame={s.click.start + 42} volume={0.2} />
@@ -89,35 +93,35 @@ export const SoundLayer: React.FC = () => {
       {/* Timeline appears */}
       <SFX src={sfx.ping} frame={s.wow.start + 130} volume={0.2} />
       {/* Expert Review button */}
-      <SFX src={sfx.ping} frame={s.wow.start + 158} volume={0.25} />
+      <SFX src={sfx.ping} frame={s.wow.start + 165} volume={0.25} />
       {/* "Before any sales call" overlay */}
-      <SFX src={sfx.success} frame={s.wow.start + 218} volume={0.4} />
+      <SFX src={sfx.success} frame={s.wow.start + 235} volume={0.4} />
 
-      {/* ═══════ Scene 5: Pipeline Zoom Out (360f) ═══════ */}
+      {/* ═══════ Scene 5: Pipeline Zoom Out (390f) ═══════ */}
       {/* Overlay text appears */}
       <SFX src={sfx.whoosh} frame={s.zoomOut.start + 5} volume={0.3} />
       {/* Pipeline fades in */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 80} volume={0.2} />
-      {/* Staggered card entrances (at 90 + i*8) */}
-      {[90, 98, 106, 114, 122, 130].map((f, i) => (
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 105} volume={0.2} />
+      {/* Staggered card entrances (at 120 + i*8) */}
+      {[120, 128, 136, 144, 152, 160].map((f, i) => (
         <SFX key={`card-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.18} playbackRate={0.8 + i * 0.05} />
       ))}
-      {/* Flash-expand clicks (at 150 + i*30) */}
-      {[150, 180, 210, 240, 270, 300].map((f) => (
+      {/* Flash-expand clicks (at 180 + i*30) */}
+      {[180, 210, 240, 270, 300, 330].map((f) => (
         <SFX key={`flash-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.12} playbackRate={1.4} />
       ))}
 
-      {/* ═══════ Scene 6: Knowledge Loop (150f) ═══════ */}
+      {/* ═══════ Scene 6: Knowledge Loop (180f) ═══════ */}
       <SFX src={sfx.ping} frame={s.loop.start + 5} volume={0.3} />
       <SFX src={sfx.whoosh} frame={s.loop.start + 10} volume={0.3} playbackRate={0.6} />
-      <SFX src={sfx.ping} frame={s.loop.start + 45} volume={0.3} playbackRate={0.85} />
-      <SFX src={sfx.pop} frame={s.loop.start + 72} volume={0.3} />
-      <SFX src={sfx.pop} frame={s.loop.start + 78} volume={0.3} />
-      <SFX src={sfx.chime} frame={s.loop.start + 102} volume={0.3} />
+      <SFX src={sfx.ping} frame={s.loop.start + 55} volume={0.3} playbackRate={0.85} />
+      <SFX src={sfx.pop} frame={s.loop.start + 82} volume={0.3} />
+      <SFX src={sfx.pop} frame={s.loop.start + 90} volume={0.3} />
+      <SFX src={sfx.chime} frame={s.loop.start + 118} volume={0.3} />
 
-      {/* ═══════ Scene 7: CTA (90f) ═══════ */}
+      {/* ═══════ Scene 7: CTA (180f) ═══════ */}
       <SFX src={sfx.chime} frame={s.cta.start + 5} volume={0.25} playbackRate={0.9} />
-      <SFX src={sfx.ping} frame={s.cta.start + 48} volume={0.2} />
+      <SFX src={sfx.ping} frame={s.cta.start + 85} volume={0.2} />
 
       {/* ═══════ Ambient pad ═══════ */}
       {/* Scene 1 (dark narrative) */}

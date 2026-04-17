@@ -7,24 +7,24 @@ export const Scene7CTA: React.FC = () => {
   const { fps } = useVideoConfig();
 
   const logoScale = spring({ frame, fps, config: { damping: 15, stiffness: 80 }, from: 0.85, to: 1 });
-  const logoOpacity = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: 'clamp' });
+  const logoOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' });
 
-  const taglineOpacity = interpolate(frame, [20, 35], [0, 1], {
+  const taglineOpacity = interpolate(frame, [35, 55], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const ctaOpacity = interpolate(frame, [42, 55], [0, 1], {
+  const ctaOpacity = interpolate(frame, [80, 100], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const vixulOpacity = interpolate(frame, [55, 68], [0, 1], {
+  const vixulOpacity = interpolate(frame, [110, 130], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
   return (
     <AbsoluteFill style={{
       backgroundColor: colors.bg, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: 24,
+      alignItems: 'center', justifyContent: 'center', gap: 28,
     }}>
       {/* Logo */}
       <div style={{

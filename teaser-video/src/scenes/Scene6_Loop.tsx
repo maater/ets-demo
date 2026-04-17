@@ -9,17 +9,17 @@ import {
 import { colors, fonts } from '../styles/tokens';
 
 /*
-  Scene 6 — Knowledge Loop (150 frames / 5s)
+  Scene 6 — Knowledge Loop (180 frames / 6s)
 
   Light background, matching Scene 5's tile style.
   Shows all 6 phase cards with arc trail from Learn → Discover.
 
-  0-10f:   Fade in (continuing from Scene 5)
-  10-40f:  Learn card pulses purple, arc trail animates
-  40-70f:  Arc reaches Discover, Discover glows blue
-  70-100f: Bookend badges appear
-  100-130f: Text overlay
-  130-150f: Hold
+  0-10f:    Fade in (continuing from Scene 5)
+  10-50f:   Learn card pulses purple, arc trail animates
+  50-80f:   Arc reaches Discover, Discover glows blue
+  80-110f:  Bookend badges appear
+  110-150f: Text overlay with dwell
+  150-180f: Hold
 */
 
 const PHASES = [
@@ -35,18 +35,18 @@ export const Scene6Loop: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const learnGlow = frame >= 0 && frame < 70;
-  const discoverGlow = frame >= 40;
+  const learnGlow = frame >= 0 && frame < 80;
+  const discoverGlow = frame >= 50;
 
-  const arcProgress = interpolate(frame, [10, 55], [0, 1], {
+  const arcProgress = interpolate(frame, [10, 60], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const badgeOpacity = interpolate(frame, [70, 85], [0, 1], {
+  const badgeOpacity = interpolate(frame, [80, 100], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const textOpacity = interpolate(frame, [100, 115], [0, 1], {
+  const textOpacity = interpolate(frame, [115, 135], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
