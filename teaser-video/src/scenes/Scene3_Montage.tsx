@@ -96,23 +96,24 @@ export const Scene3Montage: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
       {/* Narrative overlay — large, centered, stays visible over the assessment */}
-      {frame < 120 && (
+      {/* 15 words main + 12 words sub × 7f = 105+84 = longest is 105f. Visible 8-120 = 112f. ✓ */}
+      {frame < 140 && (
         <AbsoluteFill style={{
-          backgroundColor: interpolate(frame, [0, 5, 90, 120], [0.92, 0.92, 0.92, 0], {
+          backgroundColor: interpolate(frame, [0, 5, 110, 140], [0.92, 0.92, 0.92, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 90, 120], [0.92, 0.92, 0.92, 0], {
+          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 110, 140], [0.92, 0.92, 0.92, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           })})` : 'transparent',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 20, zIndex: 20,
-          opacity: interpolate(frame, [0, 8, 95, 120], [0, 1, 1, 0], {
+          justifyContent: 'center', gap: 24, zIndex: 20,
+          opacity: interpolate(frame, [0, 8, 115, 140], [0, 1, 1, 0], {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           }),
         }}>
           <div style={{
-            fontSize: 46, fontWeight: 600, color: '#E5E7EB',
-            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.5,
-            maxWidth: 1100,
+            fontSize: 64, fontWeight: 600, color: '#E5E7EB',
+            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.4,
+            maxWidth: 1400,
           }}>
             Sarah shares details about her SAP environment.
             <br />
@@ -121,8 +122,8 @@ export const Scene3Montage: React.FC = () => {
             </span>
           </div>
           <div style={{
-            fontSize: 36, color: '#9CA3AF', fontFamily: fonts.sans,
-            textAlign: 'center', lineHeight: 1.6,
+            fontSize: 64, color: '#9CA3AF', fontFamily: fonts.sans,
+            textAlign: 'center', lineHeight: 1.4,
           }}>
             These questions come from deep SAP domain expertise
             <br />

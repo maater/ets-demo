@@ -220,35 +220,35 @@ export const Scene5ZoomOut: React.FC = () => {
   const { fps } = useVideoConfig();
 
   // Overlay phase — two beats with pause
-  // Beat 1: "What you just experienced was one step" (0-75f)
-  const beat1Opacity = interpolate(frame, [0, 12, 60, 75], [0, 1, 1, 0], {
+  // Beat 1: 10 words × 7f = 70f. Visible 12-90 = 78f. ✓
+  const beat1Opacity = interpolate(frame, [0, 12, 90, 105], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  // Beat 2: "But there are five more." (75-150f) — longer dwell
-  const beat2Opacity = interpolate(frame, [75, 88, 130, 150], [0, 1, 1, 0], {
+  // Beat 2: 5 words × 7f = 35f. Visible 115-160 = 45f. ✓
+  const beat2Opacity = interpolate(frame, [105, 115, 160, 175], [0, 1, 1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const overlayBgOpacity = interpolate(frame, [0, 5, 130, 150], [0.92, 0.92, 0.92, 0], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-
-  const pipelineOpacity = interpolate(frame, [135, 160], [0, 1], {
+  const overlayBgOpacity = interpolate(frame, [0, 5, 155, 175], [0.92, 0.92, 0.92, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const arrowOpacity = interpolate(frame, [190, 210], [0, 1], {
+  const pipelineOpacity = interpolate(frame, [160, 185], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  // Phase expansion starts at frame 210
-  const FLASH_START = 210;
+  const arrowOpacity = interpolate(frame, [215, 235], [0, 1], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+
+  // Phase expansion starts at frame 235
+  const FLASH_START = 235;
   const FLASH_PER = 30;
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
 
       {/* ── Large overlay: two beats ── */}
-      {frame < 150 && (
+      {frame < 175 && (
         <AbsoluteFill style={{
           backgroundColor: `rgba(11,17,32,${overlayBgOpacity})`,
           display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -256,9 +256,9 @@ export const Scene5ZoomOut: React.FC = () => {
         }}>
           {/* Beat 1: "What you just experienced was one step" */}
           <div style={{
-            fontSize: 56, fontWeight: 800, color: '#F9FAFB',
+            fontSize: 64, fontWeight: 800, color: '#F9FAFB',
             fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.3,
-            maxWidth: 900, opacity: beat1Opacity,
+            maxWidth: 1100, opacity: beat1Opacity,
           }}>
             What you just experienced was
             <br />
@@ -266,7 +266,7 @@ export const Scene5ZoomOut: React.FC = () => {
           </div>
           {/* Beat 2: "But there are five more." */}
           <div style={{
-            fontSize: 56, fontWeight: 800, color: '#F9FAFB',
+            fontSize: 64, fontWeight: 800, color: '#F9FAFB',
             fontFamily: fonts.sans, textAlign: 'center',
             opacity: beat2Opacity,
           }}>
@@ -317,7 +317,7 @@ export const Scene5ZoomOut: React.FC = () => {
           padding: '0 32px', maxWidth: 1260, margin: '0 auto',
         }}>
           {PHASES.map((phase, i) => {
-            const enterFrame = 155 + i * 8;
+            const enterFrame = 180 + i * 8;
             const entered = frame >= enterFrame;
             const slideY = entered
               ? spring({ frame: frame - enterFrame, fps, config: { damping: 14, stiffness: 80 }, from: 80, to: 0 })
@@ -470,9 +470,9 @@ export const Scene5ZoomOut: React.FC = () => {
             extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
           }),
         }}>
-          <span style={{ fontSize: 22, color: '#6B7280', fontFamily: fonts.sans }}>
-            All steps are <span style={{ color: colors.primary, fontWeight: 700 }}>AI-enabled</span> or{' '}
-            <span style={{ color: colors.primary, fontWeight: 700 }}>AI-accelerated</span> for both Sarah and the service provider.
+          <span style={{ fontSize: 64, color: '#6B7280', fontFamily: fonts.sans, lineHeight: 1.4 }}>
+            All steps are <span style={{ color: colors.primary, fontWeight: 700 }}>AI-enabled</span>
+            <br />for both Sarah and the service provider.
           </span>
         </div>
 
@@ -480,7 +480,7 @@ export const Scene5ZoomOut: React.FC = () => {
         <div style={{
           position: 'absolute', bottom: 12, left: 0, right: 0,
           display: 'flex', justifyContent: 'center', gap: 20,
-          opacity: interpolate(frame, [200, 220], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+          opacity: interpolate(frame, [230, 250], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
         }}>
           {[
             { label: 'AI-led', color: '#2563EB' },

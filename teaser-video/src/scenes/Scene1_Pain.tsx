@@ -40,8 +40,8 @@ export const Scene1Pain: React.FC = () => {
   const p1 = frame >= 0 && frame < 140;
   const p2 = frame >= 140 && frame < 280;
   const p3 = frame >= 280 && frame < 440;
-  const p4 = frame >= 440 && frame < 570;
-  const p5 = frame >= 570;
+  const p4 = frame >= 440 && frame < 590;
+  const p5 = frame >= 590;
 
   const panelOpacity = (enter: number, exit: number) => {
     const fadeIn = interpolate(frame, [enter, enter + 12], [0, 1], {
@@ -53,7 +53,7 @@ export const Scene1Pain: React.FC = () => {
     return fadeIn * fadeOut;
   };
 
-  const globalFade = interpolate(frame, [640, 660], [1, 0], {
+  const globalFade = interpolate(frame, [700, 720], [1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
@@ -70,7 +70,7 @@ export const Scene1Pain: React.FC = () => {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
           <FadeLine frame={frame} enterFrame={0} style={{
-            fontSize: 36, fontWeight: 600, color: colors.primary,
+            fontSize: 64, fontWeight: 600, color: colors.primary,
             letterSpacing: '0.18em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
@@ -96,28 +96,28 @@ export const Scene1Pain: React.FC = () => {
           textAlign: 'center',
         }}>
           <FadeLine frame={frame} enterFrame={140} style={{
-            fontSize: 56, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+            fontSize: 64, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
           }}>
             Mid-market manufacturer
           </FadeLine>
           <FadeLine frame={frame} enterFrame={162} style={{
-            fontSize: 40, color: '#9CA3AF', fontFamily: fonts.sans,
+            fontSize: 64, color: '#9CA3AF', fontFamily: fonts.sans,
           }}>
             $120M revenue &middot; 850 employees &middot; Chicago, IL
           </FadeLine>
           <FadeLine frame={frame} enterFrame={184} style={{
-            fontSize: 36, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
+            fontSize: 64, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
           }}>
             Running SAP ECC 6.0
           </FadeLine>
           <FadeLine frame={frame} enterFrame={206} style={{
-            display: 'flex', gap: 12, marginTop: 4,
+            display: 'flex', gap: 16, marginTop: 8,
           }}>
             {['MM', 'PP', 'FI', 'SD'].map((mod) => (
               <span key={mod} style={{
-                padding: '8px 24px', borderRadius: 24,
+                padding: '10px 28px', borderRadius: 28,
                 backgroundColor: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)',
-                fontSize: 30, fontWeight: 700, color: colors.primary,
+                fontSize: 44, fontWeight: 700, color: colors.primary,
                 fontFamily: fonts.mono, letterSpacing: '0.05em',
               }}>{mod}</span>
             ))}
@@ -132,7 +132,7 @@ export const Scene1Pain: React.FC = () => {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
           <FadeLine frame={frame} enterFrame={280} style={{
-            fontSize: 32, fontWeight: 600, color: '#F87171',
+            fontSize: 64, fontWeight: 600, color: '#F87171',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
@@ -154,22 +154,22 @@ export const Scene1Pain: React.FC = () => {
       {/* Panel 4: Supporting pain — 4.3s, lines well spaced */}
       {p4 && (
         <div style={{
-          opacity: panelOpacity(440, 570),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
-          textAlign: 'center', maxWidth: 900,
+          opacity: panelOpacity(440, 590),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
+          textAlign: 'center', maxWidth: 1200,
         }}>
           <FadeLine frame={frame} enterFrame={440} style={{
-            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 64, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.5,
           }}>
             Weekly manual Excel exports from SAP.
           </FadeLine>
           <FadeLine frame={frame} enterFrame={470} style={{
-            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 64, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.5,
           }}>
             Crystal Reports nobody trusts.
           </FadeLine>
           <FadeLine frame={frame} enterFrame={500} style={{
-            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 64, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.5,
           }}>
             No visibility into supplier risk or spend patterns.
           </FadeLine>
@@ -179,25 +179,25 @@ export const Scene1Pain: React.FC = () => {
       {/* Panel 5: The trigger — 3s */}
       {p5 && (
         <div style={{
-          opacity: panelOpacity(570, 660),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
+          opacity: panelOpacity(590, 720),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
           textAlign: 'center',
         }}>
-          <FadeLine frame={frame} enterFrame={570} style={{
-            fontSize: 32, fontWeight: 600, color: '#34D399',
+          <FadeLine frame={frame} enterFrame={590} style={{
+            fontSize: 64, fontWeight: 600, color: '#34D399',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
             Then they find Axon Labs
           </FadeLine>
-          <FadeLine frame={frame} enterFrame={585} style={{
-            fontSize: 44, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
-            lineHeight: 1.6,
+          <FadeLine frame={frame} enterFrame={610} style={{
+            fontSize: 64, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
+            lineHeight: 1.5,
           }}>
-            LinkedIn &middot; SAP partner directories &middot; Manufacturing conferences
+            LinkedIn &middot; SAP partner directories &middot; Conferences
           </FadeLine>
-          <FadeLine frame={frame} enterFrame={608} style={{
-            fontSize: 44, fontWeight: 700, color: colors.primary,
+          <FadeLine frame={frame} enterFrame={635} style={{
+            fontSize: 64, fontWeight: 700, color: colors.primary,
             fontFamily: fonts.sans, marginTop: 4,
           }}>
             "See what we'd build for you. In 5 minutes."

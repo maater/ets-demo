@@ -180,7 +180,7 @@ export const Scene6Loop: React.FC = () => {
         opacity: textOpacity,
       }}>
         <div style={{
-          fontSize: 44, fontWeight: 800, color: '#111827', fontFamily: fonts.sans,
+          fontSize: 64, fontWeight: 800, color: '#111827', fontFamily: fonts.sans,
           lineHeight: 1.4,
         }}>
           And it keeps getting smarter.

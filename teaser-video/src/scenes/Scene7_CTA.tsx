@@ -9,11 +9,12 @@ export const Scene7CTA: React.FC = () => {
   const logoScale = spring({ frame, fps, config: { damping: 15, stiffness: 80 }, from: 0.85, to: 1 });
   const logoOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' });
 
-  const taglineOpacity = interpolate(frame, [35, 55], [0, 1], {
+  // 17 words × 7f = 119f. Visible from 30 to 180 = 150f. ✓
+  const taglineOpacity = interpolate(frame, [20, 40], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const ctaOpacity = interpolate(frame, [80, 100], [0, 1], {
+  const ctaOpacity = interpolate(frame, [90, 110], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
@@ -40,7 +41,7 @@ export const Scene7CTA: React.FC = () => {
 
       {/* Tagline */}
       <div style={{
-        fontSize: 38, fontWeight: 500, color: colors.textMuted,
+        fontSize: 64, fontWeight: 500, color: colors.textMuted,
         fontFamily: fonts.sans, opacity: taglineOpacity,
         textAlign: 'center', lineHeight: 1.6, maxWidth: 1100,
       }}>

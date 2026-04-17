@@ -106,15 +106,15 @@ export const SoundLayer: React.FC = () => {
       {/* Overlay beat 1 */}
       <SFX src={sfx.whoosh} frame={s.zoomOut.start + 5} volume={0.05} />
       {/* Overlay beat 2 */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 80} volume={0.05} />
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 105} volume={0.05} />
       {/* Pipeline fades in */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 140} volume={0.04} />
-      {/* Staggered card entrances (at 155 + i*8) */}
-      {[155, 163, 171, 179, 187, 195].map((f, i) => (
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 165} volume={0.04} />
+      {/* Staggered card entrances (at 180 + i*8) */}
+      {[180, 188, 196, 204, 212, 220].map((f, i) => (
         <SFX key={`card-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.02} playbackRate={0.8 + i * 0.05} />
       ))}
-      {/* Flash-expand clicks (at 210 + i*30) */}
-      {[210, 240, 270, 300, 330, 360].map((f) => (
+      {/* Flash-expand clicks (at 235 + i*30) */}
+      {[235, 265, 295, 325, 355, 385].map((f) => (
         <SFX key={`flash-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.02} playbackRate={1.4} />
       ))}
 
@@ -136,9 +136,12 @@ export const SoundLayer: React.FC = () => {
         <Audio src={sfx.pad} volume={0.12} showInTimeline={false} />
       </Sequence>
 
-      {/* ═══════ Background music — full duration ═══════ */}
-      <Sequence from={0} durationInFrames={2190} showInTimeline={false}>
+      {/* ═══════ Background music — loops to cover full duration ═══════ */}
+      <Sequence from={0} durationInFrames={2100} showInTimeline={false}>
         <Audio src={sfx.music} volume={0.18} showInTimeline={false} />
+      </Sequence>
+      <Sequence from={2100} durationInFrames={240} showInTimeline={false}>
+        <Audio src={sfx.music} volume={0.14} showInTimeline={false} />
       </Sequence>
     </>
   );

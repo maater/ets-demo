@@ -49,8 +49,9 @@ export const Scene4Wow: React.FC = () => {
 
   const expertBtnOpacity = interpolate(frame, [160, 175], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const overlayBg = interpolate(frame, [220, 240], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const overlayTextOpacity = interpolate(frame, [230, 248], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  // 9 words × 7f = 63f needed. Visible from 218 to 282 = 64f. ✓
+  const overlayBg = interpolate(frame, [210, 225], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const overlayTextOpacity = interpolate(frame, [215, 230], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const finalFade = interpolate(frame, [282, 300], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   // Opening overlay: "And Sarah gets a project preview"
@@ -68,13 +69,13 @@ export const Scene4Wow: React.FC = () => {
         <AbsoluteFill style={{
           backgroundColor: `rgba(11,17,32,${introOverlayBgOpacity})`,
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 20, zIndex: 20,
+          justifyContent: 'center', gap: 24, zIndex: 20,
           opacity: introOverlayOpacity,
         }}>
           <div style={{
-            fontSize: 46, fontWeight: 600, color: '#E5E7EB',
-            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.5,
-            maxWidth: 1100,
+            fontSize: 64, fontWeight: 600, color: '#E5E7EB',
+            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.4,
+            maxWidth: 1400,
           }}>
             And Sarah gets a
             <br />
@@ -83,8 +84,8 @@ export const Scene4Wow: React.FC = () => {
             </span>
           </div>
           <div style={{
-            fontSize: 32, color: '#9CA3AF', fontFamily: fonts.sans,
-            textAlign: 'center', lineHeight: 1.6,
+            fontSize: 64, color: '#9CA3AF', fontFamily: fonts.sans,
+            textAlign: 'center', lineHeight: 1.4,
           }}>
             AI-generated. Tailored to her exact SAP environment.
           </div>
@@ -266,14 +267,14 @@ export const Scene4Wow: React.FC = () => {
       </div>
 
       {/* Text overlay */}
-      {frame >= 210 && (
+      {frame >= 205 && (
         <AbsoluteFill style={{
           backgroundColor: `rgba(0,0,0,${overlayBg})`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <div style={{
-            fontSize: 54, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
-            textAlign: 'center', lineHeight: 1.4, opacity: overlayTextOpacity, maxWidth: 1000,
+            fontSize: 64, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
+            textAlign: 'center', lineHeight: 1.4, opacity: overlayTextOpacity, maxWidth: 1200,
           }}>
             From problem to solution preview.
             <br />
