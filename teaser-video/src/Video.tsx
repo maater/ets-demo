@@ -8,10 +8,13 @@ import { Scene4Wow } from './scenes/Scene4_Wow';
 import { Scene5ZoomOut } from './scenes/Scene5_ZoomOut';
 import { Scene6Loop } from './scenes/Scene6_Loop';
 import { Scene7CTA } from './scenes/Scene7_CTA';
+import { SoundLayer } from './audio/SoundLayer';
 
 export const Video: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: '#000' }}>
+      {/* Audio runs across the full timeline, independent of visual scenes */}
+      <SoundLayer />
       <Series>
         <Series.Sequence durationInFrames={scenes.pain.duration}>
           <Scene1Pain />
