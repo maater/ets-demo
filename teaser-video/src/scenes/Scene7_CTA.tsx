@@ -9,11 +9,11 @@ export const Scene7CTA: React.FC = () => {
   const logoScale = spring({ frame, fps, config: { damping: 15, stiffness: 80 }, from: 0.85, to: 1 });
   const logoOpacity = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: 'clamp' });
 
-  const taglineChars = "AI-first service delivery.";
-  const taglineElapsed = Math.max(0, frame - 15);
-  const tagVisible = Math.min(taglineChars.length, Math.floor(taglineElapsed * (30 / fps)));
+  const taglineOpacity = interpolate(frame, [20, 35], [0, 1], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
 
-  const ctaOpacity = interpolate(frame, [45, 55], [0, 1], {
+  const ctaOpacity = interpolate(frame, [45, 58], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
@@ -39,18 +39,22 @@ export const Scene7CTA: React.FC = () => {
 
       {/* Tagline */}
       <div style={{
-        fontSize: 36, fontWeight: 500, color: colors.textMuted,
-        fontFamily: fonts.sans, height: 50,
+        fontSize: 32, fontWeight: 500, color: colors.textMuted,
+        fontFamily: fonts.sans, opacity: taglineOpacity,
+        textAlign: 'center', lineHeight: 1.5,
       }}>
-        {taglineChars.slice(0, tagVisible)}
+        Curious to see the rest?
       </div>
 
       {/* CTA */}
       <div style={{
-        fontSize: 24, fontWeight: 600, color: colors.primary, fontFamily: fonts.sans,
-        opacity: ctaOpacity, textDecoration: 'underline', textUnderlineOffset: 6,
+        opacity: ctaOpacity,
+        padding: '16px 40px', borderRadius: 14,
+        backgroundColor: colors.primary, color: '#fff',
+        fontSize: 26, fontWeight: 700, fontFamily: fonts.sans,
+        boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
       }}>
-        See the full demo &rarr;
+        See us in the Demo Area &rarr;
       </div>
     </AbsoluteFill>
   );

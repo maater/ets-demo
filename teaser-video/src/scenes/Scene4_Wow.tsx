@@ -8,7 +8,26 @@ import {
 } from 'remotion';
 import { colors, fonts } from '../styles/tokens';
 
-const SAP_PILLS = ['EKKO', 'EKPO', 'EBAN', 'MARC'];
+/*
+  Scene 4 — AI-Generated Spec + Wedge Recommendation (270 frames / 9s)
+
+  0-15f:   Left card slides in (richer spec content)
+  15-80f:  Spec sections materialize
+  80-120f: Right wedge card slides in with flow diagram
+  120-150f: SAP pills + delivery estimate
+  150-170f: "Request Expert Review" button appears
+  170-210f: Hold
+  210-240f: Overlay text: "Before any sales call."
+  240-270f: Fade out
+*/
+
+const SAP_PILLS = ['EKKO', 'EKPO', 'EBAN', 'MARC', 'LFA1'];
+
+const TIMELINE_STEPS = [
+  { label: 'Procurement Analytics', weeks: 'Wk 1-5', color: colors.primary },
+  { label: 'Supplier Risk', weeks: 'Wk 6-8', color: '#7C3AED' },
+  { label: 'Executive Dashboard', weeks: 'Wk 9-12', color: colors.propose },
+];
 
 export const Scene4Wow: React.FC = () => {
   const frame = useCurrentFrame();
@@ -17,99 +36,108 @@ export const Scene4Wow: React.FC = () => {
   const cardSlide = spring({ frame, fps, config: { damping: 20, stiffness: 80 }, from: 200, to: 0 });
   const cardOpacity = interpolate(frame, [0, 12], [0, 1], { extrapolateRight: 'clamp' });
 
-  const sections = [
-    { title: 'Executive Summary', delay: 10 },
-    { title: 'SAP Modules in Scope: MM, FI, SD', delay: 25 },
-    { title: 'Primary Pain Points: Procurement visibility, stock-out risk', delay: 40 },
-    { title: 'Complexity Estimate: Medium', delay: 55 },
+  const specSections = [
+    { title: 'Executive Summary', body: 'Custom SAP Intelligence Platform — transforming raw data into actionable procurement insights and supplier risk intelligence.', delay: 10 },
+    { title: 'SAP Modules in Scope', body: 'MM (Materials Management), FI (Financial Accounting), SD (Sales & Distribution), PP (Production Planning)', delay: 25 },
+    { title: 'Primary Pain Points', body: 'Manual Excel exports weekly · Crystal Reports nobody trusts · No spend visibility across purchasing orgs · No predictive capability for reorder timing', delay: 40 },
+    { title: 'Fit Score: 87 · Complexity: Medium', body: 'Strong fit — classic procurement intelligence engagement with well-defined data sources and 12+ identified users across procurement, ops, and finance.', delay: 55 },
+    { title: 'Estimated Timeline: 12 weeks', body: 'Phased delivery starting with procurement analytics, then supplier risk and inventory optimization. Pricing: Professional tier.', delay: 70 },
   ];
 
-  const wedgeX = interpolate(frame, [70, 95], [600, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const wedgeOpacity = interpolate(frame, [70, 85], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const wedgeX = interpolate(frame, [80, 105], [600, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const wedgeOpacity = interpolate(frame, [80, 95], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const overlayBg = interpolate(frame, [145, 160], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const overlayTextOpacity = interpolate(frame, [155, 170], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const finalFade = interpolate(frame, [200, 210], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const expertBtnOpacity = interpolate(frame, [155, 168], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+
+  const overlayBg = interpolate(frame, [210, 225], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const overlayTextOpacity = interpolate(frame, [218, 232], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const finalFade = interpolate(frame, [255, 270], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg, opacity: finalFade }}>
-      <div style={{ display: 'flex', gap: 40, padding: '80px 80px 60px', height: '100%' }}>
-        {/* Left: Spec document */}
+      <div style={{ display: 'flex', gap: 32, padding: '72px 60px 60px', height: '100%' }}>
+        {/* Left: Spec document — richer content */}
         <div style={{
-          flex: 1, backgroundColor: '#fff', borderRadius: 18,
+          flex: 1.1, backgroundColor: '#fff', borderRadius: 18,
           border: `1px solid ${colors.border}`, boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-          padding: '36px 40px', opacity: cardOpacity,
+          padding: '32px 36px', opacity: cardOpacity,
           transform: `translateY(${cardSlide}px)`, overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
         }}>
           <div style={{
-            fontSize: 15, fontWeight: 700, color: colors.primary, fontFamily: fonts.sans,
-            letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 28,
+            fontSize: 14, fontWeight: 700, color: colors.primary, fontFamily: fonts.sans,
+            letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 6,
           }}>
             AI-Generated Spec Preview
           </div>
+          <div style={{
+            fontSize: 11, color: colors.textMuted, fontFamily: fonts.sans, marginBottom: 22,
+          }}>
+            For Meridian Partners &middot; Generated from self-assessment data
+          </div>
 
-          {sections.map((section, i) => {
+          {specSections.map((section, i) => {
             const sectionOpacity = interpolate(frame, [section.delay, section.delay + 12], [0, 1], {
               extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
             });
-            const blur = interpolate(frame, [section.delay, section.delay + 10], [6, 0], {
+            const blur = interpolate(frame, [section.delay, section.delay + 10], [4, 0], {
               extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
             });
 
             return (
-              <div key={i} style={{ marginBottom: 28, opacity: sectionOpacity }}>
+              <div key={i} style={{ marginBottom: 18, opacity: sectionOpacity }}>
                 <div style={{
-                  fontSize: 22, fontWeight: 700, color: colors.text, fontFamily: fonts.sans,
-                  marginBottom: 8, filter: `blur(${blur}px)`,
+                  fontSize: 17, fontWeight: 700, color: colors.text, fontFamily: fonts.sans,
+                  marginBottom: 5, filter: `blur(${blur}px)`,
                 }}>
                   {section.title}
                 </div>
                 <div style={{
-                  height: 14, backgroundColor: colors.borderLight, borderRadius: 4,
-                  width: `${70 + i * 5}%`, filter: `blur(${blur}px)`,
-                }} />
-                <div style={{
-                  height: 14, backgroundColor: colors.borderLight, borderRadius: 4,
-                  width: `${50 + i * 8}%`, marginTop: 8, filter: `blur(${blur}px)`,
-                }} />
+                  fontSize: 13, color: colors.textMuted, fontFamily: fonts.sans,
+                  lineHeight: 1.6, filter: `blur(${blur}px)`,
+                }}>
+                  {section.body}
+                </div>
               </div>
             );
           })}
         </div>
 
-        {/* Right: Wedge recommendation */}
+        {/* Right: Wedge recommendation + flow diagram */}
         <div style={{
           flex: 1, transform: `translateX(${wedgeX}px)`, opacity: wedgeOpacity,
-          display: 'flex', flexDirection: 'column', gap: 24,
+          display: 'flex', flexDirection: 'column', gap: 20,
         }}>
+          {/* Recommendation card */}
           <div style={{
             backgroundColor: '#fff', borderRadius: 18,
             border: `2px solid ${colors.proposeBorder}`,
             boxShadow: `0 0 0 4px ${colors.proposeLight}, 0 4px 24px rgba(5,150,105,0.1)`,
-            padding: '32px 36px',
+            padding: '28px 32px',
           }}>
             <div style={{
-              fontSize: 14, fontWeight: 700, color: colors.propose, fontFamily: fonts.sans,
-              letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 16,
+              fontSize: 13, fontWeight: 700, color: colors.propose, fontFamily: fonts.sans,
+              letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 14,
             }}>
               Recommended Starting Point
             </div>
             <div style={{
-              fontSize: 30, fontWeight: 800, color: colors.text, fontFamily: fonts.sans, marginBottom: 12,
+              fontSize: 28, fontWeight: 800, color: colors.text, fontFamily: fonts.sans, marginBottom: 10,
             }}>
               Procurement Intelligence
             </div>
             <div style={{
-              fontSize: 19, color: colors.textMuted, fontFamily: fonts.sans,
-              lineHeight: 1.7, marginBottom: 20,
+              fontSize: 16, color: colors.textMuted, fontFamily: fonts.sans,
+              lineHeight: 1.7, marginBottom: 18,
             }}>
-              Real-time spend visibility across all purchasing orgs. Automated maverick detection.
-              Supplier risk scoring from live PO data.
+              Real-time spend visibility across all purchasing orgs.
+              Automated maverick detection. Supplier risk scoring from live PO data.
             </div>
 
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}>
+            {/* SAP table pills */}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 18 }}>
               {SAP_PILLS.map((pill, i) => {
-                const pillDelay = 95 + i * 6;
+                const pillDelay = 105 + i * 5;
                 const pillOpacity = interpolate(frame, [pillDelay, pillDelay + 8], [0, 1], {
                   extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
                 });
@@ -119,9 +147,9 @@ export const Scene4Wow: React.FC = () => {
 
                 return (
                   <div key={pill} style={{
-                    padding: '6px 16px', borderRadius: 22,
+                    padding: '5px 14px', borderRadius: 22,
                     backgroundColor: colors.proposeLight, border: `1px solid ${colors.proposeBorder}`,
-                    fontSize: 16, fontWeight: 700, color: colors.propose,
+                    fontSize: 14, fontWeight: 700, color: colors.propose,
                     fontFamily: fonts.mono, letterSpacing: '0.05em',
                     opacity: pillOpacity, transform: `scale(${pillScale})`,
                   }}>
@@ -132,18 +160,77 @@ export const Scene4Wow: React.FC = () => {
             </div>
 
             <div style={{
-              display: 'inline-block', padding: '8px 18px', borderRadius: 22,
+              display: 'inline-block', padding: '7px 16px', borderRadius: 22,
               backgroundColor: colors.deliverLight, border: `1px solid ${colors.deliverBorder}`,
-              fontSize: 16, fontWeight: 700, color: colors.deliver, fontFamily: fonts.sans,
+              fontSize: 14, fontWeight: 700, color: colors.deliver, fontFamily: fonts.sans,
             }}>
-              Quick win — 4 week delivery
+              Quick win &mdash; 4 week delivery
+            </div>
+          </div>
+
+          {/* Mini phased timeline flow */}
+          <div style={{
+            backgroundColor: '#fff', borderRadius: 14,
+            border: `1px solid ${colors.border}`, padding: '20px 24px',
+            opacity: interpolate(frame, [120, 135], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+          }}>
+            <div style={{
+              fontSize: 12, fontWeight: 700, color: colors.textMuted, fontFamily: fonts.sans,
+              letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 14,
+            }}>
+              Phased Delivery Roadmap
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+              {TIMELINE_STEPS.map((step, i) => (
+                <React.Fragment key={i}>
+                  <div style={{
+                    flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+                  }}>
+                    <div style={{
+                      width: '100%', height: 8, borderRadius: 4, backgroundColor: step.color,
+                      opacity: 0.8,
+                    }} />
+                    <span style={{
+                      fontSize: 12, fontWeight: 700, color: colors.text, fontFamily: fonts.sans,
+                      textAlign: 'center',
+                    }}>{step.label}</span>
+                    <span style={{
+                      fontSize: 11, color: colors.textMuted, fontFamily: fonts.sans,
+                    }}>{step.weeks}</span>
+                  </div>
+                  {i < TIMELINE_STEPS.length - 1 && (
+                    <div style={{
+                      flex: '0 0 20px', display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontSize: 16, color: '#D1D5DB',
+                      marginBottom: 24,
+                    }}>→</div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Expert Review CTA */}
+          <div style={{
+            opacity: expertBtnOpacity,
+            display: 'flex', justifyContent: 'center',
+          }}>
+            <div style={{
+              padding: '14px 32px', borderRadius: 14,
+              backgroundColor: colors.primary, color: '#fff',
+              fontSize: 18, fontWeight: 700, fontFamily: fonts.sans,
+              boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
+              display: 'flex', alignItems: 'center', gap: 10,
+            }}>
+              <span>Request Expert Review</span>
+              <span style={{ fontSize: 14, opacity: 0.8 }}>→</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Text overlay */}
-      {frame >= 145 && (
+      {frame >= 210 && (
         <AbsoluteFill style={{
           backgroundColor: `rgba(0,0,0,${overlayBg})`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',

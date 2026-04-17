@@ -7,24 +7,39 @@ import {
 } from 'remotion';
 import { colors, fonts } from '../styles/tokens';
 
+/*
+  Scene 2 — Website landing + CTA click (90 frames / 3s)
+
+  0-20f:  Fade in website with narrative overlay at top
+  20-50f: Cursor moves toward CTA
+  50-60f: Click ripple
+  60-90f: Zoom into button + fade out
+*/
+
 export const Scene2Click: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const cursorX = interpolate(frame, [0, 30], [1400, 960], { extrapolateRight: 'clamp' });
-  const cursorY = interpolate(frame, [0, 30], [800, 590], { extrapolateRight: 'clamp' });
+  // Narrative overlay fades in then out
+  const overlayOpacity = interpolate(frame, [0, 8, 45, 55], [0, 1, 1, 0], {
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
 
-  const btnShadow = frame >= 28
+  const cursorX = interpolate(frame, [10, 45], [1400, 960], { extrapolateRight: 'clamp' });
+  const cursorY = interpolate(frame, [10, 45], [800, 590], { extrapolateRight: 'clamp' });
+
+  const btnShadow = frame >= 42
     ? '0 8px 24px rgba(37,99,235,0.25), 0 2px 8px rgba(0,0,0,0.1)'
     : '0 2px 8px rgba(0,0,0,0.08)';
-  const btnY = frame >= 28 ? -3 : 0;
+  const btnY = frame >= 42 ? -3 : 0;
 
-  const rippleProgress = frame >= 40 ? (frame - 40) / 10 : 0;
+  const rippleProgress = frame >= 50 ? (frame - 50) / 10 : 0;
   const rippleOpacity = interpolate(rippleProgress, [0, 1], [0.5, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const rippleScale = interpolate(rippleProgress, [0, 1], [0.01, 2.5], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const zoom = interpolate(frame, [50, 60], [1, 3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const fadeOut = interpolate(frame, [55, 60], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const zoom = interpolate(frame, [60, 80], [1, 3], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const fadeOut = interpolate(frame, [70, 85], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const pageOpacity = interpolate(frame, [0, 10], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill style={{
@@ -45,12 +60,35 @@ export const Scene2Click: React.FC = () => {
         <span style={{ fontSize: 22, fontWeight: 700, color: colors.text, fontFamily: fonts.sans }}>
           Axon Labs
         </span>
+        <div style={{ flex: 1 }} />
+        <span style={{ fontSize: 16, color: colors.textMuted, fontFamily: fonts.sans }}>Education Hub</span>
+        <span style={{ fontSize: 16, color: colors.textMuted, fontFamily: fonts.sans, marginLeft: 24 }}>Case Studies</span>
+        <span style={{ fontSize: 16, color: colors.textMuted, fontFamily: fonts.sans, marginLeft: 24 }}>How We Work</span>
+      </div>
+
+      {/* Narrative overlay bar — top of content */}
+      <div style={{
+        position: 'absolute', top: 88, left: 0, right: 0, textAlign: 'center',
+        opacity: overlayOpacity, zIndex: 10,
+      }}>
+        <div style={{
+          display: 'inline-block',
+          backgroundColor: 'rgba(11,17,32,0.88)', borderRadius: 12,
+          padding: '14px 36px',
+        }}>
+          <span style={{
+            fontSize: 22, color: '#E5E7EB', fontFamily: fonts.sans, fontWeight: 500,
+          }}>
+            Sarah visits Axon's site — reads the blog, reviews case studies, finds answers to her everyday problems.
+          </span>
+        </div>
       </div>
 
       {/* Hero content */}
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         justifyContent: 'center', height: '100%', gap: 28,
+        opacity: pageOpacity,
       }}>
         <div style={{
           fontSize: 64, fontWeight: 800, color: colors.text, fontFamily: fonts.sans,
@@ -75,7 +113,7 @@ export const Scene2Click: React.FC = () => {
           }}>
             See what we'd build for you &rarr;
           </div>
-          {frame >= 40 && rippleProgress <= 1 && (
+          {frame >= 50 && rippleProgress <= 1 && (
             <div style={{
               position: 'absolute', top: '50%', left: '50%',
               width: 80, height: 80, borderRadius: '50%',

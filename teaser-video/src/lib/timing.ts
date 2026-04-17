@@ -3,16 +3,16 @@
 export const FPS = 30;
 
 export const scenes = {
-  pain:         { start: 0,    duration: 90  },  // 3s
-  click:        { start: 90,   duration: 60  },  // 2s
-  conversation: { start: 150,  duration: 270 },  // 9s
-  wow:          { start: 420,  duration: 210 },  // 7s
-  zoomOut:      { start: 630,  duration: 270 },  // 9s
-  loop:         { start: 900,  duration: 135 },  // 4.5s
-  cta:          { start: 1035, duration: 90  },  // 3s
+  pain:         { start: 0,    duration: 270 },  // 9s — rich Meridian Partners narrative
+  click:        { start: 270,  duration: 90  },  // 3s — website landing + CTA
+  conversation: { start: 360,  duration: 270 },  // 9s — self-assessment montage
+  wow:          { start: 630,  duration: 270 },  // 9s — spec + wedge + expert review
+  zoomOut:      { start: 900,  duration: 360 },  // 12s — overlay → pipeline walkthrough
+  loop:         { start: 1260, duration: 150 },  // 5s — knowledge loop (light style)
+  cta:          { start: 1410, duration: 90  },  // 3s — CTA
 } as const;
 
-export const TOTAL_FRAMES = 1125; // ~37.5s
+export const TOTAL_FRAMES = 1500; // 50s
 
 /** Helper: get a 0-1 progress value within a scene */
 export function sceneProgress(frame: number, sceneName: keyof typeof scenes): number {
