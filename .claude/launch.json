@@ -6,6 +6,13 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8080"],
       "port": 8080
+    },
+    {
+      "name": "Remotion Studio",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "studio", "--prefix", "teaser-video"],
+      "port": 3123,
+      "autoPort": false
     }
   ]
 }
