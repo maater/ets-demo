@@ -19,6 +19,7 @@ const sfx = {
   ping:    staticFile('sfx/ping.wav'),
   success: staticFile('sfx/success.wav'),
   pad:     staticFile('sfx/pad.wav'),
+  music:   staticFile('sfx/music.wav'),
 };
 
 /** Helper: place an audio clip at a specific absolute frame.
@@ -126,7 +127,12 @@ export const SoundLayer: React.FC = () => {
       {/* ═══════ Ambient pad ═══════ */}
       {/* Scene 1 (dark narrative) */}
       <Sequence from={s.pain.start} durationInFrames={s.pain.duration} showInTimeline={false}>
-        <Audio src={sfx.pad} volume={0.15} showInTimeline={false} />
+        <Audio src={sfx.pad} volume={0.12} showInTimeline={false} />
+      </Sequence>
+
+      {/* ═══════ Background music — full duration ═══════ */}
+      <Sequence from={0} durationInFrames={2100} showInTimeline={false}>
+        <Audio src={sfx.music} volume={0.18} showInTimeline={false} />
       </Sequence>
     </>
   );

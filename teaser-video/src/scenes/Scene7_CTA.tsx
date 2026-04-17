@@ -24,28 +24,28 @@ export const Scene7CTA: React.FC = () => {
   return (
     <AbsoluteFill style={{
       backgroundColor: colors.bg, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: 28,
+      alignItems: 'center', justifyContent: 'center', gap: 32,
     }}>
       {/* Logo */}
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 18,
+        display: 'flex', alignItems: 'center', gap: 22,
         opacity: logoOpacity, transform: `scale(${logoScale})`,
       }}>
         <div style={{
-          width: 64, height: 64, borderRadius: 16, backgroundColor: colors.primary,
+          width: 80, height: 80, borderRadius: 20, backgroundColor: colors.primary,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 32, color: '#fff', fontWeight: 800, fontFamily: fonts.sans,
+          fontSize: 42, color: '#fff', fontWeight: 800, fontFamily: fonts.sans,
         }}>A</div>
         <span style={{
-          fontSize: 48, fontWeight: 700, color: colors.text, fontFamily: fonts.sans,
+          fontSize: 72, fontWeight: 700, color: colors.text, fontFamily: fonts.sans,
         }}>Axon Labs</span>
       </div>
 
       {/* Tagline */}
       <div style={{
-        fontSize: 26, fontWeight: 500, color: colors.textMuted,
+        fontSize: 38, fontWeight: 500, color: colors.textMuted,
         fontFamily: fonts.sans, opacity: taglineOpacity,
-        textAlign: 'center', lineHeight: 1.6, maxWidth: 800,
+        textAlign: 'center', lineHeight: 1.6, maxWidth: 1100,
       }}>
         Axon Labs is a hypothetical company — but these are exactly
         <br />
@@ -55,9 +55,9 @@ export const Scene7CTA: React.FC = () => {
       {/* CTA */}
       <div style={{
         opacity: ctaOpacity,
-        padding: '16px 40px', borderRadius: 14,
+        padding: '20px 52px', borderRadius: 16,
         backgroundColor: colors.primary, color: '#fff',
-        fontSize: 24, fontWeight: 700, fontFamily: fonts.sans,
+        fontSize: 36, fontWeight: 700, fontFamily: fonts.sans,
         boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
       }}>
         Learn more about this vision &rarr;
@@ -66,7 +66,7 @@ export const Scene7CTA: React.FC = () => {
       {/* Vixul note */}
       <div style={{
         opacity: vixulOpacity,
-        fontSize: 18, color: colors.textLight, fontFamily: fonts.sans,
+        fontSize: 28, color: colors.textLight, fontFamily: fonts.sans,
         textAlign: 'center',
       }}>
         See what our companies are building at vixul.com

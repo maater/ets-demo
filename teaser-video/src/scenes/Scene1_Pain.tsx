@@ -70,7 +70,7 @@ export const Scene1Pain: React.FC = () => {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
           <FadeLine frame={frame} enterFrame={0} style={{
-            fontSize: 18, fontWeight: 600, color: colors.primary,
+            fontSize: 36, fontWeight: 600, color: colors.primary,
             letterSpacing: '0.18em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
@@ -79,7 +79,7 @@ export const Scene1Pain: React.FC = () => {
           <TypingText
             text="Meridian Partners"
             speed={12}
-            fontSize={64}
+            fontSize={96}
             color="#F9FAFB"
             fontFamily={fonts.sans}
             startFrame={15}
@@ -96,17 +96,17 @@ export const Scene1Pain: React.FC = () => {
           textAlign: 'center',
         }}>
           <FadeLine frame={frame} enterFrame={140} style={{
-            fontSize: 32, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+            fontSize: 56, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
           }}>
             Mid-market manufacturer
           </FadeLine>
           <FadeLine frame={frame} enterFrame={162} style={{
-            fontSize: 24, color: '#9CA3AF', fontFamily: fonts.sans,
+            fontSize: 40, color: '#9CA3AF', fontFamily: fonts.sans,
           }}>
             $120M revenue &middot; 850 employees &middot; Chicago, IL
           </FadeLine>
           <FadeLine frame={frame} enterFrame={184} style={{
-            fontSize: 22, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
+            fontSize: 36, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
           }}>
             Running SAP ECC 6.0
           </FadeLine>
@@ -115,9 +115,9 @@ export const Scene1Pain: React.FC = () => {
           }}>
             {['MM', 'PP', 'FI', 'SD'].map((mod) => (
               <span key={mod} style={{
-                padding: '5px 16px', borderRadius: 20,
+                padding: '8px 24px', borderRadius: 24,
                 backgroundColor: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)',
-                fontSize: 18, fontWeight: 700, color: colors.primary,
+                fontSize: 30, fontWeight: 700, color: colors.primary,
                 fontFamily: fonts.mono, letterSpacing: '0.05em',
               }}>{mod}</span>
             ))}
@@ -132,7 +132,7 @@ export const Scene1Pain: React.FC = () => {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
         }}>
           <FadeLine frame={frame} enterFrame={280} style={{
-            fontSize: 18, fontWeight: 600, color: '#F87171',
+            fontSize: 32, fontWeight: 600, color: '#F87171',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
@@ -141,7 +141,7 @@ export const Scene1Pain: React.FC = () => {
           <TypingText
             text={`"Our SAP system has 10 years of\nprocurement data. Nobody knows\nwhat to do with it."`}
             speed={18}
-            fontSize={44}
+            fontSize={64}
             color="#E5E7EB"
             fontFamily={fonts.sans}
             startFrame={15}
@@ -159,17 +159,17 @@ export const Scene1Pain: React.FC = () => {
           textAlign: 'center', maxWidth: 900,
         }}>
           <FadeLine frame={frame} enterFrame={440} style={{
-            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
           }}>
             Weekly manual Excel exports from SAP.
           </FadeLine>
           <FadeLine frame={frame} enterFrame={470} style={{
-            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
           }}>
             Crystal Reports nobody trusts.
           </FadeLine>
           <FadeLine frame={frame} enterFrame={500} style={{
-            fontSize: 26, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
+            fontSize: 42, color: '#D1D5DB', fontFamily: fonts.sans, lineHeight: 1.7,
           }}>
             No visibility into supplier risk or spend patterns.
           </FadeLine>
@@ -184,20 +184,20 @@ export const Scene1Pain: React.FC = () => {
           textAlign: 'center',
         }}>
           <FadeLine frame={frame} enterFrame={570} style={{
-            fontSize: 18, fontWeight: 600, color: '#34D399',
+            fontSize: 32, fontWeight: 600, color: '#34D399',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
             Then they find Axon Labs
           </FadeLine>
           <FadeLine frame={frame} enterFrame={585} style={{
-            fontSize: 28, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
+            fontSize: 44, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
             lineHeight: 1.6,
           }}>
             LinkedIn &middot; SAP partner directories &middot; Manufacturing conferences
           </FadeLine>
           <FadeLine frame={frame} enterFrame={608} style={{
-            fontSize: 28, fontWeight: 700, color: colors.primary,
+            fontSize: 44, fontWeight: 700, color: colors.primary,
             fontFamily: fonts.sans, marginTop: 4,
           }}>
             "See what we'd build for you — in 5 minutes."
