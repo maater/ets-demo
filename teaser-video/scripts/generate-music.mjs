@@ -143,30 +143,31 @@ for (let i = 0; i < TOTAL_SAMPLES; i++) {
     }
   }
 
-  // ── Layer 3: Driving hi-hat pattern ──
+  // ── Layer 3: Soft hi-hat pattern ──
   let hat = 0;
   // Sixteenth note pattern: every 1/4 beat
   const sixteenthSec = BEAT_SEC / 4;
   const sixteenthPos = (t % sixteenthSec) / sixteenthSec;
   const sixteenthInBeat = Math.floor((t % BEAT_SEC) / sixteenthSec);
 
-  // Accent pattern: strong on 1,3 of each beat, ghost on 2,4
+  // Gentle accent pattern — lower volumes overall
   let hatVol = 0;
-  if (sixteenthInBeat === 0) hatVol = 0.06;
-  else if (sixteenthInBeat === 2) hatVol = 0.04;
-  else hatVol = 0.02;
+  if (sixteenthInBeat === 0) hatVol = 0.025;
+  else if (sixteenthInBeat === 2) hatVol = 0.018;
+  else hatVol = 0.01;
 
-  // Open hat on the "and" (8th note offbeats)
+  // Softer decay — less sharp transient
   const isOpenHat = sixteenthInBeat === 2;
-  const hatDecay = isOpenHat ? 4 : 12;
-  hat = noise(i) * Math.exp(-sixteenthPos * hatDecay) * hatVol;
+  const hatDecay = isOpenHat ? 3 : 6;
+  // Mix noise with high sine for softer texture instead of pure noise
+  hat = (noise(i) * 0.4 + sine(8000, t) * 0.6) * Math.exp(-sixteenthPos * hatDecay) * hatVol;
 
-  // ── Layer 4: Snare on beats 2 and 4 ──
+  // ── Layer 4: Soft snare on beats 2 and 4 ──
   let snare = 0;
   if (beatNum === 1 || beatNum === 3) {
-    const snareEnv = Math.exp(-beatFrac * 10);
-    // Noise burst + pitched tone body
-    snare = (noise(i) * 0.7 + sine(200, t) * 0.3) * snareEnv * 0.06;
+    const snareEnv = Math.exp(-beatFrac * 6);
+    // Much more tone, much less noise — soft rimshot feel
+    snare = (noise(i) * 0.25 + sine(180, t) * 0.5 + sine(330, t) * 0.25) * snareEnv * 0.03;
   }
 
   // ── Layer 5: Bright arpeggio lead ──
@@ -190,12 +191,12 @@ for (let i = 0; i < TOTAL_SAMPLES; i++) {
   // Gentle LFO modulation
   pad *= 0.85 + 0.15 * sine(0.5, t);
 
-  // ── Layer 7: Kick drum on every beat ──
+  // ── Layer 7: Soft kick drum on every beat ──
   let kick = 0;
-  const kickEnv = Math.exp(-beatFrac * 15);
-  // Pitch sweep from 150Hz down to 50Hz
-  const kickFreq = 50 + 100 * Math.exp(-beatFrac * 20);
-  kick = sine(kickFreq, t) * kickEnv * 0.08;
+  const kickEnv = Math.exp(-beatFrac * 10);
+  // Gentler pitch sweep — less snappy attack
+  const kickFreq = 55 + 60 * Math.exp(-beatFrac * 12);
+  kick = sine(kickFreq, t) * kickEnv * 0.06;
 
   // ── Mix ──
   let mix = bass + stab + hat + snare + arp * arpGate + pad + kick;

@@ -95,42 +95,41 @@ export const Scene3Montage: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
-      {/* Narrative overlay — large, centered, stays visible over the assessment */}
-      {/* 15 words main + 12 words sub × 7f = 105+84 = longest is 105f. Visible 8-120 = 112f. ✓ */}
-      {frame < 140 && (
-        <AbsoluteFill style={{
-          backgroundColor: interpolate(frame, [0, 5, 110, 140], [0.92, 0.92, 0.92, 0], {
-            extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-          }) > 0 ? `rgba(11,17,32,${interpolate(frame, [0, 5, 110, 140], [0.92, 0.92, 0.92, 0], {
-            extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-          })})` : 'transparent',
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 24, zIndex: 20,
-          opacity: interpolate(frame, [0, 8, 115, 140], [0, 1, 1, 0], {
-            extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-          }),
-        }}>
+      {/* Narrative overlay — bottom bar so chips stay fully visible above */}
+      {frame < 200 && (() => {
+        const overlayOpacity = interpolate(frame, [0, 8, 175, 200], [0, 1, 1, 0], {
+          extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+        });
+        const bgAlpha = interpolate(frame, [0, 5, 170, 200], [0.85, 0.85, 0.85, 0], {
+          extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+        });
+        return (
           <div style={{
-            fontSize: 64, fontWeight: 600, color: '#E5E7EB',
-            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.4,
-            maxWidth: 1400,
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            backgroundColor: `rgba(11,17,32,${bgAlpha})`,
+            padding: '36px 60px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            gap: 12, zIndex: 20,
+            opacity: overlayOpacity,
           }}>
-            Sarah shares details about her SAP environment.
-            <br />
-            <span style={{ color: colors.primary, fontWeight: 700 }}>
-              But this isn't ChatGPT.
-            </span>
+            <div style={{
+              fontSize: 52, fontWeight: 600, color: '#E5E7EB',
+              fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.4,
+            }}>
+              Sarah shares details about her SAP environment.{' '}
+              <span style={{ color: colors.primary, fontWeight: 700 }}>
+                But this isn't ChatGPT.
+              </span>
+            </div>
+            <div style={{
+              fontSize: 36, color: '#9CA3AF', fontFamily: fonts.sans,
+              textAlign: 'center', lineHeight: 1.4,
+            }}>
+              These questions come from deep SAP domain expertise and real engagement patterns.
+            </div>
           </div>
-          <div style={{
-            fontSize: 64, color: '#9CA3AF', fontFamily: fonts.sans,
-            textAlign: 'center', lineHeight: 1.4,
-          }}>
-            These questions come from deep SAP domain expertise
-            <br />
-            and real engagement patterns.
-          </div>
-        </AbsoluteFill>
-      )}
+        );
+      })()}
 
       {/* App chrome */}
       <div style={{

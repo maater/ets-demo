@@ -183,7 +183,7 @@ export const Scene6Loop: React.FC = () => {
           fontSize: 64, fontWeight: 800, color: '#111827', fontFamily: fonts.sans,
           lineHeight: 1.4,
         }}>
-          And it keeps getting smarter.
+          And Axon Labs keeps getting smarter.
         </div>
       </div>
     </AbsoluteFill>

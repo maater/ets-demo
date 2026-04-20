@@ -69,45 +69,61 @@ function expDecay(t, rate) {
 
 // ── Sound effects ────────────────────────────────────────
 
-/** Soft UI click — short sine burst with fast exponential decay */
+/** Soft UI click — gentle low-pitched thud, like a soft button press */
 function generateClick() {
-  const duration = 0.08;
+  const duration = 0.1;
   const samples = new Float64Array(Math.floor(SAMPLE_RATE * duration));
   for (let i = 0; i < samples.length; i++) {
     const t = i / SAMPLE_RATE;
-    samples[i] = sine(1200, t) * expDecay(t, 60) * 0.4
-               + sine(800, t) * expDecay(t, 80) * 0.2;
+    // Low-pitched soft thud, no sharp high frequencies
+    const freq = 400 - 200 * (t / duration); // gentle pitch drop
+    samples[i] = sine(freq, t) * expDecay(t, 30) * 0.2
+               + sine(220, t) * expDecay(t, 25) * 0.1;
+  }
+  // Extra smoothing to remove any sharpness
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = 1; i < samples.length - 1; i++) {
+      samples[i] = (samples[i - 1] * 0.3 + samples[i] * 0.4 + samples[i + 1] * 0.3);
+    }
   }
   return samples;
 }
 
-/** Chip selection pop — slightly fuller than click */
+/** Chip selection pop — soft bubble pop, rounded and warm */
 function generatePop() {
-  const duration = 0.12;
+  const duration = 0.15;
   const samples = new Float64Array(Math.floor(SAMPLE_RATE * duration));
   for (let i = 0; i < samples.length; i++) {
     const t = i / SAMPLE_RATE;
-    // Frequency drops from 1400 to 600
-    const freq = 1400 - 800 * (t / duration);
-    samples[i] = sine(freq, t) * expDecay(t, 35) * 0.35
-               + sine(freq * 0.5, t) * expDecay(t, 45) * 0.15;
+    // Gentle frequency drop from 600 to 300 — much lower than before
+    const freq = 600 - 300 * (t / duration);
+    samples[i] = sine(freq, t) * expDecay(t, 20) * 0.2
+               + sine(freq * 0.5, t) * expDecay(t, 18) * 0.1;
+  }
+  // Smooth out any transients
+  for (let pass = 0; pass < 4; pass++) {
+    for (let i = 1; i < samples.length - 1; i++) {
+      samples[i] = (samples[i - 1] * 0.3 + samples[i] * 0.4 + samples[i + 1] * 0.3);
+    }
   }
   return samples;
 }
 
-/** Keyboard tap — very short noise burst */
+/** Keyboard tap — very soft, muted tap like a cushioned key */
 function generateTap() {
-  const duration = 0.04;
+  const duration = 0.06;
   const samples = new Float64Array(Math.floor(SAMPLE_RATE * duration));
   for (let i = 0; i < samples.length; i++) {
     const t = i / SAMPLE_RATE;
-    // Filtered noise (simple low-pass via averaging)
-    const n = noise();
-    samples[i] = n * expDecay(t, 120) * 0.2;
+    // Soft sine thud instead of noise burst
+    samples[i] = sine(350, t) * expDecay(t, 40) * 0.12
+               + noise() * expDecay(t, 80) * 0.03; // tiny noise for texture
   }
-  // Simple low-pass: average neighboring samples
-  for (let i = 1; i < samples.length - 1; i++) {
-    samples[i] = (samples[i - 1] + samples[i] + samples[i + 1]) / 3;
+  // Heavy smoothing
+  for (let pass = 0; pass < 6; pass++) {
+    for (let i = 1; i < samples.length - 1; i++) {
+      samples[i] = (samples[i - 1] * 0.3 + samples[i] * 0.4 + samples[i + 1] * 0.3);
+    }
   }
   return samples;
 }
