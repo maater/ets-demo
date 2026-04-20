@@ -43,7 +43,7 @@ export const TypingText: React.FC<TypingTextProps> = ({
         fontSize,
         color,
         lineHeight: 1.6,
-        maxWidth: '80%',
+        maxWidth: '95%',
         whiteSpace: 'pre-wrap',
       }}
     >
