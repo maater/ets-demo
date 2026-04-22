@@ -106,19 +106,30 @@ export const SoundLayer: React.FC = () => {
       {/* "Before any sales call" overlay */}
       <SFX src={sfx.success} frame={s.wow.start + 235} volume={0.06} />
 
-      {/* ═══════ Scene 5: Pipeline Zoom Out (420f) ═══════ */}
-      {/* Overlay beat 1 */}
-      <SFX src={sfx.whoosh} frame={s.zoomOut.start + 5} volume={0.05} />
-      {/* Overlay beat 2 */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 105} volume={0.05} />
+      {/* ═══════ Scene 5a: Showcases (870f) ═══════ */}
+      {/* Overlay whoosh */}
+      <SFX src={sfx.whoosh} frame={s.showcases.start + 5} volume={0.05} />
+      {/* Beat 2 chime */}
+      <SFX src={sfx.chime} frame={s.showcases.start + 100} volume={0.06} />
+      {/* Showcase 1: Proposal appears at 210 */}
+      <SFX src={sfx.whoosh} frame={s.showcases.start + 210} volume={0.06} playbackRate={0.9} />
+      <SFX src={sfx.chime} frame={s.showcases.start + 240} volume={0.05} />
+      {/* Showcase 2: Control Tower at 510 */}
+      <SFX src={sfx.whoosh} frame={s.showcases.start + 510} volume={0.06} playbackRate={0.9} />
+      <SFX src={sfx.ping} frame={s.showcases.start + 540} volume={0.05} />
+      {/* Showcase 3: Dashboard at 720 */}
+      <SFX src={sfx.whoosh} frame={s.showcases.start + 720} volume={0.06} playbackRate={0.9} />
+      <SFX src={sfx.ping} frame={s.showcases.start + 745} volume={0.05} />
+
+      {/* ═══════ Scene 5b: Pipeline Zoom Out (270f) ═══════ */}
       {/* Pipeline fades in */}
-      <SFX src={sfx.chime} frame={s.zoomOut.start + 165} volume={0.04} />
-      {/* Staggered card entrances (at 180 + i*8) */}
-      {[180, 188, 196, 204, 212, 220].map((f, i) => (
+      <SFX src={sfx.chime} frame={s.zoomOut.start + 5} volume={0.05} />
+      {/* Staggered card entrances (15 + i*8) */}
+      {[15, 23, 31, 39, 47, 55].map((f, i) => (
         <SFX key={`card-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.12} />
       ))}
-      {/* Flash-expand clicks (at 235 + i*30) */}
-      {[235, 265, 295, 325, 355, 385].map((f) => (
+      {/* Flash-expand clicks (75 + i*30) */}
+      {[75, 105, 135, 165, 195, 225].map((f) => (
         <SFX key={`flash-${f}`} src={sfx.click} frame={s.zoomOut.start + f} volume={0.12} />
       ))}
 

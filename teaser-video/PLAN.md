@@ -1,297 +1,272 @@
-# Axon Labs Teaser Video — Build Plan & Storyboard
+# Axon Labs Teaser Video — VixulCon 2026 Demo
 
 ## Overview
 
-A 45-60 second teaser video built with [Remotion](https://www.remotion.dev/) (React-based programmatic video). The video sells one idea: **"You describe your SAP problem, and we show you the solution before you ever talk to a human."**
+A ~102-second teaser video built with [Remotion](https://www.remotion.dev/) (React-based programmatic video). The video tells the story of **Sarah from Meridian Partners** discovering Axon Labs and experiencing an AI-enabled customer engagement — from first website click through proposal, delivery dashboards, and a self-improving knowledge loop.
 
-Target output: 1920x1080 MP4, 30fps.
+**Output:** 1920x1080 MP4, 30fps, 3060 frames (102s).
 
 ---
 
-## Project Setup
+## Project Structure
 
-### Location
-`/ets-demo/teaser-video/` — a standalone Remotion project alongside the demo.
-
-### Tech Stack
-- Remotion 4.x (React + TypeScript)
-- Uses simplified recreations of the demo UI (not screen recordings)
-- Reuses color tokens and visual patterns from the demo's CSS
-
-### Key Files to Create
 ```
 teaser-video/
   package.json
   tsconfig.json
+  PLAN.md                         # This file
+  public/sfx/                     # Audio assets
+    mouse-click.wav               # Real mouse click SFX
+    typing.wav                    # Keyboard typing SFX
+    music-bg.mp3                  # Background music track (external)
+    whoosh.wav, chime.wav, ...    # Synthesized SFX (generated)
+  scripts/
+    generate-sfx.mjs              # Generates synthesized WAV files
+    generate-music.mjs            # Generates procedural backup music
   src/
-    index.ts              # Remotion entry — registerRoot
-    Root.tsx              # Top-level <Composition> definitions
-    Video.tsx             # Main sequence stitching all scenes
-    scenes/
-      Scene1_Pain.tsx     # "The Pain" — typing text on black
-      Scene2_Click.tsx    # "The Click" — homepage CTA click
-      Scene3_Montage.tsx  # "The Conversation" — self-assessment fast-cut
-      Scene4_Wow.tsx      # "The Wow Moment" — results build
-      Scene5_ZoomOut.tsx  # "The Zoom Out" — value stream pipeline
-      Scene6_Loop.tsx     # "The Loop" — knowledge badge pulse
-      Scene7_CTA.tsx      # "CTA" — logo + tagline
-    components/
-      TypingText.tsx      # Reusable typing/terminal animation
-      ChipGrid.tsx        # SAP module/pain-point chip layout
-      PipelineCard.tsx    # Value stream phase card (simplified)
-      StepCard.tsx        # Swimlane step card (simplified)
-      KBBadge.tsx         # Knowledge base bookend badge
-      AxonLogo.tsx        # Axon Labs logo + branding
-    styles/
-      tokens.ts           # Color palette, fonts (from demo's variables.css)
-      shared.ts           # Shared CSS-in-JS styles
+    index.ts                      # Remotion entry — registerRoot
+    Root.tsx                      # <Composition> definition (AxonTeaser)
+    Video.tsx                     # Main <Series> stitching all scenes + SoundLayer
     lib/
-      timing.ts           # Frame/duration constants for each scene
+      timing.ts                   # Frame constants for every scene
+    styles/
+      tokens.ts                   # Color palette, fonts (from demo CSS)
+    audio/
+      SoundLayer.tsx              # All SFX + music placement with ducking
+    components/
+      TypingText.tsx              # Character-by-character typing animation
+      ChipGrid.tsx                # SAP module/pain-point chip grid
+    scenes/
+      Scene1_Pain.tsx             # 5-panel Meridian Partners narrative
+      Scene2_Click.tsx            # Website landing + CTA button click
+      Scene3_Montage.tsx          # Self-assessment chips + live chat
+      Scene4_Wow.tsx              # AI-generated spec + wedge recommendation
+      Scene5_Showcases.tsx        # Overlay beats + 3 product showcases
+      Scene5_ZoomOut.tsx          # 6-phase pipeline zoom-out
+      Scene6_Loop.tsx             # Knowledge loop animation
+      Scene7_CTA.tsx              # Vixul closing CTA
 ```
 
 ---
 
-## Storyboard — Scene by Scene
+## Scene Breakdown
 
-### Scene 1 — "The Pain" (3 seconds / 90 frames)
+### Scene 1 — Narrative (720f / 24s)
 
-**Visual:** Black screen. White monospace text types out character by character:
-> "Our SAP system has 10 years of procurement data. Nobody knows what to do with it."
+**Story:** Introduces Sarah at Meridian Partners and her SAP procurement pain.
 
-**Animation:**
-- Text types at ~40 chars/second with a blinking cursor
-- Cursor blinks 2x after text completes
-- Slight fade to black at end
+**Visual:** 5 dark panels with staggered text reveals:
+- Panel 1 (0-140f): TypingText "Meridian Partners" at 96px, subtitle "A mid-market manufacturer, 2,200 employees"
+- Panel 2 (140-280f): Three stat lines fade in (10 years SAP, 8 modules, 47 reports)
+- Panel 3 (280-440f): TypingText quote "Our SAP system has 10 years of procurement data. Nobody knows what to do with it." at 64px
+- Panel 4 (440-590f): Supporting pain details + module pills
+- Panel 5 (590-720f): "Then one day, Sarah finds Axon Labs." + chime
 
-**Audio direction:** Silent. The quiet is the point.
+**Rules enforced:**
+- Minimum 64px font for all overlay text
+- 7 frames per word minimum reading time (~257 WPM at 30fps)
 
-**Components:** `TypingText` with monospace font, white on #000.
-
----
-
-### Scene 2 — "The Click" (2 seconds / 60 frames)
-
-**Visual:** Simplified recreation of the Axon homepage hero section:
-- "SAP Intelligence That Tells You What To Do" headline
-- A prominent blue CTA button: "See what we'd build for you"
-- Cursor (custom SVG pointer) glides to the button
-- Button gets hover state (shadow lift)
-- Click flash/ripple effect
-- Quick zoom-in transition to next scene
-
-**Animation:**
-- 0-30f: Page visible, cursor starts from bottom-right
-- 30-45f: Cursor reaches button, hover state activates
-- 45-55f: Click ripple
-- 55-60f: Fast zoom into button, cross-dissolve to Scene 3
-
-**Components:** Simple hero layout div, animated cursor SVG, ripple effect.
+**Audio:** Ambient pad drone + whoosh transitions between panels.
 
 ---
 
-### Scene 3 — "The Conversation" (8-10 seconds / 240-300 frames)
+### Scene 2 — The Click (210f / 7s)
 
-**Visual:** Montage of the self-assessment flow, sped up ~4x with smooth easing. Four beats:
+**Story:** Sarah visits Axon's website and clicks the CTA.
 
-**Beat 3a — Module Selection (~2.5s)**
-- Grid of SAP module chips (MM, FI, SD, PP, CO, WM...)
-- Three chips light up in sequence: MM → FI → SD
-- Each chip transitions from gray border to blue fill with a spring animation
-- Small "3 selected" counter ticks up
+**Visual:**
+- 0-148f: Dark overlay narrative "Sarah from Meridian visits Axon's website and starts finding answers to her everyday problems." (64px)
+- 140-158f: Website hero fades in (nav bar, headline, CTA button)
+- 158-178f: Cursor glides toward "See what we'd build for you" button
+- 175f: Button hover lift + shadow
+- 180f: **Prominent mouse click sound** + ripple effect
+- 185-210f: Gentle zoom-in (1x → 2.2x), fade out
 
-**Beat 3b — Pain Points (~2.5s)**
-- Pain point cards appear in a staggered grid
-- Cards selected: "Maverick spending", "Stock-outs", "Manual reporting"
-- Each card gets a checkmark + color shift on selection
-- Category labels visible: Procurement, Inventory, Reporting
-
-**Beat 3c — Deep Dive Branch (~2s)**
-- Screen transitions (slide-left) to procurement-specific questions
-- Pill selectors for "Which procurement reports?" — ME2M, MB5B highlighted
-- Quick flash of data access question — "CDS / OData" pill selected
-
-**Beat 3d — Reporting Stack (~1.5s)**
-- Final selection screen, fast
-- "Excel + Crystal Reports" chips selected
-- Transition: the whole form compresses/zooms out, results start building
-
-**Overall feel:** Fast, confident, SAP-vocabulary-dense. The viewer should think "this thing knows my world" even if they can't read every label.
-
-**Components:** `ChipGrid` (reusable for modules, pain points, pills).
+**Audio:** Music ducks starting here. Prominent click at button press.
 
 ---
 
-### Scene 4 — "The Wow Moment" (6-8 seconds / 180-240 frames)
+### Scene 3 — Self-Assessment + Chat (330f / 11s)
 
-**Visual:** Results screen builds itself in real time (normal speed now — let it breathe).
+**Story:** Sarah shares details about her SAP environment. This isn't ChatGPT.
 
-**Beat 4a — Spec Document (~3s)**
-- White card slides up from bottom
-- Section headers type in one by one:
-  - "Executive Summary"
-  - "SAP Modules in Scope: MM, FI, SD"
-  - "Primary Pain Points: Procurement visibility, stock-out risk"
-- Body text fades in paragraph by paragraph (blurred → sharp)
+**Visual:** Chip selection montage with bottom-bar narrative overlay:
+- **Bottom bar overlay** (0-200f): Semi-transparent dark bar at bottom showing "Sarah shares details about her SAP environment. **But this isn't ChatGPT.**" + subtitle. Chips are fully visible above it.
+- **Beat A** (0-55f): SAP Module selection — MM, FI, SD chips highlight
+- **Beat B** (55-110f): Pain Points — Maverick spending, Stock-outs, Manual reporting
+- **Beat C** (110-150f): Procurement deep dive — report pills + data access
+- **Beat D** (150-190f): Reporting Stack — compress transition
+- **Beat E** (190-330f): Live Chat — 4 messages showing real conversation about S/4HANA migration
 
-**Beat 4b — Wedge Recommendation (~2.5s)**
-- A highlighted card slides in from right with a subtle glow
-- Title: "Recommended Starting Point: Procurement Intelligence"
-- SAP table names appear as pills: EKKO, EKPO, EBAN, MARC
-- Small tag: "Quick win — 4 week delivery"
-
-**Beat 4c — Text Overlay (~2s)**
-- Results screen dims slightly (opacity 0.7)
-- Large white text fades in, centered:
-  **"From problem to solution preview. No sales call."**
-- Hold for 1.5s
-
-**Components:** Card layout, typing headers, pill tags, text overlay with backdrop blur.
+**Audio:** Mouse clicks on each chip selection. Typing sounds during user chat messages. Music remains ducked.
 
 ---
 
-### Scene 5 — "The Zoom Out" (8-10 seconds / 240-300 frames)
+### Scene 4 — The Wow Moment (300f / 10s)
 
-**Visual:** The value stream pipeline from index.html, rendered as React components.
+**Story:** Sarah gets an AI-generated project preview tailored to her exact SAP environment.
 
-**Beat 5a — Pipeline Appears (~3s)**
-- Black/dark background
-- Six phase cards slide in from bottom, staggered left-to-right (spring animation, 150ms delay between each)
-- Cards: Reach → Discover → Qualify → Propose → Deliver → Learn
-- Arrows fade in between them
-- Each card has its color accent (red, blue, purple, green, amber, purple)
+**Visual:**
+- 0-115f: Dark overlay "And Sarah gets a project preview." + "AI-generated. Tailored to her exact SAP environment." (64px)
+- Spec document builds: section headers, content paragraphs
+- Wedge recommendation card slides in: "Procurement Intelligence" with SAP table pills (EKKO, EKPO, EBAN, MARC)
+- Timeline and expert review button
+- 205-300f: End overlay "From problem to solution preview. Before any sales call." (64px)
 
-**Beat 5b — Quick Expand Flashes (~5s)**
-- Each phase card briefly "expands" — a simplified version of its detail panel fades in below it for ~0.8s, then collapses back
-- Reach: channel cards converging (simplified to icons + lines)
-- Discover: 4 step cards in a row
-- Qualify: two-lane layout hint
-- Propose: loop return banners flash
-- Deliver: kanban-style cards
-- Learn: knowledge base callout
-- This happens in sequence, left to right, ~0.8s per phase
-
-**Beat 5c — All Visible (~1.5s)**
-- Pipeline fully visible, all cards settled
-- Subtle ambient glow on each card
-
-**Components:** `PipelineCard` (6 instances), simplified detail snippets.
+**Audio:** Music fades back to full volume. Clicks on spec sections appearing.
 
 ---
 
-### Scene 6 — "The Loop" (4-5 seconds / 120-150 frames)
+### Scene 5a — Product Showcases (870f / 29s)
 
-**Visual:** The knowledge loop animates between Learn and Discover.
+**Story:** "What you just experienced was one step. Imagine an entire customer engagement that is AI-enabled."
 
-**Animation sequence:**
-1. Knowledge Base callout in Learn phase pulses with purple glow (0.5s)
-2. A particle/dot trail (purple → blue gradient) arcs from Learn card backward over the pipeline to Discover card (~1.5s)
-3. Education Hub in Discover phase pulses with blue glow (0.5s)
-4. The bookend badges ("Sourced from KB" / "Powers Education Hub") fade in on both ends
-5. Text overlay fades in:
-   **"Every engagement makes the next one smarter."**
-6. Hold 1.5s
+**Visual — Overlay Beats (0-210f):**
+- Beat 1 (0-100f): "What you just experienced was **one step** in this engagement."
+- Beat 2 (100-210f): "Imagine an entire customer engagement that is **AI-enabled.**"
 
-**Components:** `KBBadge`, particle trail animation (SVG path or canvas), text overlay.
+**Visual — Showcase 1: Interactive Proposal (210-510f / 10s):**
+- Mock proposal UI with sidebar TOC (6 sections), "Draft for Review" badge
+- Main content: "Recommended Approach" with 3 numbered phases
+- AI Suggestion highlight box with phased rollout recommendation
+- "AI Confidence: 94%" badge in sidebar
+- Bottom label: "An Interactive, AI-Enabled Proposal"
 
----
+**Visual — Showcase 2: Engagement Control Tower (510-720f / 7s):**
+- Dashboard with 4 metric cards: Sprint Velocity (34 pts), Risk Score (Low), Budget Burn (67%), Timeline (Sprint 3)
+- Project Timeline with milestone dots (Kickoff through Go-Live)
+- Recent Activity feed (agent PRs, approvals, AI flags)
+- Bottom label: "A Live Engagement Control Tower"
 
-### Scene 7 — "CTA" (3 seconds / 90 frames)
+**Visual — Showcase 3: Customer Dashboard (720-870f / 5s):**
+- Customer portal with health/stories/milestones/sprint metric cards
+- Deliverables table with status pills (Delivered, In Review, In Progress, Upcoming)
+- "Last updated: 2 min ago" badge
+- Bottom label: "An Always Up-to-Date Customer Dashboard"
 
-**Visual:** Clean, minimal outro.
-
-**Animation:**
-- Everything fades to white (#F3F4F6 — the demo background color)
-- Axon Labs logo fades in center (blue dot + wordmark), scales from 0.9 → 1.0
-- Tagline types below: **"AI-first service delivery."**
-- After 0.5s pause, a subtle underlined link appears:
-  **"See the full demo →"**
-- Hold 1.5s, fade to black
-
-**Components:** `AxonLogo`, `TypingText`.
+**Audio:** Whoosh + chime transitions between showcases.
 
 ---
 
-## Duration Summary
+### Scene 5b — Pipeline Zoom Out (270f / 9s)
 
-| Scene | Name | Duration | Frames (30fps) |
-|-------|------|----------|-----------------|
-| 1 | The Pain | 3s | 90 |
-| 2 | The Click | 2s | 60 |
-| 3 | The Conversation | 9s | 270 |
-| 4 | The Wow Moment | 7s | 210 |
-| 5 | The Zoom Out | 9s | 270 |
-| 6 | The Loop | 4.5s | 135 |
-| 7 | CTA | 3s | 90 |
-| **Total** | | **~37.5s** | **~1125** |
+**Story:** The full 6-phase AI-first value stream.
 
-Buffer for transitions between scenes: ~5-7s total. Final video: **~42-45 seconds**.
+**Visual:**
+- Pipeline fades in with 6 phase cards: Reach → Discover → Qualify → Propose → Deliver → Learn
+- Cards enter with spring animation (staggered 8f apart)
+- Arrows fade in between cards
+- Sequential "flash-expand" — each card briefly highlights with its detail panel (30f per phase)
+- Bottom text (64px): "All steps are **AI-enabled** for both Sarah and the service provider."
+- Legend: AI-led / Human-led / Human + AI
 
----
-
-## Build Order
-
-Work scene by scene, each independently previewable in Remotion Studio:
-
-### Phase 1 — Scaffold
-1. Initialize Remotion project (`npm init video`)
-2. Set up `Root.tsx` with composition config (1920x1080, 30fps)
-3. Create `tokens.ts` with color palette from the demo
-4. Create `timing.ts` with frame constants for each scene
-
-### Phase 2 — Simple Scenes First
-5. **Scene 1** — TypingText component + Scene1_Pain
-6. **Scene 7** — AxonLogo + Scene7_CTA
-7. **Scene 2** — Homepage hero + cursor animation + Scene2_Click
-
-### Phase 3 — Complex Scenes
-8. **Scene 3** — ChipGrid component + 4 beats of the montage
-9. **Scene 4** — Results card build + text overlay
-10. **Scene 5** — PipelineCard component + staggered entrance + expand flashes
-11. **Scene 6** — Loop particle trail + badge pulse
-
-### Phase 4 — Assembly
-12. Stitch all scenes in `Video.tsx` with `<Series>` component
-13. Add cross-fade transitions between scenes
-14. Fine-tune timing, review in Remotion Studio
-15. Render final MP4
+**Audio:** Chime on entrance, clicks on card highlights.
 
 ---
 
-## Color Palette (from demo)
+### Scene 6 — Knowledge Loop (180f / 6s)
 
+**Story:** And Axon Labs keeps getting smarter.
+
+**Visual:**
+- Circular diagram: Discover → Qualify → Propose → Deliver → Learn → back to Discover
+- Arc trail animation from Learn back to Discover (SVG animated path)
+- Text: "And Axon Labs keeps getting smarter." (64px)
+
+**Audio:** Pings and chime.
+
+---
+
+### Scene 7 — CTA (180f / 6s)
+
+**Story:** Axon Labs is hypothetical, but Vixul builds companies like this.
+
+**Visual:**
+- Axon Labs logo (blue square + wordmark) fades in with spring scale
+- Tagline (64px): "Axon Labs is a hypothetical company, but these are exactly the kind of companies we're building at **Vixul**."
+- CTA button: "Learn more about this vision →"
+
+**Audio:** Chime + ping. Music fades out over final 3s.
+
+---
+
+## Timing Summary
+
+| Scene | Name | Frames | Duration | Start Frame |
+|-------|------|--------|----------|-------------|
+| 1 | Narrative | 720 | 24s | 0 |
+| 2 | The Click | 210 | 7s | 720 |
+| 3 | Self-Assessment + Chat | 330 | 11s | 930 |
+| 4 | Spec Preview | 300 | 10s | 1260 |
+| 5a | Product Showcases | 870 | 29s | 1560 |
+| 5b | Pipeline Zoom Out | 270 | 9s | 2430 |
+| 6 | Knowledge Loop | 180 | 6s | 2700 |
+| 7 | CTA | 180 | 6s | 2880 |
+| **Total** | | **3060** | **102s** | |
+
+---
+
+## Audio Design
+
+### Sound Effects
+- **Mouse clicks:** Real recorded WAV (`mouse-click.wav`) — used for all chip selections, button presses, card interactions
+- **Typing:** Real recorded WAV (`typing.wav`) — used during chat user messages
+- **Synthesized SFX** (generated by `scripts/generate-sfx.mjs`):
+  - `whoosh.wav` — filtered noise sweep for transitions
+  - `chime.wav` — major third interval for reveals
+  - `ping.wav` — high sine for knowledge loop
+  - `success.wav` — ascending three-note arpeggio
+  - `pad.wav` — 5s ambient drone for Scene 1
+  - `click.wav` / `pop.wav` / `tap.wav` — soft synthesized alternatives (currently unused)
+
+### Background Music
+- External track: `music-bg.mp3` (royalty-free, ~3+ minutes)
+- **Fade-in:** 2s ramp at video start
+- **Ducking:** Music drops to ~18% volume when Sarah is interacting (Scene 2 website → end of Scene 3), then fades back to full at Scene 4
+- **Fade-out:** 3s ramp at video end
+
+### Volume Levels
+- Music: 0.22 (full), 0.04 (ducked)
+- Mouse clicks: 0.12-0.35 (button click loudest)
+- Whoosh/chime/ping: 0.05-0.08
+- Typing: 0.15
+
+---
+
+## Design Rules
+
+1. **Minimum 64px font** for all overlay/narrative text (UI mockup elements exempt)
+2. **7 frames per word** minimum reading time (~257 WPM at 30fps)
+3. **`showInTimeline={false}`** on all `<Audio>` and `<Sequence>` wrapping audio to prevent Studio waveform crashes
+4. **Composition ID is `AxonTeaser`** (not `TeaserVideo`)
+
+---
+
+## Commands
+
+```bash
+# Start Remotion Studio (dev preview)
+npm run studio              # Opens on port 3123
+
+# Render a single frame for verification
+npx remotion still --comp=AxonTeaser --frame=960 --output=test.png
+
+# Render final video
+npx remotion render --comp=AxonTeaser --output=axon-teaser.mp4
+
+# Regenerate synthesized SFX
+node scripts/generate-sfx.mjs
+
+# Regenerate backup procedural music
+node scripts/generate-music.mjs
 ```
---bg:           #F3F4F6
---text:         #1F2937
---text-muted:   #6B7280
---border:       #E5E7EB
---primary:      #2563EB   (Discover, links)
---reach:        #E11D48   (Reach phase)
---qualify:      #7C3AED   (Qualify, Learn, KB)
---propose:      #059669   (Propose, sales)
---deliver:      #D97706   (Deliver)
---ai-tag:       #2563EB
---human-tag:    #059669
---both-tag:     #C2410C
-```
-
----
-
-## Key Remotion APIs We'll Use
-
-- `<Series>` — sequencing scenes
-- `<Sequence>` — offsetting elements within a scene
-- `useCurrentFrame()` / `useVideoConfig()` — frame-based animation
-- `interpolate()` — mapping frame ranges to CSS values
-- `spring()` — physics-based easing for chip selections, card entrances
-- `<AbsoluteFill>` — full-screen layering
-- `<Img>` — for logo SVG if needed
 
 ---
 
 ## Resume Instructions
 
-If this conversation breaks, start a new conversation with:
+If continuing work in a new conversation:
 
-> "Read `/ets-demo/teaser-video/PLAN.md` and continue building the Remotion teaser video from where we left off. Check which files exist in `teaser-video/src/` to see what's been built so far."
+> "Read `/ets-demo/teaser-video/PLAN.md` and continue building the Remotion teaser video. Check `src/lib/timing.ts` for current frame constants and `src/Video.tsx` for scene structure."
 
-The todo list in the conversation tracks current progress. Each scene is independently buildable — pick up wherever the last scene left off.
+Each scene is independently previewable in Remotion Studio. Use `npx remotion still --comp=AxonTeaser --frame=N` to verify specific frames.

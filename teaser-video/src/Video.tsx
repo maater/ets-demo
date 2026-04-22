@@ -5,6 +5,7 @@ import { Scene1Pain } from './scenes/Scene1_Pain';
 import { Scene2Click } from './scenes/Scene2_Click';
 import { Scene3Montage } from './scenes/Scene3_Montage';
 import { Scene4Wow } from './scenes/Scene4_Wow';
+import { Scene5Showcases } from './scenes/Scene5_Showcases';
 import { Scene5ZoomOut } from './scenes/Scene5_ZoomOut';
 import { Scene6Loop } from './scenes/Scene6_Loop';
 import { Scene7CTA } from './scenes/Scene7_CTA';
@@ -27,6 +28,9 @@ export const Video: React.FC = () => {
         </Series.Sequence>
         <Series.Sequence durationInFrames={scenes.wow.duration}>
           <Scene4Wow />
+        </Series.Sequence>
+        <Series.Sequence durationInFrames={scenes.showcases.duration}>
+          <Scene5Showcases />
         </Series.Sequence>
         <Series.Sequence durationInFrames={scenes.zoomOut.duration}>
           <Scene5ZoomOut />

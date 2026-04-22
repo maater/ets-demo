@@ -9,14 +9,14 @@ import {
 import { colors, fonts } from '../styles/tokens';
 
 /*
-  Scene 5 — Pipeline Zoom Out (390 frames / 13s)
+  Scene 5b — Pipeline Zoom Out (270 frames / 9s)
+  Pipeline-only view (overlays moved to Scene5_Showcases).
 
-  0-110f:    Large overlay with dwell: "What you just experienced was one step."
-  100-135f:  Overlay fades, pipeline view fades in
-  135-155f:  Phase cards enter with spring animation
-  155-180f:  Arrows appear
-  180-360f:  Sequential phase expansion (6 phases × 30f each)
-  360-390f:  Settle + subtitle
+  0-15f:     Pipeline fades in
+  15-60f:    Phase cards enter with spring animation
+  55-75f:    Arrows appear
+  75-255f:   Sequential phase expansion (6 phases × 30f each)
+  255-270f:  Settle
 */
 
 /* ── Data matching the actual demo ────────────────────── */
@@ -219,63 +219,23 @@ export const Scene5ZoomOut: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Overlay phase — two beats with pause
-  // Beat 1: 10 words × 7f = 70f. Visible 12-90 = 78f. ✓
-  const beat1Opacity = interpolate(frame, [0, 12, 90, 105], [0, 1, 1, 0], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-  // Beat 2: 5 words × 7f = 35f. Visible 115-160 = 45f. ✓
-  const beat2Opacity = interpolate(frame, [105, 115, 160, 175], [0, 1, 1, 0], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-  const overlayBgOpacity = interpolate(frame, [0, 5, 155, 175], [0.92, 0.92, 0.92, 0], {
+  // Pipeline fades in immediately
+  const pipelineOpacity = interpolate(frame, [0, 15], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const pipelineOpacity = interpolate(frame, [160, 185], [0, 1], {
+  const arrowOpacity = interpolate(frame, [55, 75], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  const arrowOpacity = interpolate(frame, [215, 235], [0, 1], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
-
-  // Phase expansion starts at frame 235
-  const FLASH_START = 235;
+  // Phase expansion starts at frame 75
+  const FLASH_START = 75;
   const FLASH_PER = 30;
 
   return (
     <AbsoluteFill style={{ backgroundColor: colors.bg }}>
 
-      {/* ── Large overlay: two beats ── */}
-      {frame < 175 && (
-        <AbsoluteFill style={{
-          backgroundColor: `rgba(11,17,32,${overlayBgOpacity})`,
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 24, zIndex: 50,
-        }}>
-          {/* Beat 1: "What you just experienced was one step" */}
-          <div style={{
-            fontSize: 64, fontWeight: 800, color: '#F9FAFB',
-            fontFamily: fonts.sans, textAlign: 'center', lineHeight: 1.3,
-            maxWidth: 1100, opacity: beat1Opacity,
-          }}>
-            What you just experienced was
-            <br />
-            <span style={{ color: colors.primary }}>one step</span> in this engagement.
-          </div>
-          {/* Beat 2: "But there are five more." */}
-          <div style={{
-            fontSize: 64, fontWeight: 800, color: '#F9FAFB',
-            fontFamily: fonts.sans, textAlign: 'center',
-            opacity: beat2Opacity,
-          }}>
-            But there are <span style={{ color: colors.primary }}>five more.</span>
-          </div>
-        </AbsoluteFill>
-      )}
-
-      {/* ── Pipeline view (fades in during overlay fadeout) ── */}
+      {/* ── Pipeline view ── */}
       <div style={{ opacity: pipelineOpacity }}>
 
         {/* Nav bar */}
@@ -317,7 +277,7 @@ export const Scene5ZoomOut: React.FC = () => {
           padding: '0 32px', maxWidth: 1260, margin: '0 auto',
         }}>
           {PHASES.map((phase, i) => {
-            const enterFrame = 180 + i * 8;
+            const enterFrame = 15 + i * 8;
             const entered = frame >= enterFrame;
             const slideY = entered
               ? spring({ frame: frame - enterFrame, fps, config: { damping: 14, stiffness: 80 }, from: 80, to: 0 })
@@ -480,7 +440,7 @@ export const Scene5ZoomOut: React.FC = () => {
         <div style={{
           position: 'absolute', bottom: 12, left: 0, right: 0,
           display: 'flex', justifyContent: 'center', gap: 20,
-          opacity: interpolate(frame, [230, 250], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+          opacity: interpolate(frame, [70, 85], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
         }}>
           {[
             { label: 'AI-led', color: '#2563EB' },
