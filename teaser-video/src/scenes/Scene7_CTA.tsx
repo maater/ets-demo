@@ -50,7 +50,7 @@ export const Scene7CTA: React.FC = () => {
         the kind of companies we're building at <strong style={{ color: colors.text, fontWeight: 700 }}>Vixul</strong>.
       </div>
 
-      {/* CTA */}
+      {/* CTA button */}
       <div style={{
         opacity: ctaOpacity,
         padding: '20px 52px', borderRadius: 16,
@@ -58,10 +58,17 @@ export const Scene7CTA: React.FC = () => {
         fontSize: 36, fontWeight: 700, fontFamily: fonts.sans,
         boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
       }}>
-        Learn more about this vision &rarr;
+        Connect with Vixul &rarr;
       </div>
 
-      {/* (removed vixul.com line per user request) */}
+      {/* Sub-CTA — fades in as VO delivers the call to action */}
+      <div style={{
+        opacity: interpolate(frame, [200, 220], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+        fontSize: 32, color: colors.textMuted, fontFamily: fonts.sans,
+        textAlign: 'center', lineHeight: 1.6, maxWidth: 1000,
+      }}>
+        We help service companies transform from start to finish.
+      </div>
     </AbsoluteFill>
   );
 };

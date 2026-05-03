@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axon Teaser — Script Review</title>
+  <style>
+    :root {
+      --bg:      #0b1120;
+      --surface: #141e33;
+      --border:  #1e2d4a;
+      --text:    #e5e7eb;
+      --muted:   #6b7280;
+      --primary: #2563eb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px; padding: 28px 28px 80px;
+    }
+    .header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 20px; gap: 16px; flex-wrap: wrap;
+    }
+    .header h1 { font-size: 20px; font-weight: 700; color: #f9fafb; }
+    .header-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      cursor: pointer; font-size: 13px; font-weight: 600; transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-ghost   { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .save-pill {
+      font-size: 12px; color: #34d399; background: rgba(5,150,105,0.15);
+      border-radius: 20px; padding: 4px 10px; opacity: 0; transition: opacity 0.3s; white-space: nowrap;
+    }
+    .save-pill.show { opacity: 1; }
+    .filter-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); cursor: pointer; white-space: nowrap;
+    }
+    .filter-label input { cursor: pointer; accent-color: var(--primary); }
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-text { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .progress-track { background: var(--border); border-radius: 3px; height: 3px; }
+    .progress-fill  { background: var(--primary); height: 3px; border-radius: 3px; transition: width 0.3s; width: 0%; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--surface); padding: 9px 12px; text-align: left;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted); border-bottom: 2px solid var(--border);
+      position: sticky; top: 0; z-index: 10; white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:hover td { background: rgba(255,255,255,0.015); }
+    tr.section-row td {
+      background: var(--surface); color: var(--primary);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; padding: 7px 12px;
+    }
+    td { padding: 9px 12px; vertical-align: top; }
+    .col-time { font-family: monospace; font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .col-beat { font-size: 12px; color: var(--muted); white-space: nowrap; min-width: 150px; }
+    .col-text { font-size: 13px; line-height: 1.55; min-width: 240px; max-width: 320px; }
+    .col-vo   { font-size: 13px; line-height: 1.55; min-width: 240px; max-width: 320px; }
+    .silence  { color: var(--muted); font-style: italic; }
+    select.status {
+      appearance: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 5px 10px; font-size: 13px; cursor: pointer;
+      background: var(--surface); color: var(--muted); min-width: 165px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    select.status.s-good    { border-color:#059669; color:#34d399; background:rgba(5,150,105,0.1); }
+    select.status.s-timing  { border-color:#d97706; color:#fbbf24; background:rgba(217,119,6,0.1); }
+    select.status.s-vo      { border-color:#7c3aed; color:#a78bfa; background:rgba(124,58,237,0.1); }
+    select.status.s-visual  { border-color:#0891b2; color:#22d3ee; background:rgba(8,145,178,0.1); }
+    select.status.s-rewrite { border-color:#dc2626; color:#f87171; background:rgba(220,38,38,0.1); }
+    textarea.note {
+      width: 100%; min-width: 210px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+      font-family: inherit; font-size: 13px; line-height: 1.5;
+      padding: 6px 8px; resize: vertical; min-height: 34px; transition: border-color 0.15s;
+    }
+    textarea.note:focus { outline: none; border-color: var(--primary); }
+    textarea.note.filled { border-color: #374151; }
+    tr.hide { display: none !important; }
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
+      border-radius: 10px; font-weight: 600; font-size: 14px; color: #fff;
+      opacity: 0; transform: translateY(8px); transition: all 0.25s;
+      pointer-events: none; z-index: 100;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #exportPreview {
+      display: none; margin-top: 20px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+    }
+    #exportPreview h3 {
+      font-size: 13px; color: var(--muted); margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    #exportPreview pre { font-size: 12px; color: var(--text); white-space: pre-wrap; line-height: 1.6; font-family: 'SF Mono', monospace; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🎬 Axon Teaser — Script Review v4</h1>
+    <div class="header-meta" id="headerMeta">2:25 total · loading…</div>
+  </div>
+  <div class="controls">
+    <span class="save-pill" id="savePill">✓ Saved</span>
+    <label class="filter-label">
+      <input type="checkbox" id="filterCheck" onchange="applyFilter()" />
+      Issues only
+    </label>
+    <button class="btn btn-ghost" onclick="confirmReset()">Reset</button>
+    <button class="btn btn-primary" onclick="exportFeedback()">📋 Export Feedback</button>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-text" id="progressText">0 of 0 reviewed</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Beat</th>
+        <th>Screen — what's visible</th>
+        <th>VO line playing</th>
+        <th>Status</th>
+        <th>Your note / suggested change</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px;">
+  <button class="btn btn-ghost" onclick="togglePreview()">👁 Preview export</button>
+  <button class="btn btn-primary" onclick="exportFeedback()">📋 Copy to clipboard</button>
+</div>
+<div id="exportPreview">
+  <h3>Export preview — paste this back to Claude</h3>
+  <pre id="exportText"></pre>
+</div>
+<div id="toast"></div>
+
+<script>
+const BEATS = [
+
+  { section: 'Scene 0 — Preamble  (0:00 – 0:24)' },
+  { id:'p0-b1', time:'0:00', beat:'Preamble — Beat 1',
+    screen:'"What you are about to see is what we at Vixul believe will be the future of technology services companies." — dark bg, Vixul wordmark top',
+    vo:'"What you are about to see is what we at Vixul believe will be the future of technology services companies."' },
+  { id:'p0-b2', time:'0:06', beat:'Preamble — Beat 2',
+    screen:'"Companies that use human-led, AI-enabled discovery and AI-led delivery. To deliver excellent customer experience, high gross margins, and EBITDA."',
+    vo:'"Companies that use human-led, AI-enabled discovery and AI-led delivery. To deliver excellent customer experience, high gross margins, and EBITDA."' },
+  { id:'p0-b3', time:'0:18', beat:'Preamble — Beat 3',
+    screen:'"This is what Service as Software feels like." — gradient blue→purple on "Service as Software"',
+    vo:'"This is what Service as Software feels like."' },
+
+  { section: 'Scene 1 — The Problem  (0:24 – 0:51)' },
+  { id:'p1-b1', time:'0:24', beat:'Pain — Panel 1',
+    screen:'"Meet the customer" header → "Meridian Partners" types in large',
+    vo:'"Meet Meridian Partners."' },
+  { id:'p1-b2', time:'0:29', beat:'Pain — Panel 2',
+    screen:'"Mid-market manufacturer" / "$220M revenue · 2,200 employees · Chicago, IL" / "Running SAP ECC 6.0" / module pills: MM  PP  FI  SD',
+    vo:'"Mid-market manufacturer. Twenty-two hundred employees."' },
+  { id:'p1-b3', time:'0:34', beat:'Pain — Panel 3: Quote',
+    screen:'Avatar: [SM] Sarah Mitchell · VP of IT, Meridian Partners → quote types: "Our SAP system has 10 years of procurement data. Nobody knows what to do with it."',
+    vo:'"Our SAP system has ten years of procurement data. Nobody knows what to do with it."' },
+  { id:'p1-b4', time:'0:39', beat:'Pain — Panel 4',
+    screen:'"Weekly manual Excel exports from SAP." / "Crystal Reports nobody trusts." / "No visibility into supplier risk or spend patterns." — staggered, 8s dwell',
+    vo:'"Manual exports. Crystal Reports nobody trusts. No spend visibility."' },
+  { id:'p1-b5', time:'0:47', beat:'Pain — Panel 5: Trigger',
+    screen:'"Then they find Axon Labs" (green) / "LinkedIn · SAP partner directories · Conferences" / "See what we\'d build for you. In 5 minutes."',
+    vo:'"Then one day, Sarah finds Axon Labs."' },
+
+  { section: 'Scene 2 — Axon Website  (0:51 – 0:58)' },
+  { id:'p2-b1', time:'0:51', beat:'Website — Landing',
+    screen:'Axon Labs website — Sarah browsing, relevant SAP content visible',
+    vo:'"Sarah visits Axon\'s website and starts finding answers to her everyday problems."' },
+  { id:'p2-b2', time:'0:57', beat:'Website — CTA click',
+    screen:'Sarah clicks "See what we\'d build for you" — prominent click SFX',
+    vo:'(click SFX only)' },
+
+  { section: 'Scene 3 — Self-Assessment  (0:58 – 1:09)' },
+  { id:'p3-b1', time:'0:58', beat:'Assessment — Chips',
+    screen:'SAP module chips selected (MM, FI, SD…), pain point chips, data access chips',
+    vo:'"Sarah shares details about her SAP environment. But this isn\'t ChatGPT. These questions come from deep SAP domain expertise and real engagement patterns."' },
+  { id:'p3-b2', time:'1:04', beat:'Assessment — Chat',
+    screen:'Chat interface — Sarah types additional context',
+    vo:'(VO continues / silence)' },
+
+  { section: 'Scene 4 — Spec Preview  (1:09 – 1:19)' },
+  { id:'p4-b1', time:'1:09', beat:'Spec — Report',
+    screen:'AI-generated spec: modules, SAP transaction table, wedge recommendation (4-week sprint), timeline, expert review button',
+    vo:'"And Sarah gets a project preview. AI-generated. Tailored to her exact SAP environment."' },
+  { id:'p4-b2', time:'1:16', beat:'Spec — "Before any sales call"',
+    screen:'Overlay: "Before any sales call" on top of the spec',
+    vo:'"From problem to solution preview. Before any sales call."' },
+
+  { section: 'Scene 4b — Architect Call  (1:19 – 1:31)' },
+  { id:'p4b-ov', time:'1:19', beat:'Architect — Overlay',
+    screen:'"Sarah then has a call with Axon\'s solution architect, who comes fully prepared." — dark overlay',
+    vo:'(~2s pause before VO starts)' },
+  { id:'p4b-call', time:'1:21', beat:'Architect — Video call',
+    screen:'Video call: James Rivera (architect, speaking bars) + Sarah Mitchell PIP + AI-Prepared Brief (Fit Score 94% / S4HANA risk / wedge / 12 similar engagements / pre-qual approved) + Agenda (2 done / 3 pending)',
+    vo:'"Sarah then has a call with Axon\'s solution architect, who comes fully prepared."' },
+
+  { section: 'Scene 5a — Product Showcases  (1:31 – 2:00)' },
+  { id:'p5a-ov1', time:'1:31', beat:'Showcases — Overlay 1',
+    screen:'"What you just experienced was one step in this engagement."',
+    vo:'"What you just experienced was one step in this engagement."' },
+  { id:'p5a-ov2', time:'1:35', beat:'Showcases — Overlay 2',
+    screen:'"Imagine an entire customer engagement that is AI-enabled."',
+    vo:'"Imagine an entire customer engagement that is AI-enabled."' },
+  { id:'p5a-prop', time:'1:38', beat:'Showcases — Proposal',
+    screen:'AI-enabled proposal — TOC sidebar, recommended approach, AI suggestion box, investment summary',
+    vo:'"An interactive, AI-enabled proposal."' },
+  { id:'p5a-tower', time:'1:48', beat:'Showcases — Control Tower',
+    screen:'Engagement Control Tower — KPI metrics, project timeline, live activity feed',
+    vo:'"A live engagement control tower."' },
+  { id:'p5a-dash', time:'1:55', beat:'Showcases — Dashboard',
+    screen:'Customer Dashboard — health score, deliverables table, status indicators',
+    vo:'"An always up-to-date customer dashboard."' },
+
+  { section: 'Scene 5b — Pipeline Zoom Out  (2:00 – 2:09)' },
+  { id:'p5b-pipe', time:'2:00', beat:'Pipeline — Full view',
+    screen:'Complete deal pipeline — all stage cards flash-expanding to show AI-enabled steps',
+    vo:'"All steps are AI-enabled, for both Sarah and the service provider."' },
+
+  { section: 'Scene 6 — Knowledge Loop  (2:09 – 2:15)' },
+  { id:'p6-loop', time:'2:09', beat:'Knowledge loop',
+    screen:'Animated loop — engagements feed AI → AI improves future delivery',
+    vo:'"And Axon Labs keeps getting smarter."' },
+
+  { section: 'Scene 7 — CTA  (2:15 – 2:25)' },
+  { id:'p7-cta', time:'2:15', beat:'CTA',
+    screen:'"Axon Labs" logo + tagline: "Axon Labs is a hypothetical company, but these are exactly the kind of companies we\'re building at Vixul." + "Learn more about this vision →" button',
+    vo:'"Axon Labs is a hypothetical company. But this is the future we\'re building at Vixul. Reach out to learn more."' },
+];
+
+const STATUSES = [
+  { value:'',        label:'— not reviewed —', cls:'' },
+  { value:'good',   label:'✅  Good',           cls:'s-good' },
+  { value:'timing', label:'⚠️  Timing off',     cls:'s-timing' },
+  { value:'vo',     label:'🎙️  VO mismatch',    cls:'s-vo' },
+  { value:'visual', label:'👁️  Visual gap',      cls:'s-visual' },
+  { value:'rewrite',label:'✏️  Rewrite needed', cls:'s-rewrite' },
+];
+const STATUS_LABELS = { timing:'⚠️ TIMING OFF', vo:'🎙️ VO MISMATCH', visual:'👁️ VISUAL GAP', rewrite:'✏️ REWRITE NEEDED' };
+
+const STORE_KEY = 'axon-teaser-review-v5';
+let state = {};
+function loadState() { try { state = JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); } catch { state={}; } }
+
+let saveTimer, savePillTimer;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    const el = document.getElementById('savePill');
+    el.classList.add('show');
+    clearTimeout(savePillTimer);
+    savePillTimer = setTimeout(() => el.classList.remove('show'), 1600);
+  }, 350);
+}
+
+const dataBeats = BEATS.filter(b => b.id);
+
+function render() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  BEATS.forEach(item => {
+    const tr = document.createElement('tr');
+    if (item.section) {
+      tr.className = 'section-row';
+      tr.innerHTML = `<td colspan="6">${item.section}</td>`;
+      tbody.appendChild(tr); return;
+    }
+    const s = state[item.id] || { status:'', note:'' };
+    const isSilence = item.vo.startsWith('(');
+    tr.dataset.id = item.id; tr.dataset.status = s.status;
+    const opts = STATUSES.map(o => `<option value="${o.value}" ${o.value===s.status?'selected':''}>${o.label}</option>`).join('');
+    tr.innerHTML = `
+      <td class="col-time">${item.time}</td>
+      <td class="col-beat">${item.beat}</td>
+      <td class="col-text">${item.screen}</td>
+      <td class="col-vo ${isSilence?'silence':''}">${item.vo}</td>
+      <td><select class="status ${STATUSES.find(o=>o.value===s.status)?.cls||''}" onchange="onStatus('${item.id}',this)">${opts}</select></td>
+      <td><textarea class="note ${s.note?'filled':''}" placeholder="note or suggested change…" rows="1" oninput="onNote('${item.id}',this)">${s.note||''}</textarea></td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('headerMeta').textContent = `2:25 total · ${dataBeats.length} beats · auto-saved to browser`;
+  updateProgress();
+}
+
+function onStatus(id, sel) {
+  if (!state[id]) state[id]={};
+  state[id].status = sel.value;
+  sel.className = 'status '+(STATUSES.find(o=>o.value===sel.value)?.cls||'');
+  sel.closest('tr').dataset.status = sel.value;
+  scheduleSave(); updateProgress(); applyFilter(); refreshPreview();
+}
+function onNote(id, ta) {
+  if (!state[id]) state[id]={};
+  state[id].note = ta.value;
+  ta.className = 'note '+(ta.value?'filled':'');
+  ta.style.height='auto'; ta.style.height=ta.scrollHeight+'px';
+  scheduleSave(); refreshPreview();
+}
+function updateProgress() {
+  const total    = dataBeats.length;
+  const reviewed = dataBeats.filter(b=>state[b.id]?.status).length;
+  const issues   = dataBeats.filter(b=>state[b.id]?.status&&state[b.id].status!=='good').length;
+  document.getElementById('progressText').textContent =
+    `${reviewed} of ${total} reviewed  ·  ${issues} issue${issues!==1?'s':''} flagged`;
+  document.getElementById('progressFill').style.width = `${(reviewed/total)*100}%`;
+}
+function applyFilter() {
+  const on = document.getElementById('filterCheck').checked;
+  document.querySelectorAll('tbody tr[data-id]').forEach(tr =>
+    tr.classList.toggle('hide', on && (tr.dataset.status===''||tr.dataset.status==='good'))
+  );
+}
+function buildExportText() {
+  const flagged = dataBeats.filter(b => { const s=state[b.id]?.status; return s&&s!=='good'; });
+  if (!flagged.length) return null;
+  const lines = [`=== AXON TEASER — REVIEW FEEDBACK ===`,`Date: ${new Date().toLocaleString()}`,`Issues: ${flagged.length}`,``];
+  flagged.forEach((b,i) => {
+    const s = state[b.id]||{};
+    lines.push(`[${i+1}]  ${b.time}  |  ${b.beat}`);
+    lines.push(`STATUS:  ${STATUS_LABELS[s.status]||s.status.toUpperCase()}`);
+    lines.push(`Screen:  ${b.screen}`);
+    lines.push(`VO:      ${b.vo}`);
+    if (s.note) lines.push(`Note:    ${s.note}`);
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+function exportFeedback() {
+  const text = buildExportText();
+  if (!text) { showToast('No issues flagged yet','#0891b2'); return; }
+  navigator.clipboard.writeText(text).then(() => {
+    const n = dataBeats.filter(b=>state[b.id]?.status&&state[b.id].status!=='good').length;
+    showToast(`✓ ${n} issue${n!==1?'s':''} copied to clipboard`,'#059669');
+  }).catch(()=>{ togglePreview(true); showToast('Clipboard blocked — see preview below','#d97706'); });
+}
+let previewVisible=false;
+function togglePreview(forceOpen) {
+  previewVisible = forceOpen!==undefined?forceOpen:!previewVisible;
+  document.getElementById('exportPreview').style.display = previewVisible?'block':'none';
+  if (previewVisible) refreshPreview();
+}
+function refreshPreview() {
+  if (!previewVisible) return;
+  document.getElementById('exportText').textContent = buildExportText()||'(no issues flagged yet)';
+}
+let toastTimer;
+function showToast(msg,color='#059669') {
+  const el=document.getElementById('toast'); el.textContent=msg; el.style.background=color;
+  el.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
+}
+function confirmReset() {
+  if (!confirm('Reset all reviews? This cannot be undone.')) return;
+  state={}; localStorage.removeItem(STORE_KEY); render(); refreshPreview();
+}
+loadState(); render();
+</script>
+</body>
+</html>

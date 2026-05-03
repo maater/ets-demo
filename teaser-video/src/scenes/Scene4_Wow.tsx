@@ -49,10 +49,10 @@ export const Scene4Wow: React.FC = () => {
 
   const expertBtnOpacity = interpolate(frame, [160, 175], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  // 9 words × 7f = 63f needed. Visible from 218 to 282 = 64f. ✓
+  // "Before any sales call" overlay — extended dwell (+60f), fade at scene end
   const overlayBg = interpolate(frame, [210, 225], [0, 0.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const overlayTextOpacity = interpolate(frame, [215, 230], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const finalFade = interpolate(frame, [282, 300], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const finalFade = interpolate(frame, [342, 360], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   // Opening overlay: "And Sarah gets a project preview"
   const introOverlayBgOpacity = interpolate(frame, [0, 5, 85, 115], [0.92, 0.92, 0.92, 0], {

@@ -40,8 +40,8 @@ export const Scene1Pain: React.FC = () => {
   const p1 = frame >= 0 && frame < 140;
   const p2 = frame >= 140 && frame < 280;
   const p3 = frame >= 280 && frame < 440;
-  const p4 = frame >= 440 && frame < 590;
-  const p5 = frame >= 590;
+  const p4 = frame >= 440 && frame < 680;
+  const p5 = frame >= 680;
 
   const panelOpacity = (enter: number, exit: number) => {
     const fadeIn = interpolate(frame, [enter, enter + 12], [0, 1], {
@@ -53,7 +53,7 @@ export const Scene1Pain: React.FC = () => {
     return fadeIn * fadeOut;
   };
 
-  const globalFade = interpolate(frame, [700, 720], [1, 0], {
+  const globalFade = interpolate(frame, [790, 810], [1, 0], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
@@ -103,7 +103,7 @@ export const Scene1Pain: React.FC = () => {
           <FadeLine frame={frame} enterFrame={162} style={{
             fontSize: 64, color: '#9CA3AF', fontFamily: fonts.sans,
           }}>
-            $120M revenue &middot; 850 employees &middot; Chicago, IL
+            $220M revenue &middot; 2,200 employees &middot; Chicago, IL
           </FadeLine>
           <FadeLine frame={frame} enterFrame={184} style={{
             fontSize: 64, color: '#6B7280', fontFamily: fonts.sans, marginTop: 8,
@@ -125,36 +125,63 @@ export const Scene1Pain: React.FC = () => {
         </div>
       )}
 
-      {/* Panel 3: The quote — 5.3s, types very slowly */}
+      {/* Panel 3: Sarah + quote — 5.3s */}
       {p3 && (
         <div style={{
           opacity: panelOpacity(280, 440),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24,
+          maxWidth: 1300,
         }}>
+          {/* "The problem" label */}
           <FadeLine frame={frame} enterFrame={280} style={{
-            fontSize: 64, fontWeight: 600, color: '#F87171',
+            fontSize: 56, fontWeight: 600, color: '#F87171',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
             The problem
           </FadeLine>
+
+          {/* Sarah identity card */}
+          <FadeLine frame={frame} enterFrame={292} style={{
+            display: 'flex', alignItems: 'center', gap: 20,
+          }}>
+            {/* Avatar */}
+            <div style={{
+              width: 80, height: 80, borderRadius: '50%', flexShrink: 0,
+              background: 'linear-gradient(135deg, #7C3AED 0%, #2563EB 100%)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 28, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
+              boxShadow: '0 0 0 3px rgba(124,58,237,0.3)',
+            }}>SM</div>
+            {/* Name + title */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span style={{
+                fontSize: 32, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+              }}>Sarah Mitchell</span>
+              <span style={{
+                fontSize: 26, color: '#9CA3AF', fontFamily: fonts.sans,
+              }}>VP of IT · Meridian Partners</span>
+            </div>
+          </FadeLine>
+
+          {/* Quote */}
           <TypingText
             text={`"Our SAP system has 10 years of\nprocurement data. Nobody knows\nwhat to do with it."`}
             speed={18}
-            fontSize={64}
+            fontSize={60}
             color="#E5E7EB"
             fontFamily={fonts.sans}
-            startFrame={15}
+            startFrame={20}
             showCursor={true}
             cursorColor="#F87171"
           />
         </div>
       )}
 
-      {/* Panel 4: Supporting pain — 4.3s, lines well spaced */}
+      {/* Panel 4: Supporting pain — extended to 8s so lines breathe */}
       {p4 && (
         <div style={{
-          opacity: panelOpacity(440, 590),
+          opacity: panelOpacity(440, 680),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
           textAlign: 'center', maxWidth: 1200,
         }}>
@@ -176,27 +203,27 @@ export const Scene1Pain: React.FC = () => {
         </div>
       )}
 
-      {/* Panel 5: The trigger — 3s */}
+      {/* Panel 5: The trigger — starts at f680 */}
       {p5 && (
         <div style={{
-          opacity: panelOpacity(590, 720),
+          opacity: panelOpacity(680, 810),
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
           textAlign: 'center',
         }}>
-          <FadeLine frame={frame} enterFrame={590} style={{
+          <FadeLine frame={frame} enterFrame={680} style={{
             fontSize: 64, fontWeight: 600, color: '#34D399',
             letterSpacing: '0.14em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
             Then they find Axon Labs
           </FadeLine>
-          <FadeLine frame={frame} enterFrame={610} style={{
+          <FadeLine frame={frame} enterFrame={700} style={{
             fontSize: 64, fontWeight: 600, color: '#D1D5DB', fontFamily: fonts.sans,
             lineHeight: 1.5,
           }}>
             LinkedIn &middot; SAP partner directories &middot; Conferences
           </FadeLine>
-          <FadeLine frame={frame} enterFrame={635} style={{
+          <FadeLine frame={frame} enterFrame={725} style={{
             fontSize: 64, fontWeight: 700, color: colors.primary,
             fontFamily: fonts.sans, marginTop: 4,
           }}>

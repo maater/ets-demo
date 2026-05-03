@@ -1,10 +1,12 @@
 import React from 'react';
 import { AbsoluteFill, Series } from 'remotion';
 import { scenes } from './lib/timing';
+import { Scene0Preamble } from './scenes/Scene0_Preamble';
 import { Scene1Pain } from './scenes/Scene1_Pain';
 import { Scene2Click } from './scenes/Scene2_Click';
 import { Scene3Montage } from './scenes/Scene3_Montage';
 import { Scene4Wow } from './scenes/Scene4_Wow';
+import { Scene4bArchitect } from './scenes/Scene4b_Architect';
 import { Scene5Showcases } from './scenes/Scene5_Showcases';
 import { Scene5ZoomOut } from './scenes/Scene5_ZoomOut';
 import { Scene6Loop } from './scenes/Scene6_Loop';
@@ -17,6 +19,9 @@ export const Video: React.FC = () => {
       {/* Audio layer — SFX placed at precise frame offsets */}
       <SoundLayer />
       <Series>
+        <Series.Sequence durationInFrames={scenes.preamble.duration}>
+          <Scene0Preamble />
+        </Series.Sequence>
         <Series.Sequence durationInFrames={scenes.pain.duration}>
           <Scene1Pain />
         </Series.Sequence>
@@ -28,6 +33,9 @@ export const Video: React.FC = () => {
         </Series.Sequence>
         <Series.Sequence durationInFrames={scenes.wow.duration}>
           <Scene4Wow />
+        </Series.Sequence>
+        <Series.Sequence durationInFrames={scenes.architect.duration}>
+          <Scene4bArchitect />
         </Series.Sequence>
         <Series.Sequence durationInFrames={scenes.showcases.duration}>
           <Scene5Showcases />

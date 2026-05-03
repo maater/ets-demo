@@ -22,6 +22,43 @@ const sfx = {
   musicBg:    staticFile('sfx/music-bg.mp3'),
 };
 
+// ── Voiceover (Charlotte via ElevenLabs) ────────────────
+const vo = {
+  preamble1:  staticFile('sfx/vo/00a-preamble1.mp3'),
+  preamble2:  staticFile('sfx/vo/00b-preamble2.mp3'),
+  preamble3:  staticFile('sfx/vo/00c-preamble3.mp3'),
+  intro:      staticFile('sfx/vo/01-intro.mp3'),
+  company:    staticFile('sfx/vo/01b-company.mp3'),
+  supporting: staticFile('sfx/vo/02b-supporting.mp3'),
+  pain:       staticFile('sfx/vo/02-pain.mp3'),
+  finds:      staticFile('sfx/vo/03-finds.mp3'),
+  visits:     staticFile('sfx/vo/04-visits.mp3'),
+  assessment: staticFile('sfx/vo/05-assessment.mp3'),
+  preview:    staticFile('sfx/vo/06-preview.mp3'),
+  architect:  staticFile('sfx/vo/06b-architect.mp3'),
+  nosales:    staticFile('sfx/vo/07-nosales.mp3'),
+  onestep:    staticFile('sfx/vo/08-onestep.mp3'),
+  imagine:    staticFile('sfx/vo/09-imagine.mp3'),
+  proposal:   staticFile('sfx/vo/10-proposal.mp3'),
+  tower:      staticFile('sfx/vo/11-tower.mp3'),
+  dashboard:  staticFile('sfx/vo/12-dashboard.mp3'),
+  allsteps:   staticFile('sfx/vo/13-allsteps.mp3'),
+  smarter:    staticFile('sfx/vo/14-smarter.mp3'),
+  cta:        staticFile('sfx/vo/15-cta.mp3'),
+};
+
+/** Helper: place a voiceover line at a specific absolute frame */
+const VO: React.FC<{
+  src: string;
+  frame: number;
+  volume?: number;
+  durationInFrames?: number;
+}> = ({ src, frame, volume = 0.9, durationInFrames = 300 }) => (
+  <Sequence from={frame} durationInFrames={durationInFrames} showInTimeline={false}>
+    <Audio src={src} volume={volume} showInTimeline={false} />
+  </Sequence>
+);
+
 /** Helper: place an audio clip at a specific absolute frame.
  *  showInTimeline=false avoids the Studio waveform visualizer which
  *  can throw IndexSizeError on very short audio files. */
@@ -41,6 +78,11 @@ export const SoundLayer: React.FC = () => {
 
   return (
     <>
+      {/* ═══════ Scene 0: Preamble (600f) — beat transitions ═══════ */}
+      <SFX src={sfx.whoosh} frame={s.preamble.start + 5} volume={0.05} playbackRate={0.6} />
+      <SFX src={sfx.whoosh} frame={s.preamble.start + 190} volume={0.05} playbackRate={0.7} />
+      <SFX src={sfx.chime} frame={s.preamble.start + 535} volume={0.06} />
+
       {/* ═══════ Scene 1: Narrative (660f) — panel transitions ═══════ */}
       {/* Panel 1 fade in */}
       <SFX src={sfx.whoosh} frame={s.pain.start + 5} volume={0.06} playbackRate={0.8} />
@@ -106,6 +148,16 @@ export const SoundLayer: React.FC = () => {
       {/* "Before any sales call" overlay */}
       <SFX src={sfx.success} frame={s.wow.start + 235} volume={0.06} />
 
+      {/* ═══════ Scene 4b: Architect Call (360f) ═══════ */}
+      {/* Call UI fades in */}
+      <SFX src={sfx.whoosh} frame={s.architect.start + 90} volume={0.06} playbackRate={0.8} />
+      {/* AI notes stagger in */}
+      {[140, 150, 160, 170, 180].map((f) => (
+        <SFX key={`ainote-${f}`} src={sfx.click} frame={s.architect.start + f} volume={0.12} />
+      ))}
+      {/* Agenda appears */}
+      <SFX src={sfx.ping} frame={s.architect.start + 200} volume={0.05} />
+
       {/* ═══════ Scene 5a: Showcases (870f) ═══════ */}
       {/* Overlay whoosh */}
       <SFX src={sfx.whoosh} frame={s.showcases.start + 5} volume={0.05} />
@@ -145,43 +197,90 @@ export const SoundLayer: React.FC = () => {
       <SFX src={sfx.chime} frame={s.cta.start + 5} volume={0.08} playbackRate={0.9} />
       <SFX src={sfx.ping} frame={s.cta.start + 85} volume={0.06} />
 
+      {/* ═══════ Voiceover — Charlotte (ElevenLabs) ═══════ */}
+      {/* Scene 0: Preamble */}
+      <VO src={vo.preamble1} frame={s.preamble.start + 5} durationInFrames={180} />
+      <VO src={vo.preamble2} frame={s.preamble.start + 190} durationInFrames={360} />
+      <VO src={vo.preamble3} frame={s.preamble.start + 537} durationInFrames={135} />
+
+      {/* Scene 1: Narrative panels */}
+      {/* Panel 1 — "Meet the customer / Meridian Partners" (76f audio) */}
+      <VO src={vo.intro} frame={s.pain.start + 10} durationInFrames={80} />
+      {/* Panel 2 — company stats (105f audio, starts 8f into Panel 2, ends at local f253) */}
+      <VO src={vo.company} frame={s.pain.start + 148} durationInFrames={120} />
+      {/* Panel 3 — quote only, Sarah identified visually (157f audio, fits exactly in panel) */}
+      <VO src={vo.pain} frame={s.pain.start + 283} durationInFrames={165} />
+      {/* Panel 4 — supporting pain points (165f audio, 0.7s tail into Panel 5 is fine) */}
+      <VO src={vo.supporting} frame={s.pain.start + 445} durationInFrames={175} />
+      {/* Panel 5 — trigger (76f audio, starts 10f into Panel 5) */}
+      <VO src={vo.finds} frame={s.pain.start + 690} durationInFrames={90} />
+
+      {/* Scene 2: Website */}
+      <VO src={vo.visits} frame={s.click.start + 5} durationInFrames={180} />
+
+      {/* Scene 3: Self-assessment */}
+      <VO src={vo.assessment} frame={s.conversation.start + 5} durationInFrames={270} />
+
+      {/* Scene 4: Spec preview */}
+      <VO src={vo.preview} frame={s.wow.start + 5} durationInFrames={180} />
+      <VO src={vo.nosales} frame={s.wow.start + 210} durationInFrames={120} />
+
+      {/* Scene 4b: Architect discovery call — starts at +65 to leave a clean 1.4s pause after nosales VO */}
+      <VO src={vo.architect} frame={s.architect.start + 65} durationInFrames={300} />
+
+      {/* Scene 5a: Showcases — overlay beats */}
+      <VO src={vo.onestep} frame={s.showcases.start + 5} durationInFrames={120} />
+      <VO src={vo.imagine} frame={s.showcases.start + 105} durationInFrames={120} />
+      {/* Showcase labels */}
+      <VO src={vo.proposal} frame={s.showcases.start + 220} durationInFrames={90} />
+      <VO src={vo.tower} frame={s.showcases.start + 520} durationInFrames={90} />
+      <VO src={vo.dashboard} frame={s.showcases.start + 730} durationInFrames={90} />
+
+      {/* Scene 5b: Pipeline */}
+      <VO src={vo.allsteps} frame={s.zoomOut.start + 80} durationInFrames={120} />
+
+      {/* Scene 6: Knowledge loop */}
+      <VO src={vo.smarter} frame={s.loop.start + 15} durationInFrames={100} />
+
+      {/* Scene 7: CTA */}
+      <VO src={vo.cta} frame={s.cta.start + 25} durationInFrames={415} />
+
       {/* ═══════ Ambient pad ═══════ */}
       {/* Scene 1 (dark narrative) */}
       <Sequence from={s.pain.start} durationInFrames={s.pain.duration} showInTimeline={false}>
         <Audio src={sfx.pad} volume={0.12} showInTimeline={false} />
       </Sequence>
 
-      {/* ═══════ Background music — ducks during interactive sections ═══════ */}
+      {/* ═══════ Background music — ducked under voiceover throughout ═══════ */}
       <Sequence from={0} durationInFrames={TOTAL_FRAMES} showInTimeline={false}>
         <Audio
           src={sfx.musicBg}
           volume={(f) => {
-            const FULL = 0.22;
-            const DUCKED = 0.04;  // very low during clicks/typing
+            const BED = 0.10;     // base level under voiceover
+            const FULL = 0.22;    // full level during VO gaps
+            const SILENT = 0.02;  // near-silent during interactive clicks
             const FADE_IN = 60;   // 2s ramp up at start
             const FADE_OUT = 90;  // 3s ramp down at end
 
-            // Scene 2 website appears at click.start+140=860, button click at +180=900
-            // Scene 3 ends at conversation.start+duration = 930+330 = 1260
-            // Scene 4 (report) starts at 1260
-            const duckStart = s.click.start + 150; // 870 — music starts fading as website appears
-            const duckFull  = s.click.start + 180;  // 900 — fully ducked at button click
-            const unduckStart = s.wow.start;         // 1260 — report appears
-            const unduckFull  = s.wow.start + 60;    // 1320 — fully back (2s ramp)
-
             // Base envelope: fade in at start, fade out at end
-            const baseVol = interpolate(f, [0, FADE_IN, TOTAL_FRAMES - FADE_OUT, TOTAL_FRAMES], [0, FULL, FULL, 0], {
+            const baseVol = interpolate(f, [0, FADE_IN, TOTAL_FRAMES - FADE_OUT, TOTAL_FRAMES], [0, 1, 1, 0], {
               extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
             });
 
-            // Duck envelope: drops to DUCKED during interactive section
-            const duckMult = interpolate(f,
-              [duckStart, duckFull, unduckStart, unduckFull],
-              [1, DUCKED / FULL, DUCKED / FULL, 1],
+            // Music level: mostly at BED level (under VO), with deeper duck
+            // during interactive section (clicks/typing in Scenes 2-3)
+            const duckStart = s.click.start + 150;
+            const duckFull  = s.click.start + 180;
+            const unduckStart = s.wow.start;
+            const unduckFull  = s.wow.start + 60;
+
+            const level = interpolate(f,
+              [0, duckStart, duckFull, unduckStart, unduckFull, TOTAL_FRAMES],
+              [BED, BED, SILENT, SILENT, BED, BED],
               { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
             );
 
-            return baseVol * duckMult;
+            return baseVol * level;
           }}
           showInTimeline={false}
         />
