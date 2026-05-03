@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+import { AbsoluteFill, useCurrentFrame, interpolate, Img, staticFile } from 'remotion';
 import { colors, fonts } from '../styles/tokens';
 
 /*
@@ -58,93 +58,90 @@ export const Scene4bArchitect: React.FC = () => {
 
       {/* ── Video call UI ── */}
       <div style={{ opacity: callOpacity }}>
+
+        {/* James photo fills entire background */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden' }}>
+          <Img
+            src={staticFile('images/james-rivera.jpg')}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+          />
+          {/* Dark overlay so UI stays readable */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to right, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.75) 100%)',
+          }} />
+        </div>
+
         {/* Top bar */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 56,
-          backgroundColor: '#1F2937', borderBottom: '1px solid #374151',
+          backgroundColor: 'rgba(15,20,35,0.85)', borderBottom: '1px solid rgba(255,255,255,0.1)',
           display: 'flex', alignItems: 'center', padding: '0 32px', gap: 14, zIndex: 10,
+          backdropFilter: 'blur(8px)',
         }}>
-          <div style={{
-            width: 10, height: 10, borderRadius: '50%', backgroundColor: '#EF4444',
-          }} />
-          <span style={{
-            fontSize: 16, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
-          }}>Discovery Call</span>
-          <span style={{
-            fontSize: 14, color: '#9CA3AF', fontFamily: fonts.sans,
-          }}>Meridian Partners + Axon Labs</span>
+          <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#EF4444' }} />
+          <span style={{ fontSize: 16, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans }}>Discovery Call</span>
+          <span style={{ fontSize: 14, color: '#9CA3AF', fontFamily: fonts.sans }}>Meridian Partners + Axon Labs</span>
           <div style={{ flex: 1 }} />
           <span style={{
-            fontSize: 13, color: '#6B7280', fontFamily: fonts.sans,
-            padding: '4px 12px', backgroundColor: '#374151', borderRadius: 8,
+            fontSize: 13, color: '#9CA3AF', fontFamily: fonts.sans,
+            padding: '4px 12px', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 8,
           }}>🔴 Recording</span>
         </div>
 
-        {/* Main layout: video feeds left, AI notes right */}
+        {/* James name badge — bottom-left of background */}
+        <div style={{
+          position: 'absolute', bottom: 120, left: 40, zIndex: 10,
+          display: 'flex', flexDirection: 'column', gap: 4,
+        }}>
+          <span style={{ fontSize: 32, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+            textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>James Rivera</span>
+          <span style={{ fontSize: 20, color: '#D1D5DB', fontFamily: fonts.sans,
+            textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>Solution Architect · Axon Labs</span>
+        </div>
+
+        {/* Speaking indicator — bottom-left */}
+        <div style={{
+          position: 'absolute', bottom: 76, left: 40, zIndex: 10,
+          display: 'flex', gap: 4, alignItems: 'flex-end',
+        }}>
+          {[0.6, 1, 0.4, 0.8, 0.5].map((h, i) => (
+            <div key={i} style={{
+              width: 4, height: 8 + h * 14 * (Math.sin(frame * 0.3 + i * 1.5) * 0.5 + 0.5),
+              backgroundColor: '#34D399', borderRadius: 2,
+            }} />
+          ))}
+        </div>
+
+        {/* Sarah PIP — bottom-left corner */}
+        <div style={{
+          position: 'absolute', bottom: 24, left: 40, zIndex: 10,
+          width: 240, height: 148, borderRadius: 14, overflow: 'hidden',
+          border: '2px solid rgba(255,255,255,0.2)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+        }}>
+          <Img
+            src={staticFile('images/sarah-mitchell.jpg')}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+          />
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            background: 'linear-gradient(transparent, rgba(0,0,0,0.75))',
+            padding: '14px 10px 7px',
+          }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#F9FAFB', fontFamily: fonts.sans }}>Sarah Mitchell</span>
+          </div>
+        </div>
+
+        {/* Main layout: right-side AI notes panel only */}
         <div style={{
           position: 'absolute', top: 56, left: 0, right: 0, bottom: 0,
-          display: 'flex',
+          display: 'flex', justifyContent: 'flex-end',
         }}>
-          {/* Left: Video feeds */}
-          <div style={{
-            flex: 1, display: 'flex', flexDirection: 'column', gap: 16,
-            padding: 24, justifyContent: 'center', alignItems: 'center',
-          }}>
-            {/* Architect (large) */}
-            <div style={{
-              width: '100%', maxWidth: 700, aspectRatio: '16/9',
-              backgroundColor: '#1E293B', borderRadius: 16,
-              display: 'flex', flexDirection: 'column', alignItems: 'center',
-              justifyContent: 'center', gap: 12, position: 'relative',
-              border: '2px solid #334155',
-            }}>
-              <div style={{
-                width: 80, height: 80, borderRadius: '50%', backgroundColor: colors.primary,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 36, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
-              }}>JR</div>
-              <span style={{
-                fontSize: 18, fontWeight: 600, color: '#E5E7EB', fontFamily: fonts.sans,
-              }}>James Rivera</span>
-              <span style={{
-                fontSize: 14, color: '#9CA3AF', fontFamily: fonts.sans,
-              }}>Solution Architect · Axon Labs</span>
-              {/* Speaking indicator */}
-              <div style={{
-                position: 'absolute', bottom: 12, left: 12,
-                display: 'flex', gap: 3, alignItems: 'flex-end',
-              }}>
-                {[0.6, 1, 0.4, 0.8, 0.5].map((h, i) => (
-                  <div key={i} style={{
-                    width: 3, height: 8 + h * 12 * (Math.sin(frame * 0.3 + i * 1.5) * 0.5 + 0.5),
-                    backgroundColor: '#34D399', borderRadius: 2,
-                  }} />
-                ))}
-              </div>
-            </div>
-
-            {/* Sarah (small, bottom-right) */}
-            <div style={{
-              position: 'absolute', bottom: 24, left: 24,
-              width: 180, height: 110, backgroundColor: '#1E293B', borderRadius: 12,
-              display: 'flex', flexDirection: 'column', alignItems: 'center',
-              justifyContent: 'center', gap: 6, border: '2px solid #334155',
-            }}>
-              <div style={{
-                width: 36, height: 36, borderRadius: '50%', backgroundColor: '#7C3AED',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 16, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
-              }}>SM</div>
-              <span style={{
-                fontSize: 11, fontWeight: 600, color: '#E5E7EB', fontFamily: fonts.sans,
-              }}>Sarah Mitchell</span>
-            </div>
-          </div>
-
           {/* Right: AI-prepared notes panel */}
           <div style={{
-            width: 440, borderLeft: `1px solid ${colors.border}`,
-            backgroundColor: '#fff', padding: '20px 24px', overflow: 'hidden',
+            width: 460, borderLeft: '1px solid rgba(255,255,255,0.1)',
+            backgroundColor: 'rgba(255,255,255,0.97)', padding: '20px 24px', overflow: 'hidden',
             display: 'flex', flexDirection: 'column', gap: 16,
           }}>
             <div style={{

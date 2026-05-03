@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+import { AbsoluteFill, useCurrentFrame, interpolate, Img, staticFile } from 'remotion';
 import { TypingText } from '../components/TypingText';
 import { colors, fonts } from '../styles/tokens';
 
@@ -67,10 +67,23 @@ export const Scene1Pain: React.FC = () => {
       {p1 && (
         <div style={{
           opacity: panelOpacity(0, 140),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24,
         }}>
-          <FadeLine frame={frame} enterFrame={0} style={{
-            fontSize: 64, fontWeight: 600, color: colors.primary,
+          {/* Sarah portrait */}
+          <FadeLine frame={frame} enterFrame={0} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+            <div style={{
+              width: 140, height: 140, borderRadius: '50%', overflow: 'hidden', flexShrink: 0,
+              border: '3px solid rgba(37,99,235,0.5)',
+              boxShadow: '0 0 0 6px rgba(37,99,235,0.12)',
+            }}>
+              <Img src={staticFile('images/sarah-mitchell.jpg')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            <span style={{
+              fontSize: 28, color: '#9CA3AF', fontFamily: fonts.sans, letterSpacing: '0.05em',
+            }}>Sarah Mitchell · VP of IT</span>
+          </FadeLine>
+          <FadeLine frame={frame} enterFrame={8} style={{
+            fontSize: 56, fontWeight: 600, color: colors.primary,
             letterSpacing: '0.18em', textTransform: 'uppercase' as const,
             fontFamily: fonts.sans,
           }}>
@@ -125,56 +138,66 @@ export const Scene1Pain: React.FC = () => {
         </div>
       )}
 
-      {/* Panel 3: Sarah + quote — 5.3s */}
+      {/* Panel 3: Sarah + quote — magazine interview layout */}
       {p3 && (
         <div style={{
           opacity: panelOpacity(280, 440),
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24,
-          maxWidth: 1300,
+          display: 'flex', flexDirection: 'row', alignItems: 'stretch',
+          width: '100%', height: '100%', position: 'absolute', top: 0, left: 0,
         }}>
-          {/* "The problem" label */}
+          {/* Left column — Sarah's photo, large */}
           <FadeLine frame={frame} enterFrame={280} style={{
-            fontSize: 56, fontWeight: 600, color: '#F87171',
-            letterSpacing: '0.14em', textTransform: 'uppercase' as const,
-            fontFamily: fonts.sans,
+            width: '38%', position: 'relative', overflow: 'hidden', flexShrink: 0,
           }}>
-            The problem
-          </FadeLine>
-
-          {/* Sarah identity card */}
-          <FadeLine frame={frame} enterFrame={292} style={{
-            display: 'flex', alignItems: 'center', gap: 20,
-          }}>
-            {/* Avatar */}
+            <Img
+              src={staticFile('images/sarah-mitchell.jpg')}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+            />
+            {/* Right-side gradient bleed */}
             <div style={{
-              width: 80, height: 80, borderRadius: '50%', flexShrink: 0,
-              background: 'linear-gradient(135deg, #7C3AED 0%, #2563EB 100%)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 28, fontWeight: 800, color: '#fff', fontFamily: fonts.sans,
-              boxShadow: '0 0 0 3px rgba(124,58,237,0.3)',
-            }}>SM</div>
-            {/* Name + title */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              position: 'absolute', top: 0, right: 0, bottom: 0, width: 120,
+              background: 'linear-gradient(to right, transparent, #0B1120)',
+            }} />
+            {/* Name badge at bottom */}
+            <div style={{
+              position: 'absolute', bottom: 48, left: 36,
+              display: 'flex', flexDirection: 'column', gap: 6,
+            }}>
               <span style={{
-                fontSize: 32, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
+                fontSize: 30, fontWeight: 700, color: '#F9FAFB', fontFamily: fonts.sans,
               }}>Sarah Mitchell</span>
               <span style={{
-                fontSize: 26, color: '#9CA3AF', fontFamily: fonts.sans,
+                fontSize: 22, color: '#9CA3AF', fontFamily: fonts.sans,
               }}>VP of IT · Meridian Partners</span>
             </div>
           </FadeLine>
 
-          {/* Quote */}
-          <TypingText
-            text={`"Our SAP system has 10 years of\nprocurement data. Nobody knows\nwhat to do with it."`}
-            speed={18}
-            fontSize={60}
-            color="#E5E7EB"
-            fontFamily={fonts.sans}
-            startFrame={20}
-            showCursor={true}
-            cursorColor="#F87171"
-          />
+          {/* Right column — label + quote */}
+          <div style={{
+            flex: 1, display: 'flex', flexDirection: 'column',
+            justifyContent: 'center', padding: '0 80px 0 60px', gap: 32,
+          }}>
+            {/* "The problem" label */}
+            <FadeLine frame={frame} enterFrame={285} style={{
+              fontSize: 48, fontWeight: 600, color: '#F87171',
+              letterSpacing: '0.14em', textTransform: 'uppercase' as const,
+              fontFamily: fonts.sans,
+            }}>
+              The problem
+            </FadeLine>
+
+            {/* Quote */}
+            <TypingText
+              text={`"Our SAP system has 10 years of\nprocurement data. Nobody knows\nwhat to do with it."`}
+              speed={18}
+              fontSize={58}
+              color="#E5E7EB"
+              fontFamily={fonts.sans}
+              startFrame={20}
+              showCursor={true}
+              cursorColor="#F87171"
+            />
+          </div>
         </div>
       )}
 

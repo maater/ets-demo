@@ -1,4 +1,5 @@
 node_modules/
 dist/
 out/
+!out/teaser.mp4
 .cache/
