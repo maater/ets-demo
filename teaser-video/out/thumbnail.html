@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1280px; height: 720px; overflow: hidden; background: #080E1C; font-family: -apple-system, 'Inter', sans-serif; }
+
+  .container {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    display: flex;
+  }
+
+  /* Sarah — fills left ~55% */
+  .photo-col {
+    width: 55%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .photo-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  /* Gradient bleeds */
+  .photo-col::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, transparent 55%, #080E1C 100%),
+      linear-gradient(to top, rgba(8,14,28,0.7) 0%, transparent 40%);
+  }
+
+  /* Right text panel */
+  .text-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 64px 0 32px;
+    gap: 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2563EB;
+  }
+
+  .eyebrow-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2563EB;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .headline {
+    font-size: 72px;
+    font-weight: 900;
+    color: #F9FAFB;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  .headline span {
+    color: #2563EB;
+  }
+
+  .sub {
+    font-size: 24px;
+    color: #6B7280;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: #2563EB;
+    border-radius: 2px;
+  }
+
+  /* Name badge bottom-left of photo */
+  .name-badge {
+    position: absolute;
+    bottom: 36px;
+    left: 40px;
+    z-index: 10;
+  }
+
+  .name-badge .name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #F9FAFB;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+  }
+
+  .name-badge .title {
+    font-size: 16px;
+    color: #D1D5DB;
+    margin-top: 4px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+  }
+
+  /* Vixul badge top-right */
+  .vixul-badge {
+    position: absolute;
+    top: 32px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+  }
+
+  .vixul-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: #2563EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  .vixul-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #9CA3AF;
+  }
+
+  /* Play button overlay */
+  .play-btn {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(37,99,235,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.25);
+  }
+
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Sarah photo -->
+  <div class="photo-col">
+    <img src="../public/images/sarah-mitchell.jpg" alt="Sarah Mitchell" />
+    <div class="name-badge">
+      <div class="name">Sarah Mitchell</div>
+      <div class="title">VP of IT · Meridian Partners</div>
+    </div>
+  </div>
+
+  <!-- Text -->
+  <div class="text-col">
+    <div class="vixul-badge">
+      <div class="vixul-logo">V</div>
+      <span class="vixul-name">Vixul</span>
+    </div>
+
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-text">VixulCon 2026</span>
+    </div>
+
+    <div class="headline">
+      Service<br/>as<br/><span>Software.</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sub">
+      From cold prospect to<br/>AI-generated spec preview.<br/>Before any sales call.
+    </div>
+
+    <div class="play-btn">
+      <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
